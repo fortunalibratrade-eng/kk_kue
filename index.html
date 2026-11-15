@@ -580,12 +580,9 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
     <div class="login-icon"><i class="fas fa-shield-alt"></i></div>
     <div class="login-title">Admin Login</div>
     <div class="login-subtitle">Masuk untuk mengelola toko</div>
-    <form onsubmit="handleLogin(event)">
-      <div class="login-field"><label>User ID</label><div class="input-wrap"><i class="fas fa-user"></i><input type="text" id="loginId" required autocomplete="off"></div></div>
-      <div class="login-field"><label>Password</label><div class="input-wrap"><i class="fas fa-lock"></i><input type="password" id="loginPass" required></div></div>
-      <div class="login-error" id="loginError"><i class="fas fa-exclamation-circle"></i> ID atau Password salah!</div>
-      <button type="submit" class="neu-btn-accent login-submit"><i class="fas fa-sign-in-alt"></i> Masuk</button>
-    </form>
+    <button type="button" class="neu-btn-accent login-submit" id="googleLoginBtn" onclick="handleGoogleLogin()"><i class="fa-brands fa-google"></i> Masuk dengan Google</button>
+    <div class="login-error" id="loginError" style="margin-top:14px;"></div>
+    <div style="font-size:11px;color:var(--text2);margin-top:14px;line-height:1.7;">Hanya akun Google admin yang terdaftar yang bisa masuk.</div>
     <button class="login-back" onclick="goHome(event)"><i class="fas fa-arrow-left"></i> Kembali</button>
   </div>
 </div>
@@ -600,8 +597,8 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
           <div class="fs-status-dot"></div><span id="fsStatusText">Menghubungkan...</span>
         </div>
         <div class="admin-user-info">
-          <div class="admin-avatar">A</div>
-          <div><div class="admin-user-name">Admin</div><div class="admin-user-role">Super Admin</div></div>
+          <div class="admin-avatar" id="adminAvatar">A</div>
+          <div><div class="admin-user-name" id="adminUserName">Admin</div><div class="admin-user-role" id="adminUserRole">Super Admin</div></div>
         </div>
         <button class="neu-btn" style="padding:9px 16px;font-size:12px;display:flex;align-items:center;gap:5px;" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i></button>
       </div>
@@ -780,6 +777,9 @@ import {
   getFirestore, collection, getDocs, doc, addDoc, setDoc, updateDoc, deleteDoc,
   query, orderBy, onSnapshot, serverTimestamp, getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBqnkrIkmEdv7cyid82f3qhLFYkESw2YJY",
@@ -793,6 +793,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 /* ── FIRESTORE STATUS ── */
 function setFsStatus(state, text) {
@@ -843,7 +844,7 @@ function listenAbout() {
 
 function listenOrders() {
   const q = query(collection(db, 'pesanan'), orderBy('createdAt', 'desc'));
-  onSnapshot(q, snap => {
+  return onSnapshot(q, snap => {
     orders = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
     renderAO();
     renderAD();
@@ -897,7 +898,31 @@ window._getOrders = () => orders;
 /* start listeners */
 listenProducts();
 listenAbout();
-listenOrders();
+
+/* ── LOGIN ADMIN (Google) ──
+   Admin ditentukan oleh Firestore Rules (daftar email di server), bukan oleh kode ini.
+   Cara cek: akun admin boleh membaca dokumen 'admin_check/ping', akun lain ditolak. */
+let unsubOrders = null;
+function startOrders() { if (!unsubOrders) unsubOrders = listenOrders(); }
+function stopOrders() { if (unsubOrders) { unsubOrders(); unsubOrders = null; } orders = []; }
+const gProvider = new GoogleAuthProvider();
+gProvider.setCustomParameters({ prompt: 'select_account' });
+window._auth = {
+  async login() {
+    try { await signInWithPopup(auth, gProvider); }
+    catch (e) {
+      if (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment') await signInWithRedirect(auth, gProvider);
+      else throw e;
+    }
+  },
+  async logout() { await signOut(auth); }
+};
+onAuthStateChanged(auth, async user => {
+  let ok = false;
+  if (user) { try { await getDoc(doc(db, 'admin_check', 'ping')); ok = true; } catch (e) { ok = false; } }
+  if (ok) startOrders(); else stopOrders();
+  if (window.onAdminAuth) window.onAdminAuth(user, ok);
+});
 </script>
 
 <!-- ===== MAIN APP SCRIPT ===== -->
@@ -1050,8 +1075,6 @@ function showLogin(e) {
   document.getElementById('adminPanel').classList.remove('active');
   document.getElementById('navbar').style.display = 'none';
   closeMobileNav();
-  document.getElementById('loginId').value = '';
-  document.getElementById('loginPass').value = '';
   document.getElementById('loginError').classList.remove('show');
 }
 function showAdminPanel() {
@@ -1062,20 +1085,52 @@ function showAdminPanel() {
   closeMobileNav();
   renderAD(); renderAP(); renderAA(); renderAO();
 }
-function handleLogin(e) {
-  e.preventDefault();
-  const i = document.getElementById('loginId').value.trim();
-  const p = document.getElementById('loginPass').value.trim();
-  if (i === 'admin' && p === 'admin080803') {
-    isAdminLoggedIn = true;
-    document.getElementById('loginError').classList.remove('show');
-    toast('Login berhasil!');
-    showAdminPanel();
-  } else {
-    document.getElementById('loginError').classList.add('show');
-  }
+function showLoginErr(msg) {
+  const er = document.getElementById('loginError');
+  er.innerHTML = '<i class="fas fa-exclamation-circle"></i> ';
+  er.appendChild(document.createTextNode(msg));
+  er.classList.add('show');
 }
-function adminLogout() { isAdminLoggedIn = false; toast('Logout berhasil'); goHome(null); }
+function authErrMsg(e) {
+  const m = {
+    'auth/popup-closed-by-user': 'Login dibatalkan.',
+    'auth/cancelled-popup-request': 'Login dibatalkan.',
+    'auth/unauthorized-domain': 'Domain website ini belum didaftarkan di Firebase (Authentication → Settings → Authorized domains).',
+    'auth/operation-not-allowed': 'Login Google belum diaktifkan di Firebase (Authentication → Sign-in method).',
+    'auth/network-request-failed': 'Koneksi internet bermasalah, coba lagi.'
+  };
+  return m[e && e.code] || ('Login gagal' + (e && e.code ? ' (' + e.code + ')' : '') + '.');
+}
+async function handleGoogleLogin() {
+  const b = document.getElementById('googleLoginBtn');
+  document.getElementById('loginError').classList.remove('show');
+  if (!window._auth) { showLoginErr('Layanan login belum siap, coba lagi sebentar.'); return; }
+  b.disabled = true; b.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+  try { await window._auth.login(); }
+  catch (e) { console.error(e); showLoginErr(authErrMsg(e)); }
+  finally { b.disabled = false; b.innerHTML = '<i class="fa-brands fa-google"></i> Masuk dengan Google'; }
+}
+// Dipanggil otomatis oleh Firebase setiap status login berubah
+window.onAdminAuth = function (user, ok) {
+  const loginVisible = document.getElementById('loginPage').classList.contains('active');
+  if (user && ok) {
+    const was = isAdminLoggedIn; isAdminLoggedIn = true;
+    const nm = user.displayName || user.email || 'Admin';
+    document.getElementById('adminAvatar').textContent = nm.charAt(0).toUpperCase();
+    document.getElementById('adminUserName').textContent = nm;
+    document.getElementById('adminUserRole').textContent = user.email || 'Admin';
+    if (loginVisible) { toast('Login berhasil!'); showAdminPanel(); }
+    else if (!was) { renderAD(); renderAP(); renderAA(); renderAO(); }
+  } else if (user && !ok) {
+    isAdminLoggedIn = false;
+    showLoginErr('Akun ' + (user.email || '') + ' bukan admin. Gunakan akun Google yang terdaftar.');
+    window._auth.logout();
+  } else {
+    isAdminLoggedIn = false;
+    if (document.getElementById('adminPanel').classList.contains('active')) goHome(null);
+  }
+};
+function adminLogout() { isAdminLoggedIn = false; if (window._auth) window._auth.logout(); toast('Logout berhasil'); goHome(null); }
 
 // ─── USER (NAME LOGIN) ───
 function updateUserUI() {
