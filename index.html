@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="referrer" content="no-referrer">
+<script>try{var _t=localStorage.getItem("icr_theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.dataset.theme=_t}catch(e){}</script>
+<meta name="description" content="Ira Cookies Ramadhaniah - kue kering dan kue lapis premium, dibuat segar dengan bahan pilihan. Pesan mudah lewat WhatsApp.">
+<meta name="theme-color" content="#dfe6ed">
+<meta property="og:title" content="Ira Cookies Ramadhaniah"><meta property="og:description" content="Kue kering &amp; lapis premium, dibuat segar.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%AA%3C/text%3E%3C/svg%3E">
 <title>Ira Cookies Ramadhaniah</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -211,6 +216,70 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
 .extra-del{flex:0 0 38px;height:38px;border-radius:50%;border:none;cursor:pointer;background:var(--bg);color:var(--danger);box-shadow:3px 3px 7px var(--shadow-dark),-3px -3px 7px var(--shadow-light)}
 .extra-del:active{box-shadow:inset 2px 2px 5px var(--shadow-inset-dark),inset -2px -2px 5px var(--shadow-inset-light)}
 
+/* ===== REDESIGN: tema, sidebar, halaman, slider ===== */
+[data-theme=dark]{--bg:#23272e;--bg-rgb:35,39,46;--shadow-dark:rgba(8,10,14,.78);--shadow-light:rgba(72,80,95,.36);--shadow-inset-dark:rgba(8,10,14,.72);--shadow-inset-light:rgba(72,80,95,.30);--text:#e9edf2;--text2:#9aa6b2;--accent:#e0955f;--accent-hover:#c97b4b;--accent-glow:rgba(224,149,95,.28);--edge:rgba(255,255,255,.05);color-scheme:dark}
+:root{--edge:rgba(255,255,255,.55)}
+body{transition:background .4s,color .4s}
+body::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(38% 32% at 20% 22%,rgba(201,123,75,.17),transparent 70%),radial-gradient(34% 30% at 80% 72%,rgba(110,145,205,.18),transparent 70%);animation:aurora 38s ease-in-out infinite alternate;will-change:transform}
+@keyframes aurora{to{transform:translate3d(7%,5%,0) rotate(9deg)}}
+[data-theme=dark] .navbar.scrolled{background:rgba(35,39,46,.9);box-shadow:0 4px 24px rgba(0,0,0,.4)}
+.product-card,.about-card,.fs-card,.hc,.cta-card{box-shadow:9px 9px 20px var(--shadow-dark),-9px -9px 20px var(--shadow-light),inset 1px 1px 0 var(--edge)}
+.hero{min-height:auto;padding-bottom:30px}
+.page{display:none}.page.active{display:block;animation:pageIn .55s var(--smooth)}
+@keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.shell{min-height:70vh}
+.nav-logo-text span{display:flex;align-items:center;gap:5px}.sb-caret{font-size:8px;transition:transform .4s var(--smooth)}body.sb-open .sb-caret{transform:rotate(180deg)}
+.theme-btn{width:42px;height:42px;border-radius:12px;border:none;cursor:pointer;background:var(--bg);color:var(--accent);font-size:16px;box-shadow:5px 5px 12px var(--shadow-dark),-5px -5px 12px var(--shadow-light)}
+.theme-btn:active{box-shadow:inset 3px 3px 6px var(--shadow-inset-dark),inset -3px -3px 6px var(--shadow-inset-light)}
+.sb-brand{display:flex;align-items:center;gap:12px;padding:6px 8px 18px;font-family:'Playfair Display',serif;font-weight:800;font-size:17px}
+.sb-brand small{display:block;font:600 9px 'Poppins',sans-serif;letter-spacing:2px;color:var(--accent)}
+.sb-nav,.sb-foot{display:flex;flex-direction:column;gap:6px}.sb-foot{margin-top:auto;padding-top:14px}
+.sb-link{display:flex;align-items:center;gap:13px;padding:13px 16px;border-radius:14px;border:none;background:var(--bg);color:var(--text2);font:500 14px 'Poppins',sans-serif;text-decoration:none;cursor:pointer;text-align:left;transition:all .3s var(--smooth)}
+.sb-link i{width:20px;text-align:center;color:var(--accent)}
+.sb-link.active{color:var(--accent);font-weight:700;box-shadow:inset 4px 4px 9px var(--shadow-inset-dark),inset -4px -4px 9px var(--shadow-inset-light)}
+.marquee{overflow:hidden;margin:6px 0 4px;padding:12px 0;border-radius:40px;box-shadow:inset 4px 4px 9px var(--shadow-inset-dark),inset -4px -4px 9px var(--shadow-inset-light)}
+.marquee div{display:flex;gap:38px;width:max-content;animation:mq 26s linear infinite;font-size:12px;font-weight:600;color:var(--text2);white-space:nowrap}.marquee b{color:var(--accent)}
+@keyframes mq{to{transform:translateX(-50%)}}
+.hsec{padding-top:34px;padding-bottom:6px}.hsec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 4px}.hsec-head .section-title{margin:0;text-align:left;font-size:clamp(20px,5vw,28px)}
+.link-more{border:none;background:none;color:var(--accent);font:700 12px 'Poppins',sans-serif;cursor:pointer;white-space:nowrap}
+.fs-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:18px 14px 26px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.fs-track::-webkit-scrollbar{display:none}
+.fs-card{flex:0 0 min(74%,262px);scroll-snap-align:center;border-radius:var(--radius);background:var(--bg);overflow:hidden;cursor:pointer;transition:transform .45s var(--bounce)}
+.fs-card:active{transform:scale(.96)}@media(hover:hover){.fs-card:hover{transform:translateY(-6px)}}
+.fs-img{position:relative;aspect-ratio:1/1;overflow:hidden}.fs-card.ab .fs-img{aspect-ratio:16/10}
+.fs-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s var(--smooth)}.fs-card:hover .fs-img img{transform:scale(1.07)}
+.fs-tag{position:absolute;top:10px;left:10px;padding:4px 11px;border-radius:20px;font-size:10px;font-weight:700;color:#fff;background:linear-gradient(145deg,var(--accent),var(--accent-hover));box-shadow:0 3px 10px var(--accent-glow)}
+.fs-body{padding:13px 15px 17px}.fs-body h3{font:700 15px 'Playfair Display',serif;margin-bottom:4px}.fs-price{color:var(--accent);font-weight:800;font-size:15px}
+.fs-body p{font-size:12px;color:var(--text2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fs-empty{padding:30px;color:var(--text2);font-size:13px;margin:auto}
+.fs-dots{display:flex;justify-content:center;gap:6px;margin-top:-6px}.fs-dots i{width:7px;height:7px;border-radius:9px;background:var(--shadow-dark);opacity:.5;transition:all .35s var(--smooth)}.fs-dots i.on{width:24px;background:var(--accent);opacity:1}
+@media(min-width:768px){.fs-card{flex-basis:270px}.fs-track{padding-left:6px}}
+.cta-card{margin:26px 14px 0;padding:24px 20px;text-align:center;border-radius:var(--radius);background:var(--bg)}.cta-card h3{font:800 18px 'Playfair Display',serif;margin-bottom:6px}.cta-card p{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.7}
+.hist-list{display:flex;flex-direction:column;gap:18px;max-width:680px;margin:0 auto}
+.hc{padding:18px;border-radius:var(--radius);background:var(--bg);animation:pageIn .5s var(--smooth) both}
+.hc-top{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:700}.hc-date{font-size:11px;color:var(--text2);margin:2px 0 14px}
+.stp{display:flex;align-items:center;margin-bottom:14px}.stp span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:var(--text2);box-shadow:inset 2px 2px 5px var(--shadow-inset-dark),inset -2px -2px 5px var(--shadow-inset-light)}
+.stp span.on{color:#fff;background:linear-gradient(145deg,var(--accent),var(--accent-hover));box-shadow:0 0 12px var(--accent-glow)}.stp em{flex:1;height:4px;border-radius:4px;box-shadow:inset 1px 1px 3px var(--shadow-inset-dark),inset -1px -1px 3px var(--shadow-inset-light)}.stp em.on{background:var(--accent)}
+.hc-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--text2);margin:-8px 0 12px}
+.hc-items{font-size:12px;color:var(--text2);line-height:1.7}.hc-bot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}.hc-tot{font-weight:800;color:var(--accent);font-size:16px}
+.hc-btns{display:flex;gap:8px}.hc-btns button,.hc-btns a{padding:9px 14px;font-size:11px;border-radius:12px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+@media(prefers-reduced-motion:reduce){body::before,.marquee div{animation:none!important}.page.active,.hc{animation:none}}
+
+/* --- sidebar dropdown dari nama toko --- */
+.sidebar{position:fixed;top:calc(var(--nav-h) - 2px);left:10px;width:min(300px,calc(100vw - 20px));max-height:calc(100dvh - var(--nav-h) - 16px);z-index:1500;background:var(--bg);padding:14px;display:flex;flex-direction:column;gap:4px;border-radius:22px;overflow-y:auto;transform-origin:34px 0;opacity:0;visibility:hidden;pointer-events:none;clip-path:inset(0 -50px 100% -50px round 22px);transform:translateY(-12px) scale(.92);transition:clip-path .45s var(--smooth),transform .45s var(--smooth),opacity .25s,visibility 0s .45s;box-shadow:12px 14px 32px var(--shadow-dark),-6px -6px 18px var(--shadow-light),inset 1px 1px 0 var(--edge)}
+body.sb-open .sidebar{opacity:1;visibility:visible;pointer-events:auto;clip-path:inset(0 -50px -50px -50px round 22px);transform:none;transition:clip-path .6s var(--smooth),transform .6s var(--bounce),opacity .25s,visibility 0s}
+.sidebar .sb-brand,.sidebar .sb-link{opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s var(--smooth),color .3s,box-shadow .3s}
+body.sb-open .sidebar .sb-brand,body.sb-open .sidebar .sb-link{opacity:1;transform:none;transition:opacity .45s var(--smooth),transform .55s var(--bounce),color .3s,box-shadow .3s}
+body.sb-open .sb-brand{transition-delay:.06s}
+body.sb-open .sb-nav .sb-link:nth-child(1){transition-delay:.10s}body.sb-open .sb-nav .sb-link:nth-child(2){transition-delay:.15s}body.sb-open .sb-nav .sb-link:nth-child(3){transition-delay:.20s}body.sb-open .sb-nav .sb-link:nth-child(4){transition-delay:.25s}
+body.sb-open .sb-foot .sb-link:nth-child(1){transition-delay:.30s}body.sb-open .sb-foot .sb-link:nth-child(2){transition-delay:.35s}body.sb-open .sb-foot .sb-link:nth-child(3){transition-delay:.40s}
+.sb-brand{padding:4px 8px 12px;font-size:15px}.sb-foot{margin-top:6px;padding-top:10px;border-top:1px solid rgba(163,177,198,.18)}
+.sb-link:hover{color:var(--text)}
+.sb-overlay{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;z-index:1400;background:rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .35s}
+body.sb-open .sb-overlay{opacity:1;pointer-events:all}
+/* --- sidebar menyatu dengan nama toko --- */
+.sidebar{top:4px;left:8px;width:clamp(222px,calc(100vw - 140px),272px);max-height:calc(100dvh - 12px);padding:58px 12px 12px;transform-origin:30px 24px}
+body.sb-open .navbar{z-index:1600;background:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.info-body{font-size:13px;line-height:1.8;color:var(--text2)}.info-body h4{color:var(--text);margin:16px 0 4px;font-size:13px}.info-body ol,.info-body ul{padding-left:20px}.info-body li{margin-bottom:6px}.info-body b{color:var(--text)}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -477,54 +546,37 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
 <!-- MAIN CONTENT -->
 <div class="main-content" id="mainContent">
 <nav class="navbar" id="navbar">
-  <div class="nav-logo" id="navLogo">
-    <div class="nav-logo-icon" id="navLogoIcon"><i class="fas fa-cookie-bite"></i></div>
-    <div class="nav-logo-text">Ira Cookies<span>Ramadhaniah</span></div>
-  </div>
-  <div class="nav-links" id="navLinks">
-    <a href="#hero" class="nav-link active" data-section="hero">Beranda</a>
-    <a href="#produk" class="nav-link" data-section="produk">Produk</a>
-    <a href="#tentang" class="nav-link" data-section="tentang">Tentang</a>
-    <button class="nav-link" onclick="openHistoryModal(event)">Riwayat</button>
-  </div>
+  <div class="nav-logo" id="navLogo"><div class="nav-logo-icon" id="navLogoIcon"><i class="fas fa-cookie-bite"></i></div><div class="nav-logo-text">Ira Cookies<span>RAMADHANIAH <i class="fas fa-chevron-down sb-caret"></i></span></div></div>
   <div class="nav-right">
-    <button class="nav-user-chip" id="navUserChip" onclick="openUserLoginModal()" style="display:none;">
-      <div class="nav-user-dot"></div>
-      <span id="navUserName">Login</span>
-    </button>
-    <button class="nav-cart" onclick="openCart()" aria-label="Keranjang">
-      <i class="fas fa-shopping-bag"></i>
-      <span class="cart-badge" id="cartBadge" style="display:none;">0</span>
-    </button>
-    <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <button class="nav-user-chip" id="navUserChip" onclick="openUserLoginModal()" style="display:none;"><div class="nav-user-dot"></div><span id="navUserName">Login</span></button>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Ganti tema"><i class="theme-ic fas fa-moon"></i></button>
+    <button class="nav-cart" onclick="openCart()" aria-label="Keranjang"><i class="fas fa-shopping-bag"></i><span class="cart-badge" id="cartBadge" style="display:none;">0</span></button>
   </div>
 </nav>
-<div class="mobile-nav-dropdown" id="mobileNavDropdown">
-  <a href="#hero" class="mobile-nav-link active" data-section="hero" onclick="closeMobileNav()"><i class="fas fa-home"></i> Beranda</a>
-  <a href="#produk" class="mobile-nav-link" data-section="produk" onclick="closeMobileNav()"><i class="fas fa-cookie-bite"></i> Produk</a>
-  <a href="#tentang" class="mobile-nav-link" data-section="tentang" onclick="closeMobileNav()"><i class="fas fa-heart"></i> Tentang</a>
-  <button class="mobile-nav-link" onclick="openHistoryModal(event);closeMobileNav()"><i class="fas fa-receipt"></i> Riwayat</button>
-  <button class="mobile-nav-link" onclick="openUserLoginModal();closeMobileNav()"><i class="fas fa-user"></i> <span id="mobileUserName">Login Nama</span></button>
-</div>
-
+<div id="mobileNavDropdown" style="display:none"></div>
+<aside class="sidebar" id="sidebar" aria-label="Menu">
+  <div class="sb-nav">
+    <a class="sb-link active" data-pg="home" href="#home" onclick="go('home',event)"><i class="fas fa-home"></i>Beranda</a>
+    <a class="sb-link" data-pg="produk" href="#produk" onclick="go('produk',event)"><i class="fas fa-cookie-bite"></i>Produk</a>
+    <a class="sb-link" data-pg="tentang" href="#tentang" onclick="go('tentang',event)"><i class="fas fa-heart"></i>Tentang Kami</a>
+    <a class="sb-link" data-pg="riwayat" href="#riwayat" onclick="go('riwayat',event)"><i class="fas fa-receipt"></i>Riwayat</a>
+  </div>
+  <div class="sb-foot">
+    <button class="sb-link" onclick="openUserLoginModal()"><i class="fas fa-user"></i><span id="mobileUserName">Login Nama</span></button>
+    <button class="sb-link" onclick="toggleTheme()"><i class="theme-ic fas fa-moon"></i>Mode Gelap / Terang</button>
+    <a class="sb-link" href="https://wa.me/6287755046663?text=Halo%20Ira%20Cookies!" target="_blank"><i class="fab fa-whatsapp"></i>Chat WhatsApp</a>
+  </div>
+</aside>
+<div class="sb-overlay" onclick="setSidebar(false)"></div>
+<main class="shell"><div class="page active" id="pg-home">
 <section class="hero" id="hero">
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
-  <div class="wobble-shape"><div class="wobble-shape-inner"></div></div>
   <div class="hero-content">
     <div class="hero-badge"><i class="fas fa-star" style="margin-right:5px;"></i> PREMIUM HANDMADE</div>
     <h1 class="hero-title">Ira Cookies<br><span>Ramadhaniah</span></h1>
     <div class="hero-subtitle">Kue Kering & Lapis Nusantara</div>
     <p class="hero-sub">Rasa autentik warisan nenek moyang, dibuat dengan bahan premium dan cinta di setiap gigitan.</p>
     <div class="hero-actions">
-      <a href="#produk" class="neu-btn-accent hero-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-store"></i> Koleksi</a>
+      <a href="#produk" onclick="go('produk',event)" class="neu-btn-accent hero-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-store"></i> Koleksi</a>
       <a href="https://wa.me/6287755046663?text=Halo%20Ira%20Cookies!" target="_blank" class="neu-btn hero-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fab fa-whatsapp"></i> Kontak</a>
     </div>
     <div class="hero-stats">
@@ -534,7 +586,10 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
     </div>
   </div>
 </section>
-
+<div class="marquee"><div><span><b>✦</b> Dibuat segar setiap hari</span><span><b>✦</b> Bahan premium pilihan</span><span><b>✦</b> Tanpa pengawet</span><span><b>✦</b> Cocok untuk hampers &amp; lebaran</span><span><b>✦</b> Dibuat segar setiap hari</span><span><b>✦</b> Bahan premium pilihan</span><span><b>✦</b> Tanpa pengawet</span><span><b>✦</b> Cocok untuk hampers &amp; lebaran</span></div></div>
+<section class="section hsec"><div class="hsec-head"><h2 class="section-title">Pilihan <span>Favorit</span></h2><button class="link-more" onclick="go('produk')">Lihat semua <i class="fas fa-arrow-right"></i></button></div><div class="fs-track" id="favTrack"></div><div class="fs-dots" id="favDots"></div></section>
+<section class="section hsec"><div class="hsec-head"><h2 class="section-title">Cerita <span>Kami</span></h2><button class="link-more" onclick="go('tentang')">Selengkapnya <i class="fas fa-arrow-right"></i></button></div><div class="fs-track" id="aboutTrack"></div><div class="fs-dots" id="aboutDots"></div></section>
+</div><div class="page" id="pg-produk">
 <section class="section" id="produk">
   <h2 class="section-title">Koleksi <span>Kue Kami</span></h2>
   <p class="section-sub">Pilih dari berbagai varian kue kering dan lapis premium</p>
@@ -546,12 +601,16 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
   </div>
   <div class="product-grid" id="productGrid"></div>
 </section>
-
+</div><div class="page" id="pg-tentang">
 <section class="section" id="tentang">
   <h2 class="section-title">Tentang <span>Kami</span></h2>
   <p class="section-sub">Cerita di balik setiap kue</p>
   <div class="about-grid" id="aboutGrid"></div>
+  <div class="cta-card"><h3>Penasaran dengan dapur kami? 🍪</h3><p>Tanyakan resep andalan, request varian, atau pesan hampers spesial langsung lewat WhatsApp.</p><a href="https://wa.me/6287755046663?text=Halo%20Ira%20Cookies!" target="_blank" class="neu-btn-accent hero-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fab fa-whatsapp"></i> Ngobrol Yuk</a></div>
 </section>
+</div><div class="page" id="pg-riwayat">
+<section class="section" id="riwayat"><h2 class="section-title">Riwayat <span>Pesanan</span></h2><p class="section-sub">Pantau status pesananmu di sini</p><div class="hist-list" id="historyPageBody"></div></section>
+</div></main>
 
 <footer class="footer">
   <div class="footer-inner">
@@ -565,11 +624,11 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
           <a href="https://wa.me/6287755046663" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
-      <div class="footer-col"><h4>Kategori</h4><a href="#produk" onclick="setFilter('kering')">Kue Kering</a><a href="#produk" onclick="setFilter('lapis')">Kue Lapis</a></div>
-      <div class="footer-col"><h4>Info</h4><a href="#">Cara Pesan</a><a href="#">Kebijakan</a></div>
+      <div class="footer-col"><h4>Kategori</h4><a href="#produk" onclick="setFilter('kering');go('produk',event)">Kue Kering</a><a href="#produk" onclick="setFilter('lapis');go('produk',event)">Kue Lapis</a></div>
+      <div class="footer-col"><h4>Info</h4><a href="#" onclick="openInfo('pesan',event)">Cara Pesan</a><a href="#" onclick="openInfo('kebijakan',event)">Kebijakan</a></div>
       <div class="footer-col"><h4>Kontak</h4><p><i class="fas fa-phone" style="color:var(--accent);margin-right:5px;"></i> 0877-7550-46663</p><p><i class="fas fa-envelope" style="color:var(--accent);margin-right:5px;"></i> iracookies@gmail.com</p></div>
     </div>
-    <div class="footer-bottom">&copy; 2025 Ira Cookies Ramadhaniah. | <span style="color:var(--accent);font-weight:600;">AL-HAZA<sup style="font-size:7px;">tm</sup></span></div>
+    <div class="footer-bottom">&copy; 2026 Ira Cookies Ramadhaniah. | <span style="color:var(--accent);font-weight:600;">AL-HAZA<sup style="font-size:7px;">tm</sup></span></div>
   </div>
 </footer>
 </div><!-- end main-content -->
@@ -665,6 +724,13 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
   </div>
 </div>
 
+<!-- INFO MODAL (Cara Pesan / Kebijakan) -->
+<div class="modal-overlay" id="infoModal"><div class="modal-box">
+  <div class="modal-title"><span id="infoTitle"></span><button class="modal-close" onclick="closeInfo()"><i class="fas fa-times"></i></button></div>
+  <div class="info-body" id="infoBody"></div>
+  <button class="neu-btn-accent" style="width:100%;padding:12px;font-size:13px;margin-top:18px;" onclick="closeInfo()">Mengerti</button>
+</div></div>
+
 <!-- ABOUT MODAL (Admin) -->
 <div class="modal-overlay" id="aboutModal">
   <div class="modal-box">
@@ -673,6 +739,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
       <button class="modal-close" onclick="closeAboutModal()"><i class="fas fa-times"></i></button>
     </div>
     <form onsubmit="saveAbout(event)">
+      <label class="form-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:14px;"><input type="checkbox" id="aboutFeatured" style="width:18px;height:18px;accent-color:var(--accent);"> Tampilkan di slide Beranda (unggulan)</label>
       <input type="hidden" id="editAboutId" value="">
       <div class="form-group">
         <label class="form-label">URL Gambar / Link Foto</label>
@@ -725,7 +792,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);ove
       </div>
       <div class="payment-detail" id="payBCA">BCA: <strong>8720-3456-7890</strong> a.n. Ira Cookies Ramadhaniah</div>
       <div class="payment-detail" id="payMandiri">Mandiri: <strong>1234-0098-7654</strong> a.n. Ira Cookies Ramadhaniah</div>
-      <div class="payment-detail" id="payQRIS" style="text-align:center;">Scan QRIS:<img src="https://picsum.photos/seed/qrispay99/150/150" class="qris-img"></div>
+      <div class="payment-detail" id="payQRIS" style="text-align:center;">Scan QRIS:<img id="qrisImg" class="qris-img" alt="QRIS" style="display:none"><div id="qrisNote" style="font-size:12px;margin-top:8px;">Kode QRIS dikirim admin lewat WhatsApp setelah pesanan masuk.</div></div>
       <label class="form-label" style="margin-bottom:8px;">Ringkasan</label>
       <div class="order-summary" id="checkoutSummary"></div>
       <div style="display:flex;justify-content:space-between;margin-bottom:16px;"><span style="color:var(--text2);font-size:14px;">Total</span><span style="font-size:20px;font-weight:800;color:var(--accent);" id="checkoutTotal">Rp 0</span></div>
@@ -1042,7 +1109,7 @@ function animateShapes() {
   }
   requestAnimationFrame(animateShapes);
 }
-if (!prefersReduced) animateShapes();
+
 
 // ─── TRIPLE CLICK ADMIN ───
 document.getElementById('navLogo').addEventListener('click', function (e) {
@@ -1078,6 +1145,7 @@ function showLogin(e) {
   document.getElementById('loginError').classList.remove('show');
 }
 function showAdminPanel() {
+  setSidebar(false);
   document.getElementById('mainContent').classList.add('hidden');
   document.getElementById('loginPage').classList.remove('active');
   document.getElementById('adminPanel').classList.add('active');
@@ -1418,6 +1486,7 @@ function openAboutModal(fid) {
     document.getElementById('aboutModalTitle').innerHTML = '<i class="fas fa-edit" style="color:var(--accent);margin-right:6px;"></i>Edit Cerita';
     document.getElementById('editAboutId').value = fid;
     document.getElementById('aboutImageUrl').value = a.image_url || '';
+    document.getElementById('aboutFeatured').checked = !!a.featured;
     document.getElementById('aboutTitle').value = a.title;
     document.getElementById('aboutDesc').value = a.desc;
     if (a.image_url) {
@@ -1428,6 +1497,7 @@ function openAboutModal(fid) {
     document.getElementById('aboutModalTitle').innerHTML = '<i class="fas fa-heart" style="color:var(--accent);margin-right:6px;"></i>Tambah Cerita';
     document.getElementById('editAboutId').value = '';
     document.getElementById('aboutImageUrl').value = '';
+    document.getElementById('aboutFeatured').checked = false;
     document.getElementById('aboutTitle').value = '';
     document.getElementById('aboutDesc').value = '';
   }
@@ -1444,6 +1514,7 @@ async function saveAbout(e) {
   const fid = document.getElementById('editAboutId').value;
   const data = {
     image_url: normUrl(document.getElementById('aboutImageUrl').value),
+    featured: document.getElementById('aboutFeatured').checked,
     title: document.getElementById('aboutTitle').value.trim(),
     desc: document.getElementById('aboutDesc').value.trim(),
     date: new Date().toLocaleDateString('id-ID'),
@@ -1537,6 +1608,7 @@ function cfm(msg) {
 
 // ─── RENDER PRODUCTS ───
 function renderProducts() {
+  try { renderHomeSliders(); } catch (e) {}
   const products = window._getProducts ? window._getProducts() : [];
   const g = document.getElementById('productGrid');
   const s = document.getElementById('searchInput').value.toLowerCase();
@@ -1595,6 +1667,7 @@ function updateSV() {
 
 // ─── RENDER ABOUT ───
 function renderAbout() {
+  try { renderHomeSliders(); } catch (e) {}
   const aboutData = window._getAbout ? window._getAbout() : [];
   const g = document.getElementById('aboutGrid');
   if (!aboutData.length) {
@@ -1839,6 +1912,116 @@ function init() {
   // loading screen hides after firebase listeners fire or timeout
   setTimeout(() => document.getElementById('loadingScreen').classList.add('hidden'), 1200);
 }
+// ═══ REDESIGN: halaman, sidebar, tema, slider, riwayat ═══
+const PAGES = ['home', 'produk', 'tentang', 'riwayat']; let curPage = 'home';
+function setSidebar(o) { document.body.classList.toggle('sb-open', o); }
+function toggleSidebar() { setSidebar(!document.body.classList.contains('sb-open')); }
+function go(pg, e) {
+  if (e && e.preventDefault) e.preventDefault();
+  if (!PAGES.includes(pg)) pg = 'home'; curPage = pg;
+  PAGES.forEach(x => { const el = document.getElementById('pg-' + x); if (el) el.classList.toggle('active', x === pg); });
+  document.querySelectorAll('.sb-link[data-pg]').forEach(a => a.classList.toggle('active', a.dataset.pg === pg));
+  if (pg === 'riwayat') renderHistory();
+  window.scrollTo(0, 0); try { history.replaceState(null, '', '#' + pg); } catch (x) {}
+  setSidebar(false);
+}
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t; try { localStorage.setItem('icr_theme', t); } catch (e) {}
+  document.querySelectorAll('.theme-ic').forEach(i => i.className = 'theme-ic fas fa-' + (t === 'dark' ? 'sun' : 'moon'));
+}
+function toggleTheme() { applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); }
+
+function renderHomeSliders() {
+  const ps = window._getProducts ? window._getProducts() : [], ab = window._getAbout ? window._getAbout() : [];
+  const bl = { best: 'Best Seller', premium: 'Premium', fav: 'Favorit', hemat: 'Hemat' };
+  let f = ps.filter(p => p.badge); if (!f.length) f = ps.slice(-8).reverse(); f = f.slice(0, 8);
+  const ft = document.getElementById('favTrack'); if (!ft) return;
+  ft.innerHTML = f.map(p => `<article class="fs-card" onclick="openPD('${p.firestoreId || p.id}')"><div class="fs-img"><img src="${gImg(p)}" alt="${p.name}" loading="lazy" referrerpolicy="no-referrer" onerror="imgFallback(this)">${p.badge ? `<span class="fs-tag">${bl[p.badge] || ''}</span>` : ''}</div><div class="fs-body"><h3>${p.name}</h3><div class="fs-price">${fp(p.price || 0)}</div></div></article>`).join('') || '<div class="fs-empty">Produk segera hadir 🍪</div>';
+  let a = ab.filter(x => x.featured); if (!a.length) a = ab.slice(0, 5); a = a.slice(0, 6);
+  document.getElementById('aboutTrack').innerHTML = a.map(x => `<article class="fs-card ab" onclick="go('tentang')"><div class="fs-img"><img src="${gAImg(x)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="imgFallback(this)"></div><div class="fs-body"><h3>${x.title || ''}</h3><p>${x.desc || ''}</p></div></article>`).join('') || '<div class="fs-empty">Cerita segera hadir ✨</div>';
+  ['fav', 'about'].forEach(k => { const t = document.getElementById(k + 'Track'); document.getElementById(k + 'Dots').innerHTML = '<i></i>'.repeat(t.children.length > 1 ? t.children.length : 0); dots(t); });
+}
+function dots(t) {
+  const d = t.nextElementSibling, c = t.firstElementChild; if (!c || !d) return;
+  const i = Math.round(t.scrollLeft / (c.offsetWidth + 16)); [...d.children].forEach((x, k) => x.classList.toggle('on', k === i));
+}
+(function () {
+  const tr = () => [...document.querySelectorAll('.fs-track')];
+  tr().forEach(t => { let r; t.addEventListener('scroll', () => { cancelAnimationFrame(r); r = requestAnimationFrame(() => dots(t)); }, { passive: true });
+    ['touchstart', 'mousedown', 'mouseenter'].forEach(ev => t.addEventListener(ev, () => { t.dataset.p = 1; }, { passive: true }));
+    ['touchend', 'mouseleave'].forEach(ev => t.addEventListener(ev, () => { setTimeout(() => { t.dataset.p = ''; }, 5000); }, { passive: true })); });
+  if (!prefersReduced) setInterval(() => {
+    if (document.hidden || curPage !== 'home') return;
+    tr().forEach(t => { const c = t.firstElementChild; if (!c || t.children.length < 2 || t.dataset.p) return;
+      const st = c.offsetWidth + 16, i = Math.round(t.scrollLeft / st) + 1;
+      t.scrollTo({ left: i >= t.children.length ? 0 : i * st, behavior: 'smooth' }); });
+  }, 3800);
+  // 1x klik = buka/tutup sidebar (setelah jeda singkat), 3x klik = login admin
+  let lc = 0, lt;
+  document.getElementById('navLogo').addEventListener('click', () => {
+    lc++; clearTimeout(lt);
+    lt = setTimeout(() => { if (lc === 1) toggleSidebar(); lc = 0; }, 380);
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setSidebar(false); });
+  setSidebar(false); applyTheme(document.documentElement.dataset.theme || 'light');
+  go((location.hash || '#home').slice(1));
+})();
+
+// ─── RIWAYAT (halaman) ───
+function openHistoryModal(e) { if (e && e.preventDefault) e.preventDefault(); closeCart(); go('riwayat'); }
+function renderHistoryIfOpen() { if (curPage === 'riwayat') renderHistory(); }
+let _ho = [];
+function renderHistory() {
+  const b = document.getElementById('historyPageBody'); if (!b) return;
+  const all = window._getOrders ? window._getOrders() : [], loc = JSON.parse(localStorage.getItem('icr_orders') || '[]');
+  let list = loc;
+  if (currentUser) { const m = all.filter(o => o.userId === currentUser.userId || o.userName === currentUser.name); if (m.length) list = m; }
+  _ho = list;
+  if (!list.length) { b.innerHTML = '<div class="hc" style="text-align:center;color:var(--text2);padding:40px 20px;"><i class="fas fa-receipt" style="font-size:42px;opacity:.25;display:block;margin-bottom:12px;"></i>Belum ada pesanan<br><button class="neu-btn-accent" style="margin-top:16px;padding:11px 22px;font-size:12px;" onclick="go(\'produk\')">Mulai Belanja</button></div>'; return; }
+  const lv = { wait: 0, process: 1, done: 2 }, nm = ['Menunggu', 'Diproses', 'Selesai'], ic = ['clock', 'fire', 'check'];
+  b.innerHTML = list.map((o, i) => {
+    const s = lv[o.status] ?? 0;
+    return `<div class="hc" style="animation-delay:${Math.min(i, 6) * 70}ms"><div class="hc-top"><span>${o.orderId || o.id || '—'}</span><span style="color:var(--accent)">${nm[s]}</span></div>
+    <div class="hc-date">${o.date || (o.createdAt?.toDate?.()?.toLocaleString('id-ID') || '—')}</div>
+    <div class="stp">${[0, 1, 2].map(k => `<span class="${k <= s ? 'on' : ''}"><i class="fas fa-${ic[k]}"></i></span>${k < 2 ? `<em class="${k < s ? 'on' : ''}"></em>` : ''}`).join('')}</div>
+    <div class="hc-items">${(o.items || []).map(x => x.name + ' ×' + x.qty).join(' · ')}</div>
+    <div class="hc-bot"><div class="hc-tot">${fp(o.total || 0)}</div><div class="hc-btns"><button class="neu-btn" onclick="reorder(${i})"><i class="fas fa-redo"></i> Pesan Lagi</button><a class="neu-btn" target="_blank" href="https://wa.me/6287755046663?text=${encodeURIComponent('Halo, tanya pesanan ' + (o.orderId || ''))}"><i class="fab fa-whatsapp"></i></a></div></div></div>`;
+  }).join('');
+}
+function reorder(i) {
+  const o = _ho[i]; if (!o) return;
+  (o.items || []).forEach(it => { if (!it.productId) return; const ex = cart.find(c => c.id === it.productId); if (ex) ex.qty += it.qty; else cart.push({ id: it.productId, qty: it.qty }); });
+  saveCart(); updateCB(); renderCart(); openCart(); toast('Ditambahkan ke keranjang');
+}
+
+// ═══ INFO: Cara Pesan & Kebijakan ═══
+// Isi alamat gambar QRIS tokomu di sini (link langsung .jpg/.png). Kosong = QRIS dikirim lewat WhatsApp.
+const QRIS_URL = '';
+if (QRIS_URL) { const q = document.getElementById('qrisImg'); q.src = normUrl(QRIS_URL); q.style.display = 'block'; document.getElementById('qrisNote').style.display = 'none'; }
+const INFO = {
+  pesan: { t: 'Cara Pesan', h: `<ol>
+    <li><b>Pilih kue</b> di halaman <b>Produk</b>. Ketuk kue untuk melihat foto dan detailnya.</li>
+    <li>Tekan <b>Keranjang</b> untuk lanjut memilih kue lain, atau <b>Checkout</b> untuk langsung memesan.</li>
+    <li>Isi <b>nama, nomor WhatsApp, dan alamat</b>, lalu pilih pembayaran (BCA, Mandiri, atau QRIS).</li>
+    <li>Tekan kirim. Pesananmu otomatis terbuka di <b>WhatsApp</b> lengkap dengan rincian dan total.</li>
+    <li>Lakukan pembayaran sesuai total, lalu kirim <b>bukti transfer</b> di chat WhatsApp yang sama.</li>
+    <li>Pantau statusnya kapan saja di halaman <b>Riwayat</b>.</li></ol>
+    <h4>Butuh bantuan?</h4><p>Ingin pesan dalam jumlah besar atau hampers? Chat saja lewat WhatsApp, kami bantu.</p>` },
+  kebijakan: { t: 'Kebijakan', h: `<h4>Pemesanan &amp; Pembayaran</h4><p>Pesanan diproses setelah pembayaran dikonfirmasi lewat WhatsApp. Harga yang berlaku adalah harga saat pesanan dikirim.</p>
+    <h4>Pengiriman &amp; Pengambilan</h4><p>Waktu dan cara pengiriman disepakati bersama lewat WhatsApp. Kue dibuat segar, jadi mohon pesan lebih awal untuk jumlah besar.</p>
+    <h4>Perubahan &amp; Pembatalan</h4><p>Perubahan atau pembatalan dapat dilakukan sebelum pesanan berstatus <b>Diproses</b>. Hubungi kami secepatnya.</p>
+    <h4>Kualitas &amp; Komplain</h4><p>Jika ada kendala pada kue yang diterima, kirim foto lewat WhatsApp maksimal 1&times;24 jam setelah diterima agar segera kami tangani.</p>
+    <h4>Privasi</h4><p>Nama, nomor telepon, dan alamatmu hanya dipakai untuk memproses pesanan dan tidak dibagikan ke pihak lain.</p>` }
+};
+function openInfo(k, e) {
+  if (e && e.preventDefault) e.preventDefault(); const d = INFO[k]; if (!d) return;
+  document.getElementById('infoTitle').textContent = d.t; document.getElementById('infoBody').innerHTML = d.h;
+  document.getElementById('infoModal').classList.add('open'); document.body.style.overflow = 'hidden';
+}
+function closeInfo() { document.getElementById('infoModal').classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('infoModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeInfo(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInfo(); });
+
 init();
 </script>
 </body>
