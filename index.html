@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="referrer" content="no-referrer">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Ira Cookies">
 <script>try{var _t=localStorage.getItem("icr_theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.dataset.theme=_t}catch(e){}</script>
 <meta name="description" content="Ira Cookies Ramadhaniah - kue kering dan kue lapis premium, dibuat segar dengan bahan pilihan. Pesan mudah lewat WhatsApp.">
 <meta name="theme-color" content="#dfe6ed">
@@ -280,6 +281,12 @@ body.sb-open .sb-overlay{opacity:1;pointer-events:all}
 .sidebar{top:4px;left:8px;width:clamp(222px,calc(100vw - 140px),272px);max-height:calc(100dvh - 12px);padding:58px 12px 12px;transform-origin:30px 24px}
 body.sb-open .navbar{z-index:1600;background:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .info-body{font-size:13px;line-height:1.8;color:var(--text2)}.info-body h4{color:var(--text);margin:16px 0 4px;font-size:13px}.info-body ol,.info-body ul{padding-left:20px}.info-body li{margin-bottom:6px}.info-body b{color:var(--text)}
+/* --- chip nama hilang saat sidebar terbuka --- */
+.nav-user-chip{transition:opacity .35s,transform .45s var(--smooth)}
+body.sb-open .nav-user-chip{opacity:0;transform:scale(.8) translateX(10px);pointer-events:none}
+body.sb-open .sb-foot .sb-link:nth-child(4){transition-delay:.45s}body.sb-open .sb-foot .sb-link:nth-child(5){transition-delay:.50s}
+.ord-chip{padding:8px 14px;font-size:11px;border-radius:20px;border:none;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600}
+.ord-sel{padding:7px 8px;font-size:11px;border-radius:10px;border:none;background:var(--bg);color:var(--text);box-shadow:inset 2px 2px 5px var(--shadow-inset-dark),inset -2px -2px 5px var(--shadow-inset-light);font-family:'Poppins',sans-serif}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -564,6 +571,8 @@ body.sb-open .navbar{z-index:1600;background:transparent!important;box-shadow:no
   <div class="sb-foot">
     <button class="sb-link" onclick="openUserLoginModal()"><i class="fas fa-user"></i><span id="mobileUserName">Login Nama</span></button>
     <button class="sb-link" onclick="toggleTheme()"><i class="theme-ic fas fa-moon"></i>Mode Gelap / Terang</button>
+    <button class="sb-link" onclick="toggleSound()"><i class="fas fa-volume-high" id="sndIc"></i><span id="sndTxt">Suara: Aktif</span></button>
+    <button class="sb-link" onclick="toggleFull()"><i class="fas fa-expand"></i>Layar Penuh</button>
     <a class="sb-link" href="https://wa.me/6287755046663?text=Halo%20Ira%20Cookies!" target="_blank"><i class="fab fa-whatsapp"></i>Chat WhatsApp</a>
   </div>
 </aside>
@@ -952,6 +961,9 @@ window._fs = {
   async updateOrderStatus(firestoreId, status) {
     return await updateDoc(doc(db, 'pesanan', firestoreId), { status });
   },
+  async deleteOrder(firestoreId) {
+    return await deleteDoc(doc(db, 'pesanan', firestoreId));
+  },
   async saveUser(userId, data) {
     return await setDoc(doc(db, 'users', userId), data, { merge: true });
   }
@@ -1273,7 +1285,7 @@ function openPD(firestoreId) {
     closePD();
     choiceProductId = firestoreId;
     const ex = cart.find(c => c.id === firestoreId);
-    if (ex) ex.qty++; else cart.push({ id: firestoreId, qty: 1 });
+    if (ex) ex.qty++; else cart.push({ id: firestoreId, qty: 1 }); sfx('cart');
     saveCart(); updateCB(); renderCart();
     setTimeout(() => openCheckoutModal(), 250);
   };
@@ -1298,7 +1310,7 @@ function choiceSaveCart() {
   const products = window._getProducts ? window._getProducts() : [];
   const p = products.find(x => x.firestoreId === choiceProductId || x.id === choiceProductId);
   const ex = cart.find(c => c.id === choiceProductId);
-  if (ex) ex.qty++; else cart.push({ id: choiceProductId, qty: 1 });
+  if (ex) ex.qty++; else cart.push({ id: choiceProductId, qty: 1 }); sfx('cart');
   saveCart(); updateCB(); renderCart();
   toast((p ? p.name : 'Produk') + ' di keranjang');
   closeChoiceDialog();
@@ -1306,7 +1318,7 @@ function choiceSaveCart() {
 function choiceDirectCheckout() {
   if (!choiceProductId) return;
   const ex = cart.find(c => c.id === choiceProductId);
-  if (ex) ex.qty++; else cart.push({ id: choiceProductId, qty: 1 });
+  if (ex) ex.qty++; else cart.push({ id: choiceProductId, qty: 1 }); sfx('cart');
   saveCart(); updateCB(); renderCart();
   closeChoiceDialog();
   setTimeout(() => openCheckoutModal(), 250);
@@ -1564,42 +1576,59 @@ function renderAA() {
 }
 
 // ─── RENDER ADMIN ORDERS ───
+let ordF = 'all';
+const E = x => String(x ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function setOrdF(f) { ordF = f; renderAO(); }
+function waNum(p) { let d = (p || '').replace(/\D/g, ''); if (d.startsWith('0')) d = '62' + d.slice(1); return d; }
+function ordDate(o) { try { return o.date || (o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''); } catch (e) { return ''; } }
 function renderAO() {
-  const orders = window._getOrders ? window._getOrders() : [];
-  const b = document.getElementById('adminOrderBody');
-  if (!orders.length) { b.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text2);">Belum ada pesanan</td></tr>'; return; }
+  const all = window._getOrders ? window._getOrders() : [];
+  const b = document.getElementById('adminOrderBody'), wrap = b.closest('.admin-table-wrap');
+  let bar = document.getElementById('ordFilter');
+  if (!bar) { bar = document.createElement('div'); bar.id = 'ordFilter'; bar.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;'; wrap.parentNode.insertBefore(bar, wrap); }
+  const cnt = k => k === 'all' ? all.length : all.filter(o => (o.status || 'wait') === k).length;
+  const done = all.filter(o => o.status === 'done').reduce((t, o) => t + (o.total || 0), 0);
+  bar.innerHTML = [['all', 'Semua'], ['wait', 'Menunggu'], ['process', 'Diproses'], ['done', 'Selesai']].map(([k, l]) =>
+    `<button class="ord-chip ${ordF === k ? '' : 'neu-btn'}" style="${ordF === k ? 'background:var(--accent);color:#fff;box-shadow:0 4px 12px var(--accent-glow);' : ''}" onclick="setOrdF('${k}')">${l} (${cnt(k)})</button>`).join('')
+    + `<span style="margin-left:auto;font-size:12px;color:var(--text2);">Pendapatan selesai: <b style="color:var(--accent)">${fp(done)}</b></span>`;
+  const orders = ordF === 'all' ? all : all.filter(o => (o.status || 'wait') === ordF);
+  if (!orders.length) { b.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text2);">Tidak ada pesanan</td></tr>'; return; }
   const pl = { bca: 'BCA', mandiri: 'Mandiri', qris: 'QRIS' };
-  const sl = { wait: 'Menunggu', process: 'Diproses', done: 'Selesai' };
-  b.innerHTML = orders.map(o => `
-    <tr>
-      <td style="font-weight:700;">${o.orderId || o.id || '—'}</td>
-      <td>${o.customer?.name || '—'}<br><span style="font-size:10px;color:var(--text2);">${o.customer?.phone || ''}</span></td>
-      <td style="font-size:10px;">${(o.items || []).map(i => i.name + ' x' + i.qty).join(', ')}</td>
+  b.innerHTML = orders.map(o => {
+    const st = o.status || 'wait', c = o.customer || {}, f = o.firestoreId;
+    return `<tr>
+      <td style="font-weight:700;">${E(o.orderId || o.id || '—')}<br><span style="font-size:10px;font-weight:400;color:var(--text2);">${E(ordDate(o))}</span></td>
+      <td>${E(c.name || '—')}<br><span style="font-size:10px;color:var(--text2);">${E(c.phone || '')}</span>${c.address ? `<br><span style="font-size:10px;color:var(--text2);">${E(c.address)}</span>` : ''}</td>
+      <td style="font-size:10px;">${(o.items || []).map(i => E(i.name) + ' x' + E(i.qty)).join(', ')}${c.notes ? `<br><i style="color:var(--accent)">Catatan: ${E(c.notes)}</i>` : ''}</td>
       <td style="color:var(--accent);font-weight:800;">${fp(o.total || 0)}</td>
-      <td>${pl[o.payment] || o.payment || '—'}</td>
-      <td><span class="history-status status-${o.status || 'wait'}">${sl[o.status] || 'Menunggu'}</span></td>
-      <td>
-        <button class="admin-action-status" style="background:rgba(52,152,219,.1);color:#2980b9;${o.status !== 'wait' ? 'opacity:.35;' : ''}" ${o.status === 'wait' ? `onclick="updOrd('${o.firestoreId}','process')"` : ''}>Proses</button>
-        <button class="admin-action-status" style="background:rgba(39,174,96,.1);color:#27ae60;${o.status !== 'process' ? 'opacity:.35;' : ''}" ${o.status === 'process' ? `onclick="updOrd('${o.firestoreId}','done')"` : ''}>Selesai</button>
-      </td>
-    </tr>`).join('');
+      <td>${E(pl[o.payment] || o.payment || '—')}</td>
+      <td><span class="history-status status-${st}">${{ wait: 'Menunggu', process: 'Diproses', done: 'Selesai' }[st]}</span></td>
+      <td style="white-space:nowrap;">
+        <select class="ord-sel" onchange="updOrd('${f}',this.value)"><option value="wait" ${st === 'wait' ? 'selected' : ''}>Menunggu</option><option value="process" ${st === 'process' ? 'selected' : ''}>Diproses</option><option value="done" ${st === 'done' ? 'selected' : ''}>Selesai</option></select>
+        ${c.phone ? `<a class="admin-action-btn" style="color:#25d366;text-decoration:none;display:inline-flex;" target="_blank" title="Chat pelanggan" href="https://wa.me/${waNum(c.phone)}"><i class="fab fa-whatsapp"></i></a>` : ''}
+        <button class="admin-action-btn admin-action-delete" title="Hapus pesanan" onclick="delOrd('${f}')"><i class="fas fa-trash"></i></button>
+      </td></tr>`;
+  }).join('');
 }
-
+const _ord = id => (window._getOrders ? window._getOrders() : []).find(x => x.firestoreId === id);
 async function updOrd(fid, status) {
-  try {
-    await window._fs.updateOrderStatus(fid, status);
-    toast('Status: ' + (status === 'process' ? 'Diproses' : 'Selesai'));
-  } catch (err) {
-    toast('Gagal update: ' + err.message, 'error');
-  }
+  const o = _ord(fid); if (o && (o.status || 'wait') === status) return;
+  if (status === 'done' && !(await cfm('Tandai pesanan <b>' + E(o && o.orderId) + '</b> sebagai <b>Selesai</b>?<br><small>Status masih bisa diubah lagi nanti.</small>', 'Ya, Selesai'))) { renderAO(); return; }
+  try { await window._fs.updateOrderStatus(fid, status); toast('Status: ' + { wait: 'Menunggu', process: 'Diproses', done: 'Selesai' }[status]); }
+  catch (err) { toast('Gagal update: ' + err.message, 'error'); renderAO(); }
+}
+async function delOrd(fid) {
+  const o = _ord(fid);
+  if (!(await cfm('Hapus pesanan <b>' + E(o && o.orderId) + '</b> dari ' + E(o && o.customer && o.customer.name) + '?<br><small>Tindakan ini tidak bisa dibatalkan.</small>'))) return;
+  try { await window._fs.deleteOrder(fid); toast('Pesanan dihapus'); } catch (err) { toast('Gagal hapus: ' + err.message, 'error'); }
 }
 
 // ─── CONFIRM DIALOG ───
-function cfm(msg) {
+function cfm(msg, ok = 'Hapus') {
   return new Promise(r => {
     const o = document.createElement('div');
     o.className = 'modal-overlay open'; o.style.zIndex = '6000';
-    o.innerHTML = `<div class="modal-box" style="max-width:360px;text-align:center;border-radius:24px;"><div style="font-size:36px;color:var(--danger);margin-bottom:12px;"><i class="fas fa-exclamation-triangle"></i></div><div style="font-size:13px;margin-bottom:18px;line-height:1.6;">${msg}</div><div style="display:flex;gap:10px;justify-content:center;"><button class="neu-btn" style="padding:10px 20px;font-size:12px;" id="cfN">Batal</button><button class="neu-btn-danger" style="padding:10px 20px;font-size:12px;" id="cfY">Hapus</button></div></div>`;
+    o.innerHTML = `<div class="modal-box" style="max-width:360px;text-align:center;border-radius:24px;"><div style="font-size:36px;color:var(--danger);margin-bottom:12px;"><i class="fas fa-exclamation-triangle"></i></div><div style="font-size:13px;margin-bottom:18px;line-height:1.6;">${msg}</div><div style="display:flex;gap:10px;justify-content:center;"><button class="neu-btn" style="padding:10px 20px;font-size:12px;" id="cfN">Batal</button><button class="neu-btn-danger" style="padding:10px 20px;font-size:12px;" id="cfY">${ok}</button></div></div>`;
     document.body.appendChild(o);
     o.querySelector('#cfY').onclick = () => { o.remove(); r(true); };
     o.querySelector('#cfN').onclick = () => { o.remove(); r(false); };
@@ -1910,7 +1939,7 @@ function init() {
   // show loading skeleton for products
   renderProducts();
   // loading screen hides after firebase listeners fire or timeout
-  setTimeout(() => document.getElementById('loadingScreen').classList.add('hidden'), 1200);
+  setTimeout(() => { document.getElementById('loadingScreen').classList.add('hidden'); welcome(); }, 1200);
 }
 // ═══ REDESIGN: halaman, sidebar, tema, slider, riwayat ═══
 const PAGES = ['home', 'produk', 'tentang', 'riwayat']; let curPage = 'home';
@@ -1991,7 +2020,7 @@ function renderHistory() {
 function reorder(i) {
   const o = _ho[i]; if (!o) return;
   (o.items || []).forEach(it => { if (!it.productId) return; const ex = cart.find(c => c.id === it.productId); if (ex) ex.qty += it.qty; else cart.push({ id: it.productId, qty: it.qty }); });
-  saveCart(); updateCB(); renderCart(); openCart(); toast('Ditambahkan ke keranjang');
+  saveCart(); updateCB(); renderCart(); openCart(); sfx('cart'); toast('Ditambahkan ke keranjang');
 }
 
 // ═══ INFO: Cara Pesan & Kebijakan ═══
@@ -2021,6 +2050,36 @@ function openInfo(k, e) {
 function closeInfo() { document.getElementById('infoModal').classList.remove('open'); document.body.style.overflow = ''; }
 document.getElementById('infoModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeInfo(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInfo(); });
+
+// ═══ SUARA & LAYAR PENUH ═══
+const SFX = { enter: new Audio('voice/suara_ketika_baru_masuk_web_setelah_loading.mp3'), cart: new Audio('voice/suara_ketika_produk_masuk_ke_keranjang.mp3') };
+Object.values(SFX).forEach(a => { a.preload = 'auto'; a.volume = .85; });
+let soundOn = true, enterPending = false;
+try { soundOn = localStorage.getItem('icr_snd') !== 'off'; } catch (e) {}
+function sfx(k) { const a = SFX[k]; if (!soundOn || !a) return; try { a.currentTime = 0; } catch (e) {} const r = a.play(); if (r && r.catch) r.catch(() => {}); }
+function sndUI() { document.getElementById('sndIc').className = 'fas fa-volume-' + (soundOn ? 'high' : 'xmark'); document.getElementById('sndTxt').textContent = 'Suara: ' + (soundOn ? 'Aktif' : 'Mati'); }
+function toggleSound() { soundOn = !soundOn; try { localStorage.setItem('icr_snd', soundOn ? 'on' : 'off'); } catch (e) {} sndUI(); if (soundOn) sfx('cart'); }
+function welcome() {
+  if (!soundOn) return;
+  try { const r = SFX.enter.play(); if (r && r.catch) r.catch(() => { enterPending = true; }); } catch (e) { enterPending = true; }
+}
+const isFull = () => document.fullscreenElement || document.webkitFullscreenElement;
+function goFull() {
+  if (isFull()) return; const d = document.documentElement, f = d.requestFullscreen || d.webkitRequestFullscreen; if (!f) return;
+  try { const r = f.call(d, { navigationUI: 'hide' }); if (r && r.catch) r.catch(() => {}); } catch (e) {}
+}
+function toggleFull() { if (isFull()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } else goFull(); }
+// Browser hanya mengizinkan suara & layar penuh setelah pengunjung menyentuh layar, jadi dijalankan pada sentuhan pertama
+(function () {
+  let done = false;
+  const first = e => {
+    if (done || (e.type === 'keydown' && e.key === 'Escape')) return; done = true;
+    ['pointerup', 'mousedown', 'touchend', 'keydown'].forEach(t => document.removeEventListener(t, first, true));
+    goFull(); if (enterPending) { enterPending = false; sfx('enter'); }
+  };
+  ['pointerup', 'mousedown', 'touchend', 'keydown'].forEach(t => document.addEventListener(t, first, true));
+  sndUI();
+})();
 
 init();
 </script>
