@@ -311,6 +311,13 @@ body.ready .hero-content>*:nth-child(1){transition-delay:.1s}body.ready .hero-co
 @keyframes imgIn{from{opacity:0;transform:scale(1.05)}}
 .neu-btn,.neu-btn-accent,.theme-btn,.nav-cart,.sb-link{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .neu-btn:active,.neu-btn-accent:active,.theme-btn:active,.nav-cart:active{transform:scale(.96)}
+/* --- performa: buang blur yang berat saat scroll --- */
+.navbar,.navbar.scrolled,.product-category-tag,.photo-count,.pd-count,.fs-tag,.pd-nav{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.navbar.scrolled{background:rgba(223,230,237,.97)}[data-theme=dark] .navbar.scrolled{background:rgba(35,39,46,.97)}
+.product-category-tag,.photo-count,.pd-count{background:rgba(245,247,250,.9)}.photo-count,.pd-count{background:rgba(42,47,51,.78)}
+.modal-overlay:not(.open),.choice-overlay:not(.open),.pd-modal-overlay:not(.open),.cart-overlay:not(.open){-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+@keyframes imgIn{from{opacity:0}}
+@media(max-width:899px),(hover:none){body::before{animation:none}}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
