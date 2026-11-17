@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="referrer" content="no-referrer">
+<link rel="preconnect" href="https://wsrv.nl"><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Ira Cookies">
 <script>try{var _t=localStorage.getItem("icr_theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.dataset.theme=_t}catch(e){}</script>
 <meta name="description" content="Ira Cookies Ramadhaniah - kue kering dan kue lapis premium, dibuat segar dengan bahan pilihan. Pesan mudah lewat WhatsApp.">
@@ -287,6 +288,29 @@ body.sb-open .nav-user-chip{opacity:0;transform:scale(.8) translateX(10px);point
 body.sb-open .sb-foot .sb-link:nth-child(4){transition-delay:.45s}body.sb-open .sb-foot .sb-link:nth-child(5){transition-delay:.50s}
 .ord-chip{padding:8px 14px;font-size:11px;border-radius:20px;border:none;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600}
 .ord-sel{padding:7px 8px;font-size:11px;border-radius:10px;border:none;background:var(--bg);color:var(--text);box-shadow:inset 2px 2px 5px var(--shadow-inset-dark),inset -2px -2px 5px var(--shadow-inset-light);font-family:'Poppins',sans-serif}
+/* --- loading & kehalusan --- */
+.loading-screen{gap:0;transition:opacity .8s var(--smooth),visibility .8s,transform 1s var(--smooth)}
+.ls-orb{position:relative;width:104px;height:104px;border-radius:50%;display:grid;place-items:center;font-size:44px;color:var(--accent);background:var(--bg);box-shadow:12px 12px 26px var(--shadow-dark),-12px -12px 26px var(--shadow-light),inset 1px 1px 0 var(--edge);animation:lsFloat 3.2s ease-in-out infinite}
+.ls-orb i{animation:lsWob 2.4s ease-in-out infinite}
+.ls-ring{position:absolute;inset:-14px;border-radius:50%;border:2px solid var(--accent);opacity:0;animation:lsRing 2.6s ease-out infinite}.ls-ring.r2{animation-delay:1.3s}
+@keyframes lsRing{0%{transform:scale(.8);opacity:.5}100%{transform:scale(1.4);opacity:0}}
+@keyframes lsFloat{50%{transform:translateY(-8px)}}
+@keyframes lsWob{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(11deg) scale(1.08)}}
+.ls-name{font:800 27px 'Playfair Display',serif;margin-top:28px}.ls-sub{font:600 10px 'Poppins',sans-serif;letter-spacing:4px;color:var(--accent);margin-top:2px}
+.ls-enter{margin-top:34px;padding:14px 30px;border:none;border-radius:40px;cursor:pointer;color:#fff;font:600 14px 'Poppins',sans-serif;background:linear-gradient(145deg,var(--accent),var(--accent-hover));box-shadow:0 10px 26px var(--accent-glow);animation:lsPulse 1.9s ease-in-out infinite}
+@keyframes lsPulse{50%{transform:scale(1.06);box-shadow:0 14px 34px var(--accent-glow)}}
+.ls-load{display:none;width:min(270px,72vw);margin-top:34px}
+.ls-bar{height:12px;border-radius:12px;padding:2px;overflow:hidden;box-shadow:inset 3px 3px 6px var(--shadow-inset-dark),inset -3px -3px 6px var(--shadow-inset-light)}
+.ls-bar i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--accent),#eaa97a);transform-origin:left;transform:scaleX(0);box-shadow:0 0 10px var(--accent-glow)}
+.ls-txt{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-top:10px}.ls-txt b{color:var(--accent)}
+.loading-screen.go .ls-enter{display:none}.loading-screen.go .ls-load{display:block;animation:pageIn .5s var(--smooth)}
+.hero-content>*{opacity:0;transform:translateY(26px)}
+body.ready .hero-content>*{opacity:1;transform:none;transition:opacity .9s var(--smooth),transform 1s var(--smooth)}
+body.ready .hero-content>*:nth-child(1){transition-delay:.1s}body.ready .hero-content>*:nth-child(2){transition-delay:.22s}body.ready .hero-content>*:nth-child(3){transition-delay:.34s}body.ready .hero-content>*:nth-child(4){transition-delay:.46s}body.ready .hero-content>*:nth-child(5){transition-delay:.58s}body.ready .hero-content>*:nth-child(6){transition-delay:.7s}
+.product-img,.about-card-img,.fs-img img,.cart-item-img{animation:imgIn .7s var(--smooth) backwards;background:var(--bg)}
+@keyframes imgIn{from{opacity:0;transform:scale(1.05)}}
+.neu-btn,.neu-btn-accent,.theme-btn,.nav-cart,.sb-link{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.neu-btn:active,.neu-btn-accent:active,.theme-btn:active,.nav-cart:active{transform:scale(.96)}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -459,7 +483,7 @@ body.sb-open .sb-foot .sb-link:nth-child(4){transition-delay:.45s}body.sb-open .
 
 /* Loading */
 .loading-screen{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity .6s var(--smooth),visibility .6s}
-.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.07)}
 .loader{width:50px;height:50px;border-radius:50%;box-shadow:8px 8px 16px var(--shadow-dark),-8px -8px 16px var(--shadow-light);position:relative;animation:loaderPulse 1.4s ease-in-out infinite}
 .loader::after{content:'';position:absolute;inset:9px;border-radius:50%;background:linear-gradient(145deg,var(--accent),var(--accent-hover));animation:loaderInner 1.4s ease-in-out infinite;box-shadow:0 0 12px var(--accent-glow)}
 @keyframes loaderPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
@@ -502,8 +526,10 @@ body.sb-open .sb-foot .sb-link:nth-child(4){transition-delay:.45s}body.sb-open .
 <body>
 
 <div class="loading-screen" id="loadingScreen">
-  <div class="loader"></div>
-  <div style="font-size:13px;color:var(--text2);font-weight:500;">Memuat Ira Cookies...</div>
+  <div class="ls-orb"><span class="ls-ring"></span><span class="ls-ring r2"></span><i class="fas fa-cookie-bite"></i></div>
+  <div class="ls-name">Ira Cookies</div><div class="ls-sub">RAMADHANIAH</div>
+  <button class="ls-enter" id="lsEnter" type="button">Ketuk untuk masuk <i class="fas fa-arrow-right"></i></button>
+  <div class="ls-load"><div class="ls-bar"><i id="lsBar"></i></div><div class="ls-txt"><span id="lsTxt">Memanaskan oven…</span><b id="lsPct">0%</b></div></div>
 </div>
 <div class="watermark">AL-HAZA<sup style="font-size:6px;">tm</sup></div>
 <div class="toast-container" id="toastContainer"></div>
@@ -850,7 +876,7 @@ body.sb-open .sb-foot .sb-link:nth-child(4){transition-delay:.45s}body.sb-open .
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  getFirestore, collection, getDocs, doc, addDoc, setDoc, updateDoc, deleteDoc,
+  initializeFirestore, persistentLocalCache, persistentMultipleTabManager, getFirestore, collection, getDocs, doc, addDoc, setDoc, updateDoc, deleteDoc,
   query, orderBy, onSnapshot, serverTimestamp, getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
@@ -868,7 +894,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+let db;
+try { db = initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) }); } catch (e) { db = getFirestore(app); }
 const auth = getAuth(app);
 
 /* ── FIRESTORE STATUS ── */
@@ -895,9 +922,11 @@ function listenProducts() {
     updateSV();
     renderAD();
     setFsStatus('fs-ok', 'Firestore Terhubung');
+    window._onData && window._onData('p');
   }, err => {
     console.error(err);
     setFsStatus('fs-err', 'Gagal terhubung');
+    window._onData && window._onData('p');
     // fallback to localStorage
     products = JSON.parse(localStorage.getItem('icr_products_cache') || '[]');
     renderProducts();
@@ -909,10 +938,12 @@ function listenAbout() {
   onSnapshot(q, snap => {
     aboutData = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
     renderAbout();
+    window._onData && window._onData('a');
     renderAA();
     renderAD();
   }, err => {
     console.error(err);
+    window._onData && window._onData('a');
     aboutData = JSON.parse(localStorage.getItem('icr_about_cache') || '[]');
     renderAbout();
   });
@@ -1054,14 +1085,17 @@ function gImgs(p) {
   return [main, ...ex.filter(x => x !== main)];
 }
 // Rantai cadangan: langsung -> wsrv.nl (CDN gratis) -> Photon (WordPress CDN gratis) -> placeholder
+function thumb(u, w) { return /^https?:\/\//i.test(u) ? 'https://wsrv.nl/?url=' + encodeURIComponent(u) + '&w=' + w + '&we&output=webp&q=76' : u; }
+function ia(u, w) { const t = thumb(u, w); return 'src="' + t + '"' + (t !== u ? ' data-orig="' + u + '"' : '') + ' decoding="async"'; }
+// Rantai cadangan: thumbnail -> link asli -> wsrv.nl -> Photon -> placeholder
 function imgFallback(el) {
-  const o = el.dataset.o || el.getAttribute('src') || ''; el.dataset.o = o;
+  const cur = el.getAttribute('src') || '', orig = el.dataset.orig || el.dataset.o || cur; el.dataset.o = orig;
   const st = +(el.dataset.s || 0); el.dataset.s = st + 1;
-  if (!o || o.startsWith('data:') || st > 2) return false;
-  if (st === 0) { el.src = 'https://wsrv.nl/?url=' + encodeURIComponent(o) + '&w=1200&output=webp'; return true; }
-  if (st === 1) { el.src = 'https://i0.wp.com/' + o.replace(/^https?:\/\//, '') + '?w=1200'; return true; }
-  if (el.dataset.noph) return false;
-  el.src = PH; return true;
+  if (!orig || orig.startsWith('data:') || st > 3) return false;
+  const seq = []; if (el.dataset.orig) seq.push(orig);
+  seq.push('https://wsrv.nl/?url=' + encodeURIComponent(orig) + '&w=1200&output=webp', 'https://i0.wp.com/' + orig.replace(/^https?:\/\//, '') + '?w=1200');
+  if (st < seq.length) { el.src = seq[st]; return true; }
+  if (el.dataset.noph) return false; el.src = PH; return true;
 }
 function resetImg(el) { delete el.dataset.o; delete el.dataset.s; }
 // ─── GALERI DETAIL PRODUK ───
@@ -1069,7 +1103,7 @@ let pdList = [], pdIdx = 0;
 function pdSetup(p) {
   pdList = gImgs(p);
   document.getElementById('pdThumbs').innerHTML = pdList.length > 1
-    ? pdList.map((s, i) => `<img src="${s}" class="pd-thumb" alt="Foto ${i + 1}" loading="lazy" referrerpolicy="no-referrer" onclick="pdShow(${i})" onerror="imgFallback(this)">`).join('') : '';
+    ? pdList.map((s, i) => `<img ${ia(s, 160)} class="pd-thumb" alt="Foto ${i + 1}" loading="lazy" referrerpolicy="no-referrer" onclick="pdShow(${i})" onerror="imgFallback(this)">`).join('') : '';
   document.getElementById('pdMainWrap').classList.toggle('multi', pdList.length > 1);
   document.getElementById('pdMainImg').classList.remove('contain');
   pdShow(0);
@@ -1355,7 +1389,7 @@ function renderAP() {
   const bl = { best: 'Best', premium: 'Prem', fav: 'Fav', hemat: 'Hemat' };
   document.getElementById('adminProductBody').innerHTML = products.map(p => `
     <tr>
-      <td><img src="${gImg(p)}" class="admin-table-img" onerror="imgFallback(this,'${p.firestoreId}')"></td>
+      <td><img ${ia(gImg(p), 120)} class="admin-table-img" onerror="imgFallback(this,'${p.firestoreId}')"></td>
       <td style="font-weight:700;">${p.name}</td>
       <td>${p.category === 'kering' ? 'Kering' : 'Lapis'}</td>
       <td style="color:var(--accent);font-weight:800;">${fp(p.price || 0)}</td>
@@ -1565,7 +1599,7 @@ function renderAA() {
   const aboutData = window._getAbout ? window._getAbout() : [];
   document.getElementById('adminAboutBody').innerHTML = aboutData.map(a => `
     <tr>
-      <td><img src="${gAImg(a)}" class="admin-table-img" onerror="imgFallback(this,'ab${a.firestoreId}')"></td>
+      <td><img ${ia(gAImg(a), 120)} class="admin-table-img" onerror="imgFallback(this,'ab${a.firestoreId}')"></td>
       <td style="font-weight:700;">${a.title}</td>
       <td style="font-size:11px;color:var(--text2);">${a.date || ''}</td>
       <td>
@@ -1670,7 +1704,7 @@ function renderProducts() {
     const fid = p.firestoreId || p.id;
     return `<div class="product-card" style="transition-delay:${i * 60}ms;">
       <div class="product-img-wrap" onclick="openPD('${fid}')">
-        <img src="${gImg(p)}" alt="${p.name}" class="product-img" loading="lazy" onerror="imgFallback(this,'${fid}')">
+        <img ${ia(gImg(p), 640)} alt="${p.name}" class="product-img" loading="lazy" onerror="imgFallback(this,'${fid}')">
         ${bh}<div class="product-category-tag">${cl}</div>${(Array.isArray(p.images) && p.images.length) ? `<div class="photo-count"><i class="fas fa-images"></i> ${p.images.length + 1}</div>` : ''}
       </div>
       <div class="product-info">
@@ -1705,7 +1739,7 @@ function renderAbout() {
   }
   g.innerHTML = aboutData.map((a, i) => `
     <div class="about-card" style="transition-delay:${i * 100}ms;">
-      <img src="${gAImg(a)}" class="about-card-img" onerror="imgFallback(this,'ab${a.firestoreId}')" loading="lazy">
+      <img ${ia(gAImg(a), 640)} class="about-card-img" onerror="imgFallback(this,'ab${a.firestoreId}')" loading="lazy">
       <div class="about-card-body">
         <div class="about-card-title">${a.title}</div>
         <div class="about-card-desc">${a.desc}</div>
@@ -1753,7 +1787,7 @@ function renderCart() {
     const p = products.find(x => x.firestoreId === it.id || x.id === it.id);
     if (!p) return '';
     return `<div class="cart-item">
-      <img src="${gImg(p)}" class="cart-item-img" onerror="imgFallback(this,'${it.id}')">
+      <img ${ia(gImg(p), 160)} class="cart-item-img" onerror="imgFallback(this,'${it.id}')">
       <div class="cart-item-info">
         <div class="cart-item-name">${p.name}</div>
         <div class="cart-item-price">${fp((p.price || 0) * it.qty)}</div>
@@ -1939,7 +1973,9 @@ function init() {
   // show loading skeleton for products
   renderProducts();
   // loading screen hides after firebase listeners fire or timeout
-  setTimeout(() => { document.getElementById('loadingScreen').classList.add('hidden'); welcome(); }, 1200);
+  bootLoop();
+  setTimeout(() => { if (!BOOT.p || !BOOT.a) { BOOT.p = BOOT.a = true; bootImgs(); } }, 9000);
+  setTimeout(() => document.body.classList.add('ready'), 14000);
 }
 // ═══ REDESIGN: halaman, sidebar, tema, slider, riwayat ═══
 const PAGES = ['home', 'produk', 'tentang', 'riwayat']; let curPage = 'home';
@@ -1965,9 +2001,9 @@ function renderHomeSliders() {
   const bl = { best: 'Best Seller', premium: 'Premium', fav: 'Favorit', hemat: 'Hemat' };
   let f = ps.filter(p => p.badge); if (!f.length) f = ps.slice(-8).reverse(); f = f.slice(0, 8);
   const ft = document.getElementById('favTrack'); if (!ft) return;
-  ft.innerHTML = f.map(p => `<article class="fs-card" onclick="openPD('${p.firestoreId || p.id}')"><div class="fs-img"><img src="${gImg(p)}" alt="${p.name}" loading="lazy" referrerpolicy="no-referrer" onerror="imgFallback(this)">${p.badge ? `<span class="fs-tag">${bl[p.badge] || ''}</span>` : ''}</div><div class="fs-body"><h3>${p.name}</h3><div class="fs-price">${fp(p.price || 0)}</div></div></article>`).join('') || '<div class="fs-empty">Produk segera hadir 🍪</div>';
+  ft.innerHTML = f.map(p => `<article class="fs-card" onclick="openPD('${p.firestoreId || p.id}')"><div class="fs-img"><img ${ia(gImg(p), 640)} alt="${p.name}" loading="lazy" referrerpolicy="no-referrer" onerror="imgFallback(this)">${p.badge ? `<span class="fs-tag">${bl[p.badge] || ''}</span>` : ''}</div><div class="fs-body"><h3>${p.name}</h3><div class="fs-price">${fp(p.price || 0)}</div></div></article>`).join('') || '<div class="fs-empty">Produk segera hadir 🍪</div>';
   let a = ab.filter(x => x.featured); if (!a.length) a = ab.slice(0, 5); a = a.slice(0, 6);
-  document.getElementById('aboutTrack').innerHTML = a.map(x => `<article class="fs-card ab" onclick="go('tentang')"><div class="fs-img"><img src="${gAImg(x)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="imgFallback(this)"></div><div class="fs-body"><h3>${x.title || ''}</h3><p>${x.desc || ''}</p></div></article>`).join('') || '<div class="fs-empty">Cerita segera hadir ✨</div>';
+  document.getElementById('aboutTrack').innerHTML = a.map(x => `<article class="fs-card ab" onclick="go('tentang')"><div class="fs-img"><img ${ia(gAImg(x), 640)} alt="" loading="lazy" referrerpolicy="no-referrer" onerror="imgFallback(this)"></div><div class="fs-body"><h3>${x.title || ''}</h3><p>${x.desc || ''}</p></div></article>`).join('') || '<div class="fs-empty">Cerita segera hadir ✨</div>';
   ['fav', 'about'].forEach(k => { const t = document.getElementById(k + 'Track'); document.getElementById(k + 'Dots').innerHTML = '<i></i>'.repeat(t.children.length > 1 ? t.children.length : 0); dots(t); });
 }
 function dots(t) {
@@ -2080,6 +2116,45 @@ function toggleFull() { if (isFull()) { (document.exitFullscreen || document.web
   ['pointerup', 'mousedown', 'touchend', 'keydown'].forEach(t => document.addEventListener(t, first, true));
   sndUI();
 })();
+
+// ═══ LOADING NYATA: data + foto beranda dimuat dulu sebelum halaman dibuka ═══
+const BOOT = { p: false, a: false, imgs: 0, tot: -1, go: false, tg: 0, t0: performance.now(), shown: 0, done: false };
+window._onData = k => { BOOT[k] = true; if (BOOT.p && BOOT.a) bootImgs(); };
+function bootImgs() {
+  if (BOOT.tot >= 0) return;
+  const ps = window._getProducts ? window._getProducts() : [], ab = window._getAbout ? window._getAbout() : [];
+  let f = ps.filter(p => p.badge); if (!f.length) f = ps.slice(-8).reverse();
+  let a = ab.filter(x => x.featured); if (!a.length) a = ab.slice(0, 5);
+  const urls = [...f.slice(0, 6).map(p => thumb(gImg(p), 640)), ...a.slice(0, 3).map(x => thumb(gAImg(x), 640))].filter((u, i, r) => u && !u.startsWith('data:') && r.indexOf(u) === i);
+  BOOT.tot = urls.length; BOOT.tI = performance.now();
+  urls.forEach(u => { const im = new Image(), fin = () => { BOOT.imgs++; }; im.onload = im.onerror = fin; im.src = u; });
+}
+function idlePre() {
+  const ps = window._getProducts ? window._getProducts() : [], ab = window._getAbout ? window._getAbout() : [];
+  [...ps.slice(0, 12).map(p => thumb(gImg(p), 640)), ...ab.slice(0, 8).map(x => thumb(gAImg(x), 640))].forEach(u => { if (u && !u.startsWith('data:')) new Image().src = u; });
+}
+function bootLoop() {
+  const ls = document.getElementById('loadingScreen'), bar = document.getElementById('lsBar'), tx = document.getElementById('lsTxt'), pc = document.getElementById('lsPct');
+  ls.addEventListener('click', () => { if (BOOT.go) return; BOOT.go = true; BOOT.tg = performance.now(); ls.classList.add('go'); goFull(); });
+  (function tick() {
+    if (BOOT.done) return;
+    if (BOOT.go) {
+      const now = performance.now(), forced = now - BOOT.t0 > 10000 || (BOOT.tot > 0 && now - BOOT.tI > 6000);
+      let t = (BOOT.p ? .35 : 0) + (BOOT.a ? .15 : 0) + (BOOT.tot > 0 ? .5 * BOOT.imgs / BOOT.tot : (BOOT.tot === 0 ? .5 : 0));
+      if (forced) t = 1;
+      t = Math.min(t, (now - BOOT.tg) / 1600);
+      BOOT.shown += (t - BOOT.shown) * .09 + .001; if (BOOT.shown > 1) BOOT.shown = 1;
+      bar.style.transform = 'scaleX(' + BOOT.shown + ')'; pc.textContent = Math.round(BOOT.shown * 100) + '%';
+      tx.textContent = BOOT.shown < .3 ? 'Memanaskan oven…' : BOOT.shown < .6 ? 'Menata kue-kue…' : BOOT.shown < .92 ? 'Menyiapkan foto…' : 'Siap disajikan!';
+      if (BOOT.shown >= .995 && t >= 1) {
+        BOOT.done = true;
+        setTimeout(() => { ls.classList.add('hidden'); document.body.classList.add('ready'); welcome(); setTimeout(idlePre, 900); }, 250);
+        return;
+      }
+    }
+    requestAnimationFrame(tick);
+  })();
+}
 
 init();
 </script>
