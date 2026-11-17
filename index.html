@@ -230,7 +230,7 @@ body::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none
 .page{display:none}.page.active{display:block;animation:pageIn .55s var(--smooth)}
 @keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .shell{min-height:70vh}
-.nav-logo-text span{display:flex;align-items:center;gap:5px}.sb-caret{font-size:8px;transition:transform .4s var(--smooth)}body.sb-open .sb-caret{transform:rotate(180deg)}
+.sb-caret{font-size:8px;transition:transform .4s var(--smooth)}body.sb-open .sb-caret{transform:rotate(180deg)}
 .theme-btn{width:42px;height:42px;border-radius:12px;border:none;cursor:pointer;background:var(--bg);color:var(--accent);font-size:16px;box-shadow:5px 5px 12px var(--shadow-dark),-5px -5px 12px var(--shadow-light)}
 .theme-btn:active{box-shadow:inset 3px 3px 6px var(--shadow-inset-dark),inset -3px -3px 6px var(--shadow-inset-light)}
 .sb-brand{display:flex;align-items:center;gap:12px;padding:6px 8px 18px;font-family:'Playfair Display',serif;font-weight:800;font-size:17px}
@@ -239,8 +239,6 @@ body::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none
 .sb-link{display:flex;align-items:center;gap:13px;padding:13px 16px;border-radius:14px;border:none;background:var(--bg);color:var(--text2);font:500 14px 'Poppins',sans-serif;text-decoration:none;cursor:pointer;text-align:left;transition:all .3s var(--smooth)}
 .sb-link i{width:20px;text-align:center;color:var(--accent)}
 .sb-link.active{color:var(--accent);font-weight:700;box-shadow:inset 4px 4px 9px var(--shadow-inset-dark),inset -4px -4px 9px var(--shadow-inset-light)}
-.marquee{overflow:hidden;margin:6px 0 4px;padding:12px 0;border-radius:40px;box-shadow:inset 4px 4px 9px var(--shadow-inset-dark),inset -4px -4px 9px var(--shadow-inset-light)}
-.marquee div{display:flex;gap:38px;width:max-content;animation:mq 26s linear infinite;font-size:12px;font-weight:600;color:var(--text2);white-space:nowrap}.marquee b{color:var(--accent)}
 @keyframes mq{to{transform:translateX(-50%)}}
 .hsec{padding-top:34px;padding-bottom:6px}.hsec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 4px}.hsec-head .section-title{margin:0;text-align:left;font-size:clamp(20px,5vw,28px)}
 .link-more{border:none;background:none;color:var(--accent);font:700 12px 'Poppins',sans-serif;cursor:pointer;white-space:nowrap}
@@ -264,7 +262,7 @@ body::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none
 .hc-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--text2);margin:-8px 0 12px}
 .hc-items{font-size:12px;color:var(--text2);line-height:1.7}.hc-bot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}.hc-tot{font-weight:800;color:var(--accent);font-size:16px}
 .hc-btns{display:flex;gap:8px}.hc-btns button,.hc-btns a{padding:9px 14px;font-size:11px;border-radius:12px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-@media(prefers-reduced-motion:reduce){body::before,.marquee div{animation:none!important}.page.active,.hc{animation:none}}
+@media(prefers-reduced-motion:reduce){body::before,.mq-track{animation:none!important}.page.active,.hc{animation:none}}
 
 /* --- sidebar dropdown dari nama toko --- */
 .sidebar{position:fixed;top:calc(var(--nav-h) - 2px);left:10px;width:min(300px,calc(100vw - 20px));max-height:calc(100dvh - var(--nav-h) - 16px);z-index:1500;background:var(--bg);padding:14px;display:flex;flex-direction:column;gap:4px;border-radius:22px;overflow-y:auto;transform-origin:34px 0;opacity:0;visibility:hidden;pointer-events:none;clip-path:inset(0 -50px 100% -50px round 22px);transform:translateY(-12px) scale(.92);transition:clip-path .45s var(--smooth),transform .45s var(--smooth),opacity .25s,visibility 0s .45s;box-shadow:12px 14px 32px var(--shadow-dark),-6px -6px 18px var(--shadow-light),inset 1px 1px 0 var(--edge)}
@@ -318,6 +316,24 @@ body.ready .hero-content>*:nth-child(1){transition-delay:.1s}body.ready .hero-co
 .modal-overlay:not(.open),.choice-overlay:not(.open),.pd-modal-overlay:not(.open),.cart-overlay:not(.open){-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 @keyframes imgIn{from{opacity:0}}
 @media(max-width:899px),(hover:none){body::before{animation:none}}
+/* --- marquee keunggulan --- */
+.marquee{position:relative;margin:14px 0 6px;padding:12px 0;border-radius:46px;box-shadow:inset 5px 5px 11px var(--shadow-inset-dark),inset -5px -5px 11px var(--shadow-inset-light)}
+.mq-mask{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.mq-track{display:flex;width:max-content;animation:mq 34s linear infinite;will-change:transform}
+.mq-i{display:flex;align-items:center;gap:10px;padding-right:46px;font:600 13px 'Poppins',sans-serif;color:var(--text);white-space:nowrap}
+.mq-i i{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:13px;color:var(--accent);background:var(--bg);box-shadow:3px 3px 7px var(--shadow-dark),-3px -3px 7px var(--shadow-light),inset 1px 1px 0 var(--edge)}
+.mq-i::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.45;margin-left:36px}
+@media(hover:hover){.marquee:hover .mq-track{animation-play-state:paused}}
+/* --- nama toko tampil sebagai tombol --- */
+.nav-logo{padding:6px 10px 6px 7px;border-radius:20px;background:var(--bg);box-shadow:6px 6px 14px var(--shadow-dark),-6px -6px 14px var(--shadow-light),inset 1px 1px 0 var(--edge);transition:box-shadow .3s var(--smooth),transform .3s var(--smooth),background .3s;-webkit-tap-highlight-color:transparent}
+@media(hover:hover){.nav-logo:hover{transform:translateY(-1px)}}
+.nav-logo:active{transform:scale(.97);box-shadow:inset 4px 4px 9px var(--shadow-inset-dark),inset -4px -4px 9px var(--shadow-inset-light)}
+.nav-logo:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.nav-caret{position:relative;width:28px;height:28px;margin-left:4px;border-radius:50%;display:grid;place-items:center;font-size:10px;color:var(--accent);box-shadow:inset 2px 2px 5px var(--shadow-inset-dark),inset -2px -2px 5px var(--shadow-inset-light)}
+.nav-caret i{transition:transform .5s var(--smooth)}body.sb-open .nav-caret i{transform:rotate(180deg)}
+.nav-caret.hint::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--accent);opacity:0;animation:caretPing 1.8s ease-out infinite}
+@keyframes caretPing{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+body.sb-open .nav-logo{background:transparent;box-shadow:none}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -586,7 +602,7 @@ body.ready .hero-content>*:nth-child(1){transition-delay:.1s}body.ready .hero-co
 <!-- MAIN CONTENT -->
 <div class="main-content" id="mainContent">
 <nav class="navbar" id="navbar">
-  <div class="nav-logo" id="navLogo"><div class="nav-logo-icon" id="navLogoIcon"><i class="fas fa-cookie-bite"></i></div><div class="nav-logo-text">Ira Cookies<span>RAMADHANIAH <i class="fas fa-chevron-down sb-caret"></i></span></div></div>
+  <div class="nav-logo" id="navLogo" role="button" tabindex="0" aria-label="Buka menu" aria-expanded="false"><div class="nav-logo-icon" id="navLogoIcon"><i class="fas fa-cookie-bite"></i></div><div class="nav-logo-text">Ira Cookies<span>RAMADHANIAH</span></div><span class="nav-caret hint" aria-hidden="true"><i class="fas fa-chevron-down"></i></span></div>
   <div class="nav-right">
     <button class="nav-user-chip" id="navUserChip" onclick="openUserLoginModal()" style="display:none;"><div class="nav-user-dot"></div><span id="navUserName">Login</span></button>
     <button class="theme-btn" onclick="toggleTheme()" aria-label="Ganti tema"><i class="theme-ic fas fa-moon"></i></button>
@@ -628,7 +644,7 @@ body.ready .hero-content>*:nth-child(1){transition-delay:.1s}body.ready .hero-co
     </div>
   </div>
 </section>
-<div class="marquee"><div><span><b>✦</b> Dibuat segar setiap hari</span><span><b>✦</b> Bahan premium pilihan</span><span><b>✦</b> Tanpa pengawet</span><span><b>✦</b> Cocok untuk hampers &amp; lebaran</span><span><b>✦</b> Dibuat segar setiap hari</span><span><b>✦</b> Bahan premium pilihan</span><span><b>✦</b> Tanpa pengawet</span><span><b>✦</b> Cocok untuk hampers &amp; lebaran</span></div></div>
+<div class="marquee" aria-label="Keunggulan kami"><div class="mq-mask"><div class="mq-track"><span class="mq-i"><i class="fa-solid fa-clock"></i>Dibuat segar setiap hari</span><span class="mq-i"><i class="fa-solid fa-gem"></i>Bahan premium pilihan</span><span class="mq-i"><i class="fa-solid fa-leaf"></i>Tanpa pengawet</span><span class="mq-i"><i class="fa-solid fa-gift"></i>Cocok untuk hampers &amp; lebaran</span><span class="mq-i"><i class="fa-brands fa-whatsapp"></i>Pesan mudah lewat WhatsApp</span><span class="mq-i"><i class="fa-solid fa-clock"></i>Dibuat segar setiap hari</span><span class="mq-i"><i class="fa-solid fa-gem"></i>Bahan premium pilihan</span><span class="mq-i"><i class="fa-solid fa-leaf"></i>Tanpa pengawet</span><span class="mq-i"><i class="fa-solid fa-gift"></i>Cocok untuk hampers &amp; lebaran</span><span class="mq-i"><i class="fa-brands fa-whatsapp"></i>Pesan mudah lewat WhatsApp</span></div></div></div>
 <section class="section hsec"><div class="hsec-head"><h2 class="section-title">Pilihan <span>Favorit</span></h2><button class="link-more" onclick="go('produk')">Lihat semua <i class="fas fa-arrow-right"></i></button></div><div class="fs-track" id="favTrack"></div><div class="fs-dots" id="favDots"></div></section>
 <section class="section hsec"><div class="hsec-head"><h2 class="section-title">Cerita <span>Kami</span></h2><button class="link-more" onclick="go('tentang')">Selengkapnya <i class="fas fa-arrow-right"></i></button></div><div class="fs-track" id="aboutTrack"></div><div class="fs-dots" id="aboutDots"></div></section>
 </div><div class="page" id="pg-produk">
@@ -926,6 +942,7 @@ function listenProducts() {
     products = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
     renderProducts();
     renderAP();
+    window.pruneCart && window.pruneCart();
     updateSV();
     renderAD();
     setFsStatus('fs-ok', 'Firestore Terhubung');
@@ -1812,7 +1829,7 @@ function renderCart() {
 }
 function rC(id) { cart = cart.filter(c => c.id !== id); saveCart(); updateCB(); renderCart(); }
 function uQ(id, d) { const i = cart.find(c => c.id === id); if (!i) return; i.qty += d; if (i.qty < 1) { rC(id); return; } saveCart(); updateCB(); renderCart(); }
-function openCart() { document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartSidebar').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function openCart() { renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartSidebar').classList.add('open'); document.body.style.overflow = 'hidden'; }
 function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartSidebar').classList.remove('open'); document.body.style.overflow = ''; }
 
 // ─── CHECKOUT ───
@@ -1986,7 +2003,11 @@ function init() {
 }
 // ═══ REDESIGN: halaman, sidebar, tema, slider, riwayat ═══
 const PAGES = ['home', 'produk', 'tentang', 'riwayat']; let curPage = 'home';
-function setSidebar(o) { document.body.classList.toggle('sb-open', o); }
+function setSidebar(o) {
+  document.body.classList.toggle('sb-open', o);
+  const l = document.getElementById('navLogo'); if (l) l.setAttribute('aria-expanded', o ? 'true' : 'false');
+  if (o) { const c = document.querySelector('.nav-caret'); if (c) c.classList.remove('hint'); try { localStorage.setItem('icr_menu', '1'); } catch (e) {} }
+}
 function toggleSidebar() { setSidebar(!document.body.classList.contains('sb-open')); }
 function go(pg, e) {
   if (e && e.preventDefault) e.preventDefault();
@@ -2035,6 +2056,8 @@ function dots(t) {
     lt = setTimeout(() => { if (lc === 1) toggleSidebar(); lc = 0; }, 380);
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') setSidebar(false); });
+  document.getElementById('navLogo').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSidebar(); } });
+  try { if (localStorage.getItem('icr_menu')) document.querySelector('.nav-caret').classList.remove('hint'); } catch (e) {}
   setSidebar(false); applyTheme(document.documentElement.dataset.theme || 'light');
   go((location.hash || '#home').slice(1));
 })();
@@ -2162,6 +2185,14 @@ function bootLoop() {
     requestAnimationFrame(tick);
   })();
 }
+
+// Keranjang tersimpan di HP; saat data produk baru tiba, tampilkan ulang dan buang item yang produknya sudah tidak ada
+function pruneCart() {
+  const ps = window._getProducts ? window._getProducts() : [];
+  if (ps.length) { let ch = false; for (let i = cart.length - 1; i >= 0; i--) if (!ps.some(p => p.firestoreId === cart[i].id || p.id === cart[i].id)) { cart.splice(i, 1); ch = true; } if (ch) saveCart(); }
+  renderCart(); updateCB();
+}
+window.pruneCart = pruneCart;
 
 init();
 </script>
