@@ -334,6 +334,16 @@ body.ready .hero-content>*:nth-child(1){transition-delay:.1s}body.ready .hero-co
 .nav-caret.hint::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--accent);opacity:0;animation:caretPing 1.8s ease-out infinite}
 @keyframes caretPing{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.5);opacity:0}}
 body.sb-open .nav-logo{background:transparent;box-shadow:none}
+/* --- akun pelanggan --- */
+.ac-tabs{display:flex;gap:10px;margin-bottom:18px}
+.ac-tab{flex:1;padding:11px;border:none;border-radius:14px;cursor:pointer;background:var(--bg);color:var(--text2);font:600 13px 'Poppins',sans-serif;box-shadow:4px 4px 10px var(--shadow-dark),-4px -4px 10px var(--shadow-light);transition:all .3s var(--smooth)}
+.ac-tab.active{color:var(--accent);box-shadow:inset 3px 3px 7px var(--shadow-inset-dark),inset -3px -3px 7px var(--shadow-inset-light)}
+.pw-wrap{position:relative}.pw-wrap .neu-input{padding-right:46px;width:100%}
+.pw-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;border:none;border-radius:50%;background:none;color:var(--text2);cursor:pointer}
+.ac-note{font-size:11px;color:var(--text2);text-align:center;margin-top:14px;line-height:1.7}.ac-note a{color:var(--accent);font-weight:600;text-decoration:none}
+.ac-me{display:flex;align-items:center;gap:14px;margin-bottom:18px}.ac-me b{display:block;font-size:15px}.ac-me small{color:var(--text2);font-size:12px}
+.ac-av{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font:800 18px 'Playfair Display',serif;color:#fff;background:linear-gradient(145deg,var(--accent),var(--accent-hover));box-shadow:0 6px 16px var(--accent-glow)}
+.tmp-box{margin:14px 0;padding:16px;text-align:center;font:800 26px 'Poppins',sans-serif;letter-spacing:5px;color:var(--accent);border-radius:16px;box-shadow:inset 4px 4px 9px var(--shadow-inset-dark),inset -4px -4px 9px var(--shadow-inset-light);user-select:all}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -618,7 +628,7 @@ body.sb-open .nav-logo{background:transparent;box-shadow:none}
     <a class="sb-link" data-pg="riwayat" href="#riwayat" onclick="go('riwayat',event)"><i class="fas fa-receipt"></i>Riwayat</a>
   </div>
   <div class="sb-foot">
-    <button class="sb-link" onclick="openUserLoginModal()"><i class="fas fa-user"></i><span id="mobileUserName">Login Nama</span></button>
+    <button class="sb-link" onclick="openUserLoginModal()"><i class="fas fa-user"></i><span id="mobileUserName">Masuk / Daftar</span></button>
     <button class="sb-link" onclick="toggleTheme()"><i class="theme-ic fas fa-moon"></i>Mode Gelap / Terang</button>
     <button class="sb-link" onclick="toggleSound()"><i class="fas fa-volume-high" id="sndIc"></i><span id="sndTxt">Suara: Aktif</span></button>
     <button class="sb-link" onclick="toggleFull()"><i class="fas fa-expand"></i>Layar Penuh</button>
@@ -725,6 +735,7 @@ body.sb-open .nav-logo{background:transparent;box-shadow:none}
       <button class="admin-tab" data-tab="produk" onclick="switchAdminTab('produk')"><i class="fas fa-cookie-bite" style="margin-right:3px;"></i>Produk</button>
       <button class="admin-tab" data-tab="tentang" onclick="switchAdminTab('tentang')"><i class="fas fa-heart" style="margin-right:3px;"></i>Tentang</button>
       <button class="admin-tab" data-tab="pesanan" onclick="switchAdminTab('pesanan')"><i class="fas fa-receipt" style="margin-right:3px;"></i>Pesanan</button>
+      <button class="admin-tab" data-tab="akun" onclick="switchAdminTab('akun')"><i class="fas fa-users" style="margin-right:3px;"></i>Akun</button>
     </div>
     <div class="admin-content active" id="adminDashboard"><div class="admin-stats" id="adminStats"></div></div>
     <div class="admin-content" id="adminProduk">
@@ -737,6 +748,11 @@ body.sb-open .nav-logo{background:transparent;box-shadow:none}
     </div>
     <div class="admin-content" id="adminPesanan">
       <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>Pelanggan</th><th>Item</th><th>Total</th><th>Bayar</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="adminOrderBody"></tbody></table></div>
+    </div>
+    <div class="admin-content" id="adminAkun">
+      <input type="text" class="neu-input" id="accSearch" placeholder="Cari ID atau nama pelanggan..." oninput="renderAcc()" style="margin-bottom:14px;" autocapitalize="off">
+      <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>Nama</th><th>WhatsApp</th><th>Pesanan</th><th>Aksi</th></tr></thead><tbody id="adminAccBody"></tbody></table></div>
+      <p style="font-size:11px;color:var(--text2);margin-top:12px;line-height:1.7;">Password pelanggan tidak bisa dilihat. Jika lupa, tekan ikon kunci untuk membuat password sementara baru, lalu kirim ke pelanggan.</p>
     </div>
   </div>
 </div>
@@ -873,22 +889,28 @@ body.sb-open .nav-logo{background:transparent;box-shadow:none}
 <!-- USER LOGIN MODAL (Nama Saja) -->
 <div class="modal-overlay" id="userLoginModal">
   <div class="modal-box" style="max-width:400px;">
-    <div class="modal-title">
-      <span><i class="fas fa-user" style="color:var(--accent);margin-right:8px;"></i>Masuk dengan Nama</span>
-      <button class="modal-close" onclick="closeUserLoginModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-title"><span><i class="fas fa-user-shield" style="color:var(--accent);margin-right:8px;"></i>Akun Pelanggan</span><button class="modal-close" onclick="closeUserLoginModal()"><i class="fas fa-times"></i></button></div>
+    <div id="acGuest">
+      <div class="ac-tabs"><button class="ac-tab active" data-m="login" onclick="acMode('login')">Masuk</button><button class="ac-tab" data-m="reg" onclick="acMode('reg')">Daftar</button></div>
+      <div class="form-group"><label class="form-label">ID Pengguna</label><input type="text" class="neu-input" id="acUser" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="20" placeholder="contoh: budi_01"></div>
+      <div class="form-group" data-reg><label class="form-label">Nama Panggilan</label><input type="text" class="neu-input" id="acName" maxlength="40" placeholder="Contoh: Budi"></div>
+      <div class="form-group" data-reg><label class="form-label">No. WhatsApp <span style="font-weight:400;color:var(--text2);">(opsional, untuk bantuan reset)</span></label><input type="text" inputmode="tel" class="neu-input" id="acPhone" maxlength="20" placeholder="08xxxxxxxxxx"></div>
+      <div class="form-group"><label class="form-label">Password</label><div class="pw-wrap"><input type="password" class="neu-input" id="acPass" autocomplete="current-password" maxlength="64" placeholder="minimal 6 karakter"><button type="button" class="pw-eye" onclick="acEye('acPass',this)"><i class="fas fa-eye"></i></button></div></div>
+      <div class="login-error" id="acErr" style="margin-bottom:10px;"></div>
+      <button class="neu-btn-accent" id="acGo" style="width:100%;padding:13px;font-size:13px;" onclick="acSubmit()">Masuk</button>
+      <div class="ac-note" data-login><a href="#" onclick="acForgot(event)">Lupa password? Hubungi admin</a></div>
+      <div class="ac-note" data-reg>ID tidak bisa diganti. Password disimpan terenkripsi dan tidak bisa dilihat siapa pun, termasuk admin.</div>
     </div>
-    <div style="font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.6;">Masukkan nama kamu untuk menyimpan riwayat pesanan. Tidak perlu password!</div>
-    <div class="form-group">
-      <label class="form-label">Nama Kamu</label>
-      <input type="text" class="neu-input" id="userNameInput" placeholder="Contoh: Budi" maxlength="40">
-    </div>
-    <div style="display:flex;gap:12px;margin-top:8px;">
-      <button class="neu-btn" style="flex:1;padding:12px;font-size:13px;" onclick="closeUserLoginModal()">Batal</button>
-      <button class="neu-btn-accent" style="flex:1;padding:12px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;" onclick="saveUserName()"><i class="fas fa-check"></i> Simpan</button>
-    </div>
-    <div id="loggedUserActions" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(163,177,198,.15);">
-      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">Login sebagai: <strong id="loggedNameDisplay" style="color:var(--accent);"></strong></div>
-      <button class="neu-btn-danger" style="width:100%;padding:10px;font-size:12px;display:flex;align-items:center;justify-content:center;gap:6px;" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    <div id="acIn" style="display:none;">
+      <div class="ac-me"><div class="ac-av" id="acAv">A</div><div><b id="acMeName"></b><small id="acMeId"></small></div></div>
+      <div id="acChg" style="display:none;">
+        <div class="form-group"><label class="form-label">Password Lama / Sementara</label><div class="pw-wrap"><input type="password" class="neu-input" id="acOld" autocomplete="current-password" maxlength="64"><button type="button" class="pw-eye" onclick="acEye('acOld',this)"><i class="fas fa-eye"></i></button></div></div>
+        <div class="form-group"><label class="form-label">Password Baru</label><div class="pw-wrap"><input type="password" class="neu-input" id="acNew" autocomplete="new-password" maxlength="64" placeholder="minimal 6 karakter"><button type="button" class="pw-eye" onclick="acEye('acNew',this)"><i class="fas fa-eye"></i></button></div></div>
+        <div class="login-error" id="acErr2" style="margin-bottom:10px;"></div>
+        <button class="neu-btn-accent" style="width:100%;padding:12px;font-size:13px;margin-bottom:10px;" onclick="acChange()">Simpan Password Baru</button>
+      </div>
+      <button class="neu-btn" id="acChgBtn" style="width:100%;padding:11px;font-size:12px;margin-bottom:10px;" onclick="acChgToggle()"><i class="fas fa-key"></i> Ganti Password</button>
+      <button class="neu-btn-danger" style="width:100%;padding:11px;font-size:12px;" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Keluar</button>
     </div>
   </div>
 </div>
@@ -900,7 +922,7 @@ body.sb-open .nav-logo{background:transparent;box-shadow:none}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   initializeFirestore, persistentLocalCache, persistentMultipleTabManager, getFirestore, collection, getDocs, doc, addDoc, setDoc, updateDoc, deleteDoc,
-  query, orderBy, onSnapshot, serverTimestamp, getDoc
+  query, orderBy, onSnapshot, serverTimestamp, getDoc, arrayUnion
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, onAuthStateChanged, signOut
@@ -1021,8 +1043,22 @@ window._fs = {
   },
   async saveUser(userId, data) {
     return await setDoc(doc(db, 'users', userId), data, { merge: true });
-  }
+  },
+  // ── akun pelanggan ──
+  async usernameCreate(u) { return await setDoc(doc(db, 'usernames', u), { createdAt: new Date().toISOString() }); },
+  async usernameDelete(u) { return await deleteDoc(doc(db, 'usernames', u)); },
+  async accGet(id) { const x = await getDoc(doc(db, 'accounts', id)); return x.exists() ? x.data() : null; },
+  async accCreate(id, data) { return await setDoc(doc(db, 'accounts', id), data); },
+  async accDelete(id) { return await deleteDoc(doc(db, 'accounts', id)); },
+  async accAddOrder(id, orderId) { return await updateDoc(doc(db, 'accounts', id), { orderIds: arrayUnion(orderId) }); },
+  async orderGet(id) { const x = await getDoc(doc(db, 'pesanan', id)); return x.exists() ? { firestoreId: x.id, ...x.data() } : null; }
 };
+function listenAccounts() {
+  return onSnapshot(collection(db, 'accounts'), snap => {
+    window._accs = snap.docs.map(d => ({ credId: d.id, ...d.data() }));
+    if (window.renderAcc) window.renderAcc();
+  }, () => {});
+}
 
 /* expose data refs */
 window._getProducts = () => products;
@@ -1037,8 +1073,9 @@ listenAbout();
    Admin ditentukan oleh Firestore Rules (daftar email di server), bukan oleh kode ini.
    Cara cek: akun admin boleh membaca dokumen 'admin_check/ping', akun lain ditolak. */
 let unsubOrders = null;
-function startOrders() { if (!unsubOrders) unsubOrders = listenOrders(); }
-function stopOrders() { if (unsubOrders) { unsubOrders(); unsubOrders = null; } orders = []; }
+let unsubAcc = null;
+function startOrders() { if (!unsubOrders) unsubOrders = listenOrders(); if (!unsubAcc) unsubAcc = listenAccounts(); }
+function stopOrders() { if (unsubOrders) { unsubOrders(); unsubOrders = null; } if (unsubAcc) { unsubAcc(); unsubAcc = null; } window._accs = []; orders = []; }
 const gProvider = new GoogleAuthProvider();
 gProvider.setCustomParameters({ prompt: 'select_account' });
 window._auth = {
@@ -1073,6 +1110,7 @@ const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').mat
 
 // Current user (name-only login)
 let currentUser = JSON.parse(localStorage.getItem('icr_user') || 'null');
+if (currentUser && !currentUser.credId) { currentUser = null; localStorage.removeItem('icr_user'); }
 
 // ─── HELPERS ───
 const fp = p => 'Rp ' + p.toLocaleString('id-ID');
@@ -1281,52 +1319,80 @@ function updateUserUI() {
     if (mobileEl) mobileEl.textContent = currentUser.name.split(' ')[0];
   } else {
     nameEl.textContent = 'Login';
-    if (mobileEl) mobileEl.textContent = 'Login Nama';
+    if (mobileEl) mobileEl.textContent = 'Masuk / Daftar';
   }
+}
+const AC_RE = /^[a-z0-9_]{3,20}$/; let acM = 'login', acFail = 0, acLock = 0;
+async function derive(u, p) {
+  const enc = new TextEncoder(), key = await crypto.subtle.importKey('raw', enc.encode(p), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode('ira-cookies:' + u), iterations: 150000 }, key, 256);
+  return [...new Uint8Array(bits)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+function acErr(t, id) { const e = document.getElementById(id || 'acErr'); e.textContent = t; e.classList.toggle('show', !!t); }
+function acEye(id, b) { const i = document.getElementById(id); i.type = i.type === 'password' ? 'text' : 'password'; b.firstElementChild.className = 'fas fa-eye' + (i.type === 'password' ? '' : '-slash'); }
+function acMode(m) {
+  acM = m; document.querySelectorAll('.ac-tab').forEach(t => t.classList.toggle('active', t.dataset.m === m));
+  document.querySelectorAll('#acGuest [data-reg]').forEach(e => e.style.display = m === 'reg' ? '' : 'none');
+  document.querySelectorAll('#acGuest [data-login]').forEach(e => e.style.display = m === 'login' ? '' : 'none');
+  document.getElementById('acGo').textContent = m === 'reg' ? 'Daftar & Masuk' : 'Masuk';
+  document.getElementById('acPass').autocomplete = m === 'reg' ? 'new-password' : 'current-password'; acErr('');
+}
+function acView() {
+  const g = document.getElementById('acGuest'), i = document.getElementById('acIn');
+  g.style.display = currentUser ? 'none' : 'block'; i.style.display = currentUser ? 'block' : 'none';
+  if (currentUser) { document.getElementById('acAv').textContent = currentUser.name.charAt(0).toUpperCase(); document.getElementById('acMeName').textContent = currentUser.name; document.getElementById('acMeId').textContent = '@' + currentUser.username; }
+  else acMode(acM);
 }
 function openUserLoginModal() {
-  const modal = document.getElementById('userLoginModal');
-  const input = document.getElementById('userNameInput');
-  const actions = document.getElementById('loggedUserActions');
-  const nameDisp = document.getElementById('loggedNameDisplay');
-  if (currentUser) {
-    input.value = currentUser.name;
-    actions.style.display = 'block';
-    nameDisp.textContent = currentUser.name;
-  } else {
-    input.value = '';
-    actions.style.display = 'none';
-  }
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => input.focus(), 300);
+  acView(); acErr(''); document.getElementById('acChg').style.display = 'none';
+  document.getElementById('userLoginModal').classList.add('open'); document.body.style.overflow = 'hidden';
+  if (!currentUser) setTimeout(() => document.getElementById('acUser').focus(), 300);
 }
-function closeUserLoginModal() {
-  document.getElementById('userLoginModal').classList.remove('open');
-  document.body.style.overflow = '';
+function closeUserLoginModal() { document.getElementById('userLoginModal').classList.remove('open'); document.body.style.overflow = ''; }
+function acLogin(id, d) {
+  currentUser = { userId: d.username, username: d.username, name: d.name, phone: d.phone || '', credId: id, mustChange: !!d.mustChange };
+  localStorage.setItem('icr_user', JSON.stringify(currentUser)); updateUserUI(); acFail = 0;
+  document.getElementById('acPass').value = '';
+  if (d.mustChange) { acView(); acChgToggle(true); toast('Buat password baru untuk melanjutkan'); }
+  else closeUserLoginModal();
 }
-function saveUserName() {
-  const name = document.getElementById('userNameInput').value.trim();
-  if (!name) { toast('Masukkan nama kamu', 'error'); return; }
-  const userId = 'user_' + name.toLowerCase().replace(/\s+/g, '_') + '_' + Date.now().toString(36);
-  const userData = { name, userId, createdAt: new Date().toISOString() };
-  currentUser = userData;
-  localStorage.setItem('icr_user', JSON.stringify(userData));
-  // save to Firestore users collection
-  if (window._fs) {
-    window._fs.saveUser(userId, { name, createdAt: new Date().toISOString() }).catch(() => {});
-  }
-  updateUserUI();
-  toast('Halo, ' + name + '! 👋');
-  closeUserLoginModal();
+async function acSubmit() {
+  const u = document.getElementById('acUser').value.trim().toLowerCase(), p = document.getElementById('acPass').value, b = document.getElementById('acGo'); acErr('');
+  if (Date.now() < acLock) return acErr('Terlalu banyak percobaan. Coba lagi ' + Math.ceil((acLock - Date.now()) / 1000) + ' detik lagi.');
+  if (!AC_RE.test(u)) return acErr('ID harus 3-20 karakter: huruf kecil, angka, atau _');
+  if (p.length < 6) return acErr('Password minimal 6 karakter');
+  if (!window._fs) return acErr('Layanan belum siap, coba lagi sebentar');
+  const t0 = b.textContent; b.disabled = true; b.textContent = 'Memproses...';
+  try {
+    const id = await derive(u, p);
+    if (acM === 'reg') {
+      try { await window._fs.usernameCreate(u); } catch (e) { throw e && e.code === 'permission-denied' ? new Error('ID "' + u + '" sudah dipakai, pilih ID lain') : e; }
+      const d = { username: u, name: document.getElementById('acName').value.trim() || u, phone: document.getElementById('acPhone').value.trim(), orderIds: [], mustChange: false, createdAt: new Date().toISOString() };
+      await window._fs.accCreate(id, d); acLogin(id, d); toast('Akun dibuat. Selamat datang, ' + d.name + '!');
+    } else {
+      const d = await window._fs.accGet(id);
+      if (!d || d.username !== u) { if (++acFail >= 5) { acLock = Date.now() + 30000; acFail = 0; } throw new Error('ID atau password salah'); }
+      acLogin(id, d); toast('Halo, ' + d.name + '!');
+    }
+  } catch (e) { acErr(e && e.code ? 'Terjadi kendala koneksi, coba lagi' : (e.message || 'Gagal, coba lagi')); }
+  finally { b.disabled = false; b.textContent = t0; }
 }
-function logoutUser() {
-  currentUser = null;
-  localStorage.removeItem('icr_user');
-  updateUserUI();
-  toast('Logout berhasil');
-  closeUserLoginModal();
+function acForgot(e) { e.preventDefault(); const u = document.getElementById('acUser').value.trim(); window.open('https://wa.me/6287755046663?text=' + encodeURIComponent('Halo admin, saya lupa password akun Ira Cookies.' + (u ? ' ID: ' + u : '')), '_blank'); }
+function acChgToggle(force) { const b = document.getElementById('acChg'), o = typeof force === 'boolean' ? force : b.style.display === 'none'; b.style.display = o ? 'block' : 'none'; acErr('', 'acErr2'); if (o) document.getElementById('acOld').focus(); }
+async function acChange() {
+  const op = document.getElementById('acOld').value, np = document.getElementById('acNew').value; acErr('', 'acErr2');
+  if (np.length < 6) return acErr('Password baru minimal 6 karakter', 'acErr2');
+  try {
+    const oid = await derive(currentUser.username, op);
+    if (oid !== currentUser.credId) return acErr('Password lama salah', 'acErr2');
+    const nid = await derive(currentUser.username, np); if (nid === oid) return acErr('Password baru harus berbeda', 'acErr2');
+    const d = await window._fs.accGet(oid); if (!d) return acErr('Akun tidak ditemukan, silakan masuk ulang', 'acErr2');
+    d.mustChange = false; await window._fs.accCreate(nid, d); await window._fs.accDelete(oid);
+    currentUser.credId = nid; currentUser.mustChange = false; localStorage.setItem('icr_user', JSON.stringify(currentUser));
+    document.getElementById('acOld').value = document.getElementById('acNew').value = ''; toast('Password berhasil diganti'); closeUserLoginModal();
+  } catch (e) { acErr('Gagal menyimpan, coba lagi', 'acErr2'); }
 }
+function logoutUser() { currentUser = null; localStorage.removeItem('icr_user'); updateUserUI(); toast('Berhasil keluar'); closeUserLoginModal(); if (typeof curPage !== 'undefined' && curPage === 'riwayat') renderHistory(true); }
 
 // ─── PRODUCT DETAIL MODAL ───
 function openPD(firestoreId) {
@@ -1386,7 +1452,7 @@ function choiceDirectCheckout() {
 function switchAdminTab(t) {
   document.querySelectorAll('.admin-tab').forEach(x => x.classList.toggle('active', x.dataset.tab === t));
   document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-  const map = { dashboard: 'adminDashboard', produk: 'adminProduk', tentang: 'adminTentang', pesanan: 'adminPesanan' };
+  const map = { dashboard: 'adminDashboard', produk: 'adminProduk', tentang: 'adminTentang', pesanan: 'adminPesanan', akun: 'adminAkun' };
   if (map[t]) document.getElementById(map[t]).classList.add('active');
 }
 
@@ -1887,7 +1953,10 @@ async function submitOrder(e) {
   };
   // save to Firestore
   if (window._fs) {
-    try { await window._fs.addOrder(orderData); } catch (err) { console.warn('Order save failed:', err); }
+    try {
+      const ref = await window._fs.addOrder(orderData);
+      if (currentUser && currentUser.credId && ref && ref.id) window._fs.accAddOrder(currentUser.credId, ref.id).catch(e => console.warn(e));
+    } catch (err) { console.warn('Order save failed:', err); }
   }
   // also keep in localStorage for offline history
   const localOrders = JSON.parse(localStorage.getItem('icr_orders') || '[]');
@@ -2014,7 +2083,7 @@ function go(pg, e) {
   if (!PAGES.includes(pg)) pg = 'home'; curPage = pg;
   PAGES.forEach(x => { const el = document.getElementById('pg-' + x); if (el) el.classList.toggle('active', x === pg); });
   document.querySelectorAll('.sb-link[data-pg]').forEach(a => a.classList.toggle('active', a.dataset.pg === pg));
-  if (pg === 'riwayat') renderHistory();
+  if (pg === 'riwayat') renderHistory(true);
   window.scrollTo(0, 0); try { history.replaceState(null, '', '#' + pg); } catch (x) {}
   setSidebar(false);
 }
@@ -2064,24 +2133,41 @@ function dots(t) {
 
 // ─── RIWAYAT (halaman) ───
 function openHistoryModal(e) { if (e && e.preventDefault) e.preventDefault(); closeCart(); go('riwayat'); }
-function renderHistoryIfOpen() { if (curPage === 'riwayat') renderHistory(); }
-let _ho = [];
-function renderHistory() {
-  const b = document.getElementById('historyPageBody'); if (!b) return;
-  const all = window._getOrders ? window._getOrders() : [], loc = JSON.parse(localStorage.getItem('icr_orders') || '[]');
-  let list = loc;
-  if (currentUser) { const m = all.filter(o => o.userId === currentUser.userId || o.userName === currentUser.name); if (m.length) list = m; }
-  _ho = list;
-  if (!list.length) { b.innerHTML = '<div class="hc" style="text-align:center;color:var(--text2);padding:40px 20px;"><i class="fas fa-receipt" style="font-size:42px;opacity:.25;display:block;margin-bottom:12px;"></i>Belum ada pesanan<br><button class="neu-btn-accent" style="margin-top:16px;padding:11px 22px;font-size:12px;" onclick="go(\'produk\')">Mulai Belanja</button></div>'; return; }
-  const lv = { wait: 0, process: 1, done: 2 }, nm = ['Menunggu', 'Diproses', 'Selesai'], ic = ['clock', 'fire', 'check'];
-  b.innerHTML = list.map((o, i) => {
-    const s = lv[o.status] ?? 0;
-    return `<div class="hc" style="animation-delay:${Math.min(i, 6) * 70}ms"><div class="hc-top"><span>${o.orderId || o.id || '—'}</span><span style="color:var(--accent)">${nm[s]}</span></div>
-    <div class="hc-date">${o.date || (o.createdAt?.toDate?.()?.toLocaleString('id-ID') || '—')}</div>
+function renderHistoryIfOpen() { }
+let _ho = [], _hT = null, _hSig = '';
+async function loadHist() {
+  if (currentUser && currentUser.credId && window._fs) {
+    try {
+      const a = await window._fs.accGet(currentUser.credId);
+      if (!a) { logoutUser(); toast('Sesi berakhir, silakan masuk lagi', 'error'); return []; }
+      const ids = (a.orderIds || []).slice(-30).reverse();
+      return (await Promise.all(ids.map(id => window._fs.orderGet(id).catch(() => null)))).filter(Boolean);
+    } catch (e) { console.warn(e); }
+  }
+  return JSON.parse(localStorage.getItem('icr_orders') || '[]');
+}
+async function renderHistory(fresh) {
+  const b = document.getElementById('historyPageBody'); if (!b) return; clearTimeout(_hT);
+  if (fresh) { _hSig = ''; if (!b.children.length) b.innerHTML = '<div class="hc" style="text-align:center;color:var(--text2);">Memuat...</div>'; }
+  const list = await loadHist(); _ho = list;
+  const sig = JSON.stringify(list.map(o => (o.firestoreId || o.orderId) + o.status)) + (currentUser ? 1 : 0);
+  if (sig !== _hSig) {
+    _hSig = sig;
+    const guest = currentUser ? '' : '<div class="hc" style="text-align:center;font-size:12px;color:var(--text2);line-height:1.7;"><i class="fas fa-shield-halved" style="color:var(--accent);font-size:22px;display:block;margin-bottom:8px;"></i>Masuk agar riwayat pesananmu tersimpan aman dan bisa dibuka di perangkat lain.<br><button class="neu-btn-accent" style="margin-top:12px;padding:10px 20px;font-size:12px;" onclick="openUserLoginModal()">Masuk / Daftar</button></div>';
+    if (!list.length) { b.innerHTML = guest + '<div class="hc" style="text-align:center;color:var(--text2);padding:40px 20px;"><i class="fas fa-receipt" style="font-size:42px;opacity:.25;display:block;margin-bottom:12px;"></i>Belum ada pesanan<br><button class="neu-btn-accent" style="margin-top:16px;padding:11px 22px;font-size:12px;" onclick="go(\'produk\')">Mulai Belanja</button></div>'; }
+    else {
+      const lv = { wait: 0, process: 1, done: 2 }, nm = ['Menunggu', 'Diproses', 'Selesai'], ic = ['clock', 'fire', 'check'];
+      b.innerHTML = guest + list.map((o, i) => {
+        const s = lv[o.status] ?? 0, an = fresh ? `animation-delay:${Math.min(i, 6) * 70}ms` : 'animation:none';
+        return `<div class="hc" style="${an}"><div class="hc-top"><span>${E(o.orderId || o.id || '—')}</span><span style="color:var(--accent)">${nm[s]}</span></div>
+    <div class="hc-date">${E(o.date || (o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString('id-ID') : '—'))}</div>
     <div class="stp">${[0, 1, 2].map(k => `<span class="${k <= s ? 'on' : ''}"><i class="fas fa-${ic[k]}"></i></span>${k < 2 ? `<em class="${k < s ? 'on' : ''}"></em>` : ''}`).join('')}</div>
-    <div class="hc-items">${(o.items || []).map(x => x.name + ' ×' + x.qty).join(' · ')}</div>
+    <div class="hc-items">${(o.items || []).map(x => E(x.name) + ' ×' + E(x.qty)).join(' · ')}</div>
     <div class="hc-bot"><div class="hc-tot">${fp(o.total || 0)}</div><div class="hc-btns"><button class="neu-btn" onclick="reorder(${i})"><i class="fas fa-redo"></i> Pesan Lagi</button><a class="neu-btn" target="_blank" href="https://wa.me/6287755046663?text=${encodeURIComponent('Halo, tanya pesanan ' + (o.orderId || ''))}"><i class="fab fa-whatsapp"></i></a></div></div></div>`;
-  }).join('');
+      }).join('');
+    }
+  }
+  if (curPage === 'riwayat') _hT = setTimeout(() => renderHistory(false), 15000);
 }
 function reorder(i) {
   const o = _ho[i]; if (!o) return;
@@ -2193,6 +2279,36 @@ function pruneCart() {
   renderCart(); updateCB();
 }
 window.pruneCart = pruneCart;
+
+// ═══ ADMIN: AKUN PELANGGAN ═══
+window._accs = window._accs || [];
+function renderAcc() {
+  const b = document.getElementById('adminAccBody'); if (!b) return;
+  const q = (document.getElementById('accSearch').value || '').trim().toLowerCase();
+  const L = (window._accs || []).filter(a => !q || (a.username || '').includes(q) || (a.name || '').toLowerCase().includes(q)).sort((x, y) => (x.username > y.username ? 1 : -1));
+  b.innerHTML = L.length ? L.map(a => `<tr><td style="font-weight:700;">@${E(a.username)}${a.mustChange ? '<br><span style="font-size:10px;font-weight:400;color:var(--accent);">menunggu ganti password</span>' : ''}</td><td>${E(a.name)}</td><td>${E(a.phone || '—')}</td><td>${(a.orderIds || []).length}</td>
+    <td style="white-space:nowrap;"><button class="admin-action-btn" title="Reset password" onclick="resetAcc('${a.credId}')"><i class="fas fa-key"></i></button><button class="admin-action-btn admin-action-delete" title="Hapus akun" onclick="delAcc('${a.credId}')"><i class="fas fa-trash"></i></button></td></tr>`).join('')
+    : '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--text2);">' + (q ? 'ID tidak ditemukan' : 'Belum ada akun pelanggan') + '</td></tr>';
+}
+function genTmp() { const c = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(8)); return [...r].map(x => c[x % c.length]).join(''); }
+async function resetAcc(cid) {
+  const a = (window._accs || []).find(x => x.credId === cid); if (!a) return;
+  if (!(await cfm('Reset password akun <b>@' + E(a.username) + '</b>?<br><small>Password lama dihapus dan tidak ditampilkan. Pelanggan wajib membuat password baru saat masuk.</small>', 'Ya, Reset'))) return;
+  const tmp = genTmp();
+  try {
+    const nid = await derive(a.username, tmp);
+    await window._fs.accCreate(nid, { username: a.username, name: a.name, phone: a.phone || '', orderIds: a.orderIds || [], mustChange: true, createdAt: a.createdAt || new Date().toISOString() });
+    await window._fs.accDelete(cid);
+    const wa = a.phone ? `<a class="neu-btn-accent" style="display:flex;justify-content:center;gap:8px;padding:12px;font-size:13px;text-decoration:none;margin-top:6px;" target="_blank" href="https://wa.me/${waNum(a.phone)}?text=${encodeURIComponent('Halo ' + a.name + ', password akun Ira Cookies kamu sudah direset. Password sementara: ' + tmp + '. Silakan masuk lalu buat password baru ya.')}"><i class="fab fa-whatsapp"></i> Kirim ke WhatsApp ${E(a.name)}</a>` : '<p style="font-size:11px;">Nomor WhatsApp pelanggan tidak tersedia. Sampaikan password ini secara langsung.</p>';
+    showInfoHtml('Password Sementara', `<p>Akun <b>@${E(a.username)}</b> sudah direset. Berikan password sementara ini ke pelanggan. Password ini hanya tampil sekali.</p><div class="tmp-box">${tmp}</div>${wa}`);
+  } catch (e) { toast('Gagal reset: ' + e.message, 'error'); }
+}
+async function delAcc(cid) {
+  const a = (window._accs || []).find(x => x.credId === cid); if (!a) return;
+  if (!(await cfm('Hapus akun <b>@' + E(a.username) + '</b>?<br><small>Riwayat pesanan di toko tetap tersimpan. ID ini bisa didaftarkan ulang.</small>'))) return;
+  try { await window._fs.accDelete(cid); await window._fs.usernameDelete(a.username); toast('Akun dihapus'); } catch (e) { toast('Gagal hapus: ' + e.message, 'error'); }
+}
+function showInfoHtml(t, h) { document.getElementById('infoTitle').textContent = t; document.getElementById('infoBody').innerHTML = h; document.getElementById('infoModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
 
 init();
 </script>
