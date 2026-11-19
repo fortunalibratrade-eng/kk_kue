@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="referrer" content="no-referrer">
+<script>(function(){try{var m=localStorage.getItem("icr_pm")||"auto",t=m;if(m==="auto"){t=localStorage.getItem("icr_pt");if(!t){var n=navigator,c=n.connection||{},mem=n.deviceMemory||4,cr=n.hardwareConcurrency||4,ap=/iPhone|iPad|Macintosh/.test(n.userAgent);t=(c.saveData||matchMedia("(prefers-reduced-motion:reduce)").matches||(!ap&&(mem<=2||cr<=3)))?"low":(ap||(mem>=6&&cr>=8))?"high":"medium"}}document.documentElement.dataset.perf=t}catch(e){document.documentElement.dataset.perf="medium"}})()</script>
 <link rel="preconnect" href="https://wsrv.nl"><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Ira Cookies">
 <script>try{var _t=localStorage.getItem("icr_theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.dataset.theme=_t}catch(e){}</script>
@@ -315,7 +316,6 @@ body.ready .hero-content>*:nth-child(1){transition-delay:.1s}body.ready .hero-co
 .product-category-tag,.photo-count,.pd-count{background:rgba(245,247,250,.9)}.photo-count,.pd-count{background:rgba(42,47,51,.78)}
 .modal-overlay:not(.open),.choice-overlay:not(.open),.pd-modal-overlay:not(.open),.cart-overlay:not(.open){-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 @keyframes imgIn{from{opacity:0}}
-@media(max-width:899px),(hover:none){body::before{animation:none}}
 /* --- marquee keunggulan --- */
 .marquee{position:relative;margin:14px 0 6px;padding:12px 0;border-radius:46px;box-shadow:inset 5px 5px 11px var(--shadow-inset-dark),inset -5px -5px 11px var(--shadow-inset-light)}
 .mq-mask{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
@@ -344,6 +344,38 @@ body.sb-open .nav-logo{background:transparent;box-shadow:none}
 .ac-me{display:flex;align-items:center;gap:14px;margin-bottom:18px}.ac-me b{display:block;font-size:15px}.ac-me small{color:var(--text2);font-size:12px}
 .ac-av{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font:800 18px 'Playfair Display',serif;color:#fff;background:linear-gradient(145deg,var(--accent),var(--accent-hover));box-shadow:0 6px 16px var(--accent-glow)}
 .tmp-box{margin:14px 0;padding:16px;text-align:center;font:800 26px 'Poppins',sans-serif;letter-spacing:5px;color:var(--accent);border-radius:16px;box-shadow:inset 4px 4px 9px var(--shadow-inset-dark),inset -4px -4px 9px var(--shadow-inset-light);user-select:all}
+/* ===== DOCK (HP) ===== */
+.dock{display:none}
+@media(max-width:899px){
+.dock{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:1450;padding:7px;gap:3px;border-radius:30px;background:var(--bg);box-shadow:9px 9px 24px var(--shadow-dark),-9px -9px 24px var(--shadow-light),inset 1px 1px 0 var(--edge);transition:transform .55s var(--smooth)}
+.dock.dock-hide{transform:translateY(150%)}
+.dock-i{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 2px 9px;border:none;border-radius:23px;background:none;color:var(--text2);text-decoration:none;font:600 10.5px 'Poppins',sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:color .3s,box-shadow .4s var(--smooth),transform .3s var(--bounce)}
+.dock-i span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dock-i i{font-size:17px;transition:transform .45s var(--bounce)}
+.dock-i.active{color:var(--accent);box-shadow:inset 4px 4px 10px var(--shadow-inset-dark),inset -4px -4px 10px var(--shadow-inset-light)}
+.dock-i.active i{transform:translateY(-1px) scale(1.14)}
+.dock-i:active{transform:scale(.92)}
+.dock-badge{position:absolute;top:3px;left:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:#fff;font:700 10px/18px 'Poppins',sans-serif;text-align:center;box-shadow:0 3px 8px var(--accent-glow)}
+body .shell{padding-bottom:104px}body .footer{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
+body .scroll-top{bottom:calc(98px + env(safe-area-inset-bottom))}
+.sidebar .sb-nav{display:none}.sb-foot{margin-top:0;padding-top:0;border-top:none}
+}
+body.sb-open .sb-foot .sb-link:nth-child(6){transition-delay:.55s}
+/* ===== POLES ===== */
+.section-title::after{content:"";display:block;width:48px;height:4px;border-radius:4px;margin:10px auto 0;background:linear-gradient(90deg,var(--accent),#eaa97a)}
+.hsec-head .section-title::after{margin-left:0;width:36px;height:3px}
+/* ===== TINGKAT KUALITAS: tinggi = semua efek; sedang = tanpa animasi latar; rendah = tanpa animasi berat ===== */
+html[data-perf=high] .hero .neu-btn-accent{background-size:220% 100%;animation:sheen 6s ease-in-out infinite}
+@keyframes sheen{50%{background-position:100% 0}}
+html[data-perf=high] .product-card:hover{box-shadow:12px 14px 28px var(--shadow-dark),-10px -10px 24px var(--shadow-light),0 0 0 1px var(--accent-glow)}
+html[data-perf=medium] body::before,html[data-perf=medium] .nav-caret.hint::after{animation:none!important}
+html[data-perf=medium] .ls-ring{display:none}
+html[data-perf=low] *,html[data-perf=low] *::before,html[data-perf=low] *::after{animation:none!important;transition-duration:.18s!important;transition-delay:0s!important}
+html[data-perf=low] body::before,html[data-perf=low] .ls-ring{display:none}
+html[data-perf=low] .mq-mask{overflow-x:auto;-webkit-mask-image:none;mask-image:none;scrollbar-width:none}html[data-perf=low] .mq-mask::-webkit-scrollbar{display:none}
+html[data-perf=low] .product-card,html[data-perf=low] .about-card,html[data-perf=low] .fs-card,html[data-perf=low] .hc,html[data-perf=low] .cta-card,html[data-perf=low] .dock,html[data-perf=low] .sidebar,html[data-perf=low] .nav-logo{box-shadow:4px 4px 9px var(--shadow-dark),-4px -4px 9px var(--shadow-light)!important}
+html:not([data-perf=high]) .modal-overlay,html:not([data-perf=high]) .choice-overlay,html:not([data-perf=high]) .pd-modal-overlay,html:not([data-perf=high]) .cart-overlay{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.ac-gate{padding:12px 14px;margin-bottom:16px;border-radius:14px;font-size:12px;line-height:1.6;border-left:3px solid var(--accent);box-shadow:inset 3px 3px 7px var(--shadow-inset-dark),inset -3px -3px 7px var(--shadow-inset-light)}.ac-gate i{color:var(--accent);margin-right:6px}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -631,11 +663,19 @@ body.sb-open .nav-logo{background:transparent;box-shadow:none}
     <button class="sb-link" onclick="openUserLoginModal()"><i class="fas fa-user"></i><span id="mobileUserName">Masuk / Daftar</span></button>
     <button class="sb-link" onclick="toggleTheme()"><i class="theme-ic fas fa-moon"></i>Mode Gelap / Terang</button>
     <button class="sb-link" onclick="toggleSound()"><i class="fas fa-volume-high" id="sndIc"></i><span id="sndTxt">Suara: Aktif</span></button>
+    <button class="sb-link" onclick="cyclePerf()"><i class="fas fa-gauge-high"></i><span id="perfTxt">Kualitas: Auto</span></button>
     <button class="sb-link" onclick="toggleFull()"><i class="fas fa-expand"></i>Layar Penuh</button>
     <a class="sb-link" href="https://wa.me/6287755046663?text=Halo%20Ira%20Cookies!" target="_blank"><i class="fab fa-whatsapp"></i>Chat WhatsApp</a>
   </div>
 </aside>
 <div class="sb-overlay" onclick="setSidebar(false)"></div>
+<nav class="dock" id="dock" aria-label="Navigasi utama">
+  <a class="dock-i active" data-pg="home" href="#home" onclick="go('home',event)"><i class="fas fa-house"></i><span>Beranda</span></a>
+  <a class="dock-i" data-pg="produk" href="#produk" onclick="go('produk',event)"><i class="fas fa-cookie-bite"></i><span>Produk</span></a>
+  <a class="dock-i" data-pg="tentang" href="#tentang" onclick="go('tentang',event)"><i class="fas fa-heart"></i><span>Tentang</span></a>
+  <a class="dock-i" data-pg="riwayat" href="#riwayat" onclick="go('riwayat',event)"><i class="fas fa-receipt"></i><span>Riwayat</span><b class="dock-badge" id="dockBadge" style="display:none">0</b></a>
+  <button class="dock-i" type="button" onclick="openUserLoginModal()"><i class="fas fa-user"></i><span id="dockAccTxt">Masuk</span></button>
+</nav>
 <main class="shell"><div class="page active" id="pg-home">
 <section class="hero" id="hero">
   <div class="hero-content">
@@ -891,6 +931,7 @@ body.sb-open .nav-logo{background:transparent;box-shadow:none}
   <div class="modal-box" style="max-width:400px;">
     <div class="modal-title"><span><i class="fas fa-user-shield" style="color:var(--accent);margin-right:8px;"></i>Akun Pelanggan</span><button class="modal-close" onclick="closeUserLoginModal()"><i class="fas fa-times"></i></button></div>
     <div id="acGuest">
+      <div class="ac-gate" id="acGate" style="display:none;"></div>
       <div class="ac-tabs"><button class="ac-tab active" data-m="login" onclick="acMode('login')">Masuk</button><button class="ac-tab" data-m="reg" onclick="acMode('reg')">Daftar</button></div>
       <div class="form-group"><label class="form-label">ID Pengguna</label><input type="text" class="neu-input" id="acUser" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="20" placeholder="contoh: budi_01"></div>
       <div class="form-group" data-reg><label class="form-label">Nama Panggilan</label><input type="text" class="neu-input" id="acName" maxlength="40" placeholder="Contoh: Budi"></div>
@@ -910,7 +951,7 @@ body.sb-open .nav-logo{background:transparent;box-shadow:none}
         <button class="neu-btn-accent" style="width:100%;padding:12px;font-size:13px;margin-bottom:10px;" onclick="acChange()">Simpan Password Baru</button>
       </div>
       <button class="neu-btn" id="acChgBtn" style="width:100%;padding:11px;font-size:12px;margin-bottom:10px;" onclick="acChgToggle()"><i class="fas fa-key"></i> Ganti Password</button>
-      <button class="neu-btn-danger" style="width:100%;padding:11px;font-size:12px;" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+      <button class="neu-btn-danger" style="width:100%;padding:11px;font-size:12px;" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Keluar</button>
     </div>
   </div>
 </div>
@@ -1111,6 +1152,18 @@ const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').mat
 // Current user (name-only login)
 let currentUser = JSON.parse(localStorage.getItem('icr_user') || 'null');
 if (currentUser && !currentUser.credId) { currentUser = null; localStorage.removeItem('icr_user'); }
+// Keranjang milik akun: disimpan terpisah per akun, keranjang tamu terpisah lagi
+function loadCartFor(u) { try { return JSON.parse(localStorage.getItem(u ? 'icr_cart_u_' + u.username : 'icr_cart') || '[]'); } catch (e) { return []; } }
+if (!currentUser) localStorage.removeItem('icr_cart');   // keranjang hanya untuk yang sudah masuk
+cart.splice(0, cart.length, ...loadCartFor(currentUser));
+// Keranjang wajib login: aksi yang tertunda otomatis dijalankan setelah berhasil masuk
+var pendingAct = null;
+function needLogin(act, msg) {
+  if (currentUser) return false;
+  pendingAct = act ? { fn: act, t: Date.now() } : null;
+  window.__gate = msg || 'Masuk atau daftar dulu untuk memakai keranjang.';
+  openUserLoginModal(); return true;
+}
 
 // ─── HELPERS ───
 const fp = p => 'Rp ' + p.toLocaleString('id-ID');
@@ -1147,7 +1200,7 @@ function gImgs(p) {
   return [main, ...ex.filter(x => x !== main)];
 }
 // Rantai cadangan: langsung -> wsrv.nl (CDN gratis) -> Photon (WordPress CDN gratis) -> placeholder
-function thumb(u, w) { return /^https?:\/\//i.test(u) ? 'https://wsrv.nl/?url=' + encodeURIComponent(u) + '&w=' + w + '&we&output=webp&q=76' : u; }
+function thumb(u, w) { w = Math.round(w * ({ low: .7, medium: .85, high: 1 }[document.documentElement.dataset.perf] || 1)); return /^https?:\/\//i.test(u) ? 'https://wsrv.nl/?url=' + encodeURIComponent(u) + '&w=' + w + '&we&output=webp&q=76' : u; }
 function ia(u, w) { const t = thumb(u, w); return 'src="' + t + '"' + (t !== u ? ' data-orig="' + u + '"' : '') + ' decoding="async"'; }
 // Rantai cadangan: thumbnail -> link asli -> wsrv.nl -> Photon -> placeholder
 function imgFallback(el) {
@@ -1344,6 +1397,7 @@ function acView() {
   else acMode(acM);
 }
 function openUserLoginModal() {
+  const gt = document.getElementById('acGate'); if (window.__gate) { gt.innerHTML = '<i class="fas fa-lock"></i> ' + E(window.__gate); gt.style.display = 'block'; window.__gate = null; } else gt.style.display = 'none';
   acView(); acErr(''); document.getElementById('acChg').style.display = 'none';
   document.getElementById('userLoginModal').classList.add('open'); document.body.style.overflow = 'hidden';
   if (!currentUser) setTimeout(() => document.getElementById('acUser').focus(), 300);
@@ -1351,10 +1405,14 @@ function openUserLoginModal() {
 function closeUserLoginModal() { document.getElementById('userLoginModal').classList.remove('open'); document.body.style.overflow = ''; }
 function acLogin(id, d) {
   currentUser = { userId: d.username, username: d.username, name: d.name, phone: d.phone || '', credId: id, mustChange: !!d.mustChange };
-  localStorage.setItem('icr_user', JSON.stringify(currentUser)); updateUserUI(); acFail = 0;
+  localStorage.setItem('icr_user', JSON.stringify(currentUser)); updateUserUI(); acFail = 0; refreshBadge(); switchCartOnLogin();
   document.getElementById('acPass').value = '';
   if (d.mustChange) { acView(); acChgToggle(true); toast('Buat password baru untuk melanjutkan'); }
-  else closeUserLoginModal();
+  else {
+    closeUserLoginModal();
+    const pa = pendingAct; pendingAct = null;
+    if (pa && Date.now() - pa.t < 180000) setTimeout(pa.fn, 450);
+  }
 }
 async function acSubmit() {
   const u = document.getElementById('acUser').value.trim().toLowerCase(), p = document.getElementById('acPass').value, b = document.getElementById('acGo'); acErr('');
@@ -1392,7 +1450,25 @@ async function acChange() {
     document.getElementById('acOld').value = document.getElementById('acNew').value = ''; toast('Password berhasil diganti'); closeUserLoginModal();
   } catch (e) { acErr('Gagal menyimpan, coba lagi', 'acErr2'); }
 }
-function logoutUser() { currentUser = null; localStorage.removeItem('icr_user'); updateUserUI(); toast('Berhasil keluar'); closeUserLoginModal(); if (typeof curPage !== 'undefined' && curPage === 'riwayat') renderHistory(true); }
+function switchCartOnLogin() {
+  const guest = loadCartFor(null), mine = loadCartFor(currentUser);
+  guest.forEach(g => { const e = mine.find(x => x.id === g.id); if (e) e.qty += g.qty; else mine.push(g); });
+  cart.splice(0, cart.length, ...mine); localStorage.removeItem('icr_cart'); saveCart(); updateCB(); renderCart();
+  if (mine.length) toast(guest.length ? 'Keranjang tamu digabung dengan keranjang akunmu' : 'Keranjang akunmu dipulihkan (' + mine.length + ' item)', 'info');
+}
+async function confirmLogout() {
+  closeUserLoginModal();
+  if (await cfm('Keluar dari akun <b>@' + E(currentUser && currentUser.username) + '</b>?<br><small>Keranjangmu tetap tersimpan aman di akun ini dan kembali saat kamu masuk lagi.</small>', 'Ya, Keluar')) logoutUser(); else openUserLoginModal();
+}
+function logoutUser() {
+  saveCart();
+  currentUser = null; localStorage.removeItem('icr_user'); localStorage.removeItem('icr_cart');
+  cart.splice(0, cart.length); updateCB(); renderCart();
+  ['custName', 'custPhone', 'custAddress', 'custNotes'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+  selectedPayment = ''; document.querySelectorAll('.payment-opt').forEach(o => o.classList.remove('selected'));
+  updateUserUI(); setBadge([]); toast('Berhasil keluar'); closeUserLoginModal();
+  if (typeof curPage !== 'undefined' && curPage === 'riwayat') renderHistory(true);
+}
 
 // ─── PRODUCT DETAIL MODAL ───
 function openPD(firestoreId) {
@@ -1407,11 +1483,15 @@ function openPD(firestoreId) {
   document.getElementById('pdCartBtn').onclick = () => { closePD(); showChoiceDialog(firestoreId); };
   document.getElementById('pdBuyBtn').onclick = () => {
     closePD();
-    choiceProductId = firestoreId;
-    const ex = cart.find(c => c.id === firestoreId);
-    if (ex) ex.qty++; else cart.push({ id: firestoreId, qty: 1 }); sfx('cart');
-    saveCart(); updateCB(); renderCart();
-    setTimeout(() => openCheckoutModal(), 250);
+    const buy = () => {
+      choiceProductId = firestoreId;
+      const ex = cart.find(c => c.id === firestoreId);
+      if (ex) ex.qty++; else cart.push({ id: firestoreId, qty: 1 }); sfx('cart');
+      saveCart(); updateCB(); renderCart();
+      setTimeout(() => openCheckoutModal(), 250);
+    };
+    if (needLogin(buy, 'Masuk atau daftar dulu untuk membeli.')) return;
+    buy();
   };
   document.getElementById('pdOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1420,6 +1500,7 @@ function closePD() { document.getElementById('pdOverlay').classList.remove('open
 
 // ─── CHOICE DIALOG ───
 function showChoiceDialog(firestoreId) {
+  if (needLogin(() => showChoiceDialog(firestoreId), 'Masuk atau daftar dulu untuk menambahkan kue ke keranjang.')) return;
   const products = window._getProducts ? window._getProducts() : [];
   const p = products.find(x => x.firestoreId === firestoreId || x.id === firestoreId);
   if (!p) return;
@@ -1859,7 +1940,7 @@ function setFilter(f) {
 }
 
 // ─── CART ───
-function saveCart() { try { localStorage.setItem('icr_cart', JSON.stringify(cart)); } catch (e) {} }
+function saveCart() { try { localStorage.setItem(currentUser ? 'icr_cart_u_' + currentUser.username : 'icr_cart', JSON.stringify(cart)); } catch (e) {} }
 function updateCB() {
   const b = document.getElementById('cartBadge');
   const t = cart.reduce((s, i) => s + i.qty, 0);
@@ -1895,16 +1976,22 @@ function renderCart() {
 }
 function rC(id) { cart = cart.filter(c => c.id !== id); saveCart(); updateCB(); renderCart(); }
 function uQ(id, d) { const i = cart.find(c => c.id === id); if (!i) return; i.qty += d; if (i.qty < 1) { rC(id); return; } saveCart(); updateCB(); renderCart(); }
-function openCart() { renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartSidebar').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function openCart() { if (needLogin(openCart, 'Masuk atau daftar dulu untuk membuka keranjangmu.')) return; renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartSidebar').classList.add('open'); document.body.style.overflow = 'hidden'; }
 function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartSidebar').classList.remove('open'); document.body.style.overflow = ''; }
 
 // ─── CHECKOUT ───
 function openCheckoutModal() {
+  if (needLogin(openCheckoutModal, 'Masuk atau daftar dulu untuk melanjutkan pesanan.')) return;
   const products = window._getProducts ? window._getProducts() : [];
   if (!cart.length) { toast('Keranjang kosong!', 'error'); return; }
   closeCart();
   // pre-fill name from user login
-  if (currentUser) document.getElementById('custName').value = currentUser.name;
+  if (currentUser) {
+    document.getElementById('custName').value = currentUser.name;
+    let sv = {}; try { sv = JSON.parse(localStorage.getItem('icr_addr_u_' + currentUser.username) || '{}'); } catch (e) {}
+    const ph = document.getElementById('custPhone'), ad = document.getElementById('custAddress');
+    if (ph && !ph.value) ph.value = sv.phone || currentUser.phone || ''; if (ad && !ad.value) ad.value = sv.address || '';
+  }
   document.getElementById('checkoutSummary').innerHTML = cart.map(it => {
     const p = products.find(x => x.firestoreId === it.id || x.id === it.id);
     if (!p) return '';
@@ -1916,7 +2003,12 @@ function openCheckoutModal() {
   document.querySelectorAll('.payment-opt').forEach(o => o.classList.remove('selected'));
   document.querySelectorAll('.payment-detail').forEach(d => d.classList.remove('show'));
   document.getElementById('checkoutForm').reset();
-  if (currentUser) document.getElementById('custName').value = currentUser.name;
+  if (currentUser) {
+    document.getElementById('custName').value = currentUser.name;
+    let sv = {}; try { sv = JSON.parse(localStorage.getItem('icr_addr_u_' + currentUser.username) || '{}'); } catch (e) {}
+    const ph = document.getElementById('custPhone'), ad = document.getElementById('custAddress');
+    if (ph && !ph.value) ph.value = sv.phone || currentUser.phone || ''; if (ad && !ad.value) ad.value = sv.address || '';
+  }
   setTimeout(() => { document.getElementById('checkoutModal').classList.add('open'); document.body.style.overflow = 'hidden'; }, 350);
 }
 function closeCheckoutModal() { document.getElementById('checkoutModal').classList.remove('open'); document.body.style.overflow = ''; }
@@ -1959,9 +2051,11 @@ async function submitOrder(e) {
     } catch (err) { console.warn('Order save failed:', err); }
   }
   // also keep in localStorage for offline history
-  const localOrders = JSON.parse(localStorage.getItem('icr_orders') || '[]');
-  localOrders.unshift({ ...orderData, date: new Date().toLocaleString('id-ID') });
-  localStorage.setItem('icr_orders', JSON.stringify(localOrders.slice(0, 50)));
+  if (!currentUser) {
+    const localOrders = JSON.parse(localStorage.getItem('icr_orders') || '[]');
+    localOrders.unshift({ ...orderData, date: new Date().toLocaleString('id-ID') });
+    localStorage.setItem('icr_orders', JSON.stringify(localOrders.slice(0, 50)));
+  } else { try { localStorage.setItem('icr_addr_u_' + currentUser.username, JSON.stringify({ phone: ph, address: ad })); } catch (e) {} }
 
   // Build WA message
   let msg = `🍪 *PESANAN - Ira Cookies Ramadhaniah*\n━━━━━━━━━━━━━━━━\n👤 ${nm}\n📱 ${ph}\n📍 ${ad}\n`;
@@ -2082,13 +2176,14 @@ function go(pg, e) {
   if (e && e.preventDefault) e.preventDefault();
   if (!PAGES.includes(pg)) pg = 'home'; curPage = pg;
   PAGES.forEach(x => { const el = document.getElementById('pg-' + x); if (el) el.classList.toggle('active', x === pg); });
-  document.querySelectorAll('.sb-link[data-pg]').forEach(a => a.classList.toggle('active', a.dataset.pg === pg));
+  document.querySelectorAll('.sb-link[data-pg],.dock-i[data-pg]').forEach(a => a.classList.toggle('active', a.dataset.pg === pg));
   if (pg === 'riwayat') renderHistory(true);
   window.scrollTo(0, 0); try { history.replaceState(null, '', '#' + pg); } catch (x) {}
-  setSidebar(false);
+  setSidebar(false); armWatch();
 }
 function applyTheme(t) {
   document.documentElement.dataset.theme = t; try { localStorage.setItem('icr_theme', t); } catch (e) {}
+  const mt = document.querySelector('meta[name=theme-color]'); if (mt) mt.content = t === 'dark' ? '#23272e' : '#dfe6ed';
   document.querySelectorAll('.theme-ic').forEach(i => i.className = 'theme-ic fas fa-' + (t === 'dark' ? 'sun' : 'moon'));
 }
 function toggleTheme() { applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); }
@@ -2113,7 +2208,7 @@ function dots(t) {
     ['touchstart', 'mousedown', 'mouseenter'].forEach(ev => t.addEventListener(ev, () => { t.dataset.p = 1; }, { passive: true }));
     ['touchend', 'mouseleave'].forEach(ev => t.addEventListener(ev, () => { setTimeout(() => { t.dataset.p = ''; }, 5000); }, { passive: true })); });
   if (!prefersReduced) setInterval(() => {
-    if (document.hidden || curPage !== 'home') return;
+    if (document.hidden || curPage !== 'home' || perfT() === 'low') return;
     tr().forEach(t => { const c = t.firstElementChild; if (!c || t.children.length < 2 || t.dataset.p) return;
       const st = c.offsetWidth + 16, i = Math.round(t.scrollLeft / st) + 1;
       t.scrollTo({ left: i >= t.children.length ? 0 : i * st, behavior: 'smooth' }); });
@@ -2134,7 +2229,7 @@ function dots(t) {
 // ─── RIWAYAT (halaman) ───
 function openHistoryModal(e) { if (e && e.preventDefault) e.preventDefault(); closeCart(); go('riwayat'); }
 function renderHistoryIfOpen() { }
-let _ho = [], _hT = null, _hSig = '';
+var _ho = [], _hT = null, _hSig = '';
 async function loadHist() {
   if (currentUser && currentUser.credId && window._fs) {
     try {
@@ -2144,12 +2239,12 @@ async function loadHist() {
       return (await Promise.all(ids.map(id => window._fs.orderGet(id).catch(() => null)))).filter(Boolean);
     } catch (e) { console.warn(e); }
   }
-  return JSON.parse(localStorage.getItem('icr_orders') || '[]');
+  return JSON.parse(localStorage.getItem('icr_orders') || '[]').filter(o => !o.userId);
 }
 async function renderHistory(fresh) {
   const b = document.getElementById('historyPageBody'); if (!b) return; clearTimeout(_hT);
   if (fresh) { _hSig = ''; if (!b.children.length) b.innerHTML = '<div class="hc" style="text-align:center;color:var(--text2);">Memuat...</div>'; }
-  const list = await loadHist(); _ho = list;
+  const list = await loadHist(); _ho = list; setBadge(list);
   const sig = JSON.stringify(list.map(o => (o.firestoreId || o.orderId) + o.status)) + (currentUser ? 1 : 0);
   if (sig !== _hSig) {
     _hSig = sig;
@@ -2170,6 +2265,7 @@ async function renderHistory(fresh) {
   if (curPage === 'riwayat') _hT = setTimeout(() => renderHistory(false), 15000);
 }
 function reorder(i) {
+  if (needLogin(() => reorder(i), 'Masuk atau daftar dulu untuk memesan lagi.')) return;
   const o = _ho[i]; if (!o) return;
   (o.items || []).forEach(it => { if (!it.productId) return; const ex = cart.find(c => c.id === it.productId); if (ex) ex.qty += it.qty; else cart.push({ id: it.productId, qty: it.qty }); });
   saveCart(); updateCB(); renderCart(); openCart(); sfx('cart'); toast('Ditambahkan ke keranjang');
@@ -2251,7 +2347,7 @@ function idlePre() {
 }
 function bootLoop() {
   const ls = document.getElementById('loadingScreen'), bar = document.getElementById('lsBar'), tx = document.getElementById('lsTxt'), pc = document.getElementById('lsPct');
-  ls.addEventListener('click', () => { if (BOOT.go) return; BOOT.go = true; BOOT.tg = performance.now(); ls.classList.add('go'); goFull(); });
+  ls.addEventListener('click', () => { if (BOOT.go) return; BOOT.go = true; BOOT.tg = performance.now(); ls.classList.add('go'); goFull(); perfProbe(); });
   (function tick() {
     if (BOOT.done) return;
     if (BOOT.go) {
@@ -2264,7 +2360,7 @@ function bootLoop() {
       tx.textContent = BOOT.shown < .3 ? 'Memanaskan oven…' : BOOT.shown < .6 ? 'Menata kue-kue…' : BOOT.shown < .92 ? 'Menyiapkan foto…' : 'Siap disajikan!';
       if (BOOT.shown >= .995 && t >= 1) {
         BOOT.done = true;
-        setTimeout(() => { ls.classList.add('hidden'); document.body.classList.add('ready'); welcome(); setTimeout(idlePre, 900); }, 250);
+        setTimeout(() => { ls.classList.add('hidden'); document.body.classList.add('ready'); welcome(); setTimeout(idlePre, 900); setTimeout(armWatch, 700); setTimeout(refreshBadge, 1200); }, 250);
         return;
       }
     }
@@ -2309,6 +2405,60 @@ async function delAcc(cid) {
   try { await window._fs.accDelete(cid); await window._fs.usernameDelete(a.username); toast('Akun dihapus'); } catch (e) { toast('Gagal hapus: ' + e.message, 'error'); }
 }
 function showInfoHtml(t, h) { document.getElementById('infoTitle').textContent = t; document.getElementById('infoBody').innerHTML = h; document.getElementById('infoModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+
+// ═══ KUALITAS OTOMATIS (tinggi / sedang / rendah) ═══
+var jw = { on: false, bad: 0 }, jwT = 0;
+const TIERS = ['low', 'medium', 'high'], PNAME = { low: 'Rendah', medium: 'Sedang', high: 'Tinggi' };
+const lsg = k => { try { return localStorage.getItem(k); } catch (e) { return null; } }, lss = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+function perfT() { return document.documentElement.dataset.perf || 'medium'; }
+function perfMode() { return lsg('icr_pm') || 'auto'; }
+function perfUI() { const e = document.getElementById('perfTxt'); if (e) e.textContent = 'Kualitas: ' + (perfMode() === 'auto' ? 'Auto · ' : '') + PNAME[perfT()]; }
+function setPerf(t, save) { document.documentElement.dataset.perf = t; if (save) lss('icr_pt', t); perfUI(); }
+function cyclePerf() {
+  const o = ['auto', 'high', 'medium', 'low'], m = o[(o.indexOf(perfMode()) + 1) % 4]; lss('icr_pm', m);
+  setPerf(m === 'auto' ? (lsg('icr_pt') || 'medium') : m); toast('Kualitas grafis: ' + (m === 'auto' ? 'Otomatis' : PNAME[m]), 'info');
+}
+function capPerf(t) { if (perfMode() !== 'auto') return; if (TIERS.indexOf(perfT()) > TIERS.indexOf(t)) setPerf(t, true); }
+function downgrade() { const i = TIERS.indexOf(perfT()); if (i > 0) capPerf(TIERS[i - 1]); }
+// ukur kecepatan layar sungguhan saat loading, lalu turunkan bila HP tidak kuat
+function perfProbe() {
+  if (perfMode() !== 'auto') return; let n = 0, sum = 0, last = performance.now(), t0 = last;
+  (function f(t) { const d = t - last; last = t; if (d < 300) { n++; sum += d; } if (t - t0 < 1300) requestAnimationFrame(f); else { const a = n ? sum / n : 16; if (a > 34) capPerf('low'); else if (a > 22) capPerf('medium'); } })(last);
+}
+// pantau kehalusan sebentar: saat awal, pindah halaman, dan scroll. Jika tersendat berulang, turunkan satu tingkat
+function armWatch() {
+  if (!window.__perfReady || jw.on || perfMode() !== 'auto' || perfT() === 'low') return; jw.on = true; let n = 0, slow = 0, last = performance.now(); const t0 = last;
+  (function f(t) { const d = t - last; last = t; if (d < 400) { n++; if (d > 42) slow++; } if (document.hidden) { jw.on = false; return; }
+    if (t - t0 < 2500) requestAnimationFrame(f); else { jw.on = false; if (n > 20 && slow / n > .2) { if (++jw.bad >= 2) { jw.bad = 0; downgrade(); } } else jw.bad = Math.max(0, jw.bad - 1); } })(last);
+}
+addEventListener('scroll', () => { const n = Date.now(); if (n - jwT > 4000) { jwT = n; armWatch(); } }, { passive: true });
+// ═══ DOCK ═══
+function setBadge(list) {
+  const b = document.getElementById('dockBadge'); if (!b) return;
+  const n = currentUser ? (list || []).filter(o => (o.status || 'wait') !== 'done').length : 0;
+  b.textContent = n > 9 ? '9+' : n; b.style.display = n ? '' : 'none';
+}
+function refreshBadge() { if (currentUser && currentUser.credId) loadHist().then(setBadge).catch(() => {}); else setBadge([]); }
+(function () {
+  const o = window.updateUserUI;
+  window.updateUserUI = function () { o.apply(this, arguments); const e = document.getElementById('dockAccTxt'); if (e) e.textContent = currentUser ? currentUser.name.split(' ')[0] : 'Masuk'; };
+  window.updateUserUI();
+  const d = document.getElementById('dock'); let y = scrollY, tk = false;
+  d.addEventListener('click', () => { try { navigator.vibrate && navigator.vibrate(8); } catch (e) {} });
+  addEventListener('scroll', () => { if (tk) return; tk = true; requestAnimationFrame(() => { const ny = scrollY; if (perfT() === 'low' || ny < 120 || ny < y - 8) d.classList.remove('dock-hide'); else if (ny > y + 8) d.classList.add('dock-hide'); y = ny; tk = false; }); }, { passive: true });
+  perfUI(); window.__perfReady = true;
+})();
+
+// bersihkan sisa pesanan lama milik akun dari penyimpanan tamu, dan sinkronkan antar tab
+(function () {
+  try { const l = JSON.parse(localStorage.getItem('icr_orders') || '[]'), g = l.filter(o => !o.userId); if (g.length !== l.length) localStorage.setItem('icr_orders', JSON.stringify(g)); } catch (e) {}
+  addEventListener('storage', e => {
+    if (e.key !== 'icr_user') return;
+    try { currentUser = JSON.parse(e.newValue || 'null'); } catch (x) { currentUser = null; }
+    cart.splice(0, cart.length, ...loadCartFor(currentUser)); updateCB(); renderCart(); updateUserUI(); refreshBadge();
+    if (curPage === 'riwayat') renderHistory(true);
+  });
+})();
 
 init();
 </script>
