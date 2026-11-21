@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="referrer" content="no-referrer">
-<meta name="build" content="v15-video-2026-11-22">
+<meta name="build" content="v16-video-2026-11-22">
 <script>(function(){try{var m=localStorage.getItem("icr_pm")||"auto",t=m;if(m==="auto"){t=localStorage.getItem("icr_pt");if(!t){var n=navigator,c=n.connection||{},mem=n.deviceMemory||4,cr=n.hardwareConcurrency||4,ap=/iPhone|iPad|Macintosh/.test(n.userAgent);t=(c.saveData||matchMedia("(prefers-reduced-motion:reduce)").matches||(!ap&&(mem<=2||cr<=3)))?"low":(ap||(mem>=6&&cr>=8))?"high":"medium"}}document.documentElement.dataset.perf=t}catch(e){document.documentElement.dataset.perf="medium"}})()</script>
 <link rel="preconnect" href="https://wsrv.nl"><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Ira Cookies">
@@ -2385,9 +2385,18 @@ function videoDiag(v, ls) {
   box.style.cssText = 'position:absolute;left:10px;top:10px;z-index:9;max-width:92vw;padding:10px 12px;border-radius:10px;background:rgba(0,0,0,.78);color:#9ef;font:11px/1.55 monospace;white-space:pre-wrap;text-align:left;pointer-events:none';
   ls.appendChild(box);
   const u = new URL('componen/video_loading.mp4', location.href).href, L = { v: 'Versi web: ' + (document.querySelector('meta[name=build]') || {}).content, u: 'Alamat video: ' + u };
-  const ct = t => v.canPlayType(t) || 'tidak', show = () => { box.textContent = Object.values(L).join('\n'); };
+  const ct = t => v.canPlayType(t) || 'tidak';
   L.c = 'Browser bisa memutar: H.264=' + ct('video/mp4; codecs="avc1.42E01E"') + ' | HEVC=' + ct('video/mp4; codecs="hvc1.1.6.L93.B0"') + ' | VP9=' + ct('video/webm; codecs="vp9"');
-  fetch(u, { method: 'HEAD', cache: 'no-store' }).then(r => { L.h = 'Server GitHub: HTTP ' + r.status + ' | ' + (r.headers.get('content-type') || '?') + ' | ' + (Math.round((+r.headers.get('content-length') || 0) / 104857.6) / 10) + ' MB'; show(); }).catch(e => { L.h = 'Server GitHub: gagal diakses (' + e.message + ')'; show(); });
+  const S = {};
+  const concl = () => S.status >= 400 ? 'KESIMPULAN: file tidak ditemukan di GitHub (cek nama file dan folder)' : (S.total != null && S.total < 20000) ? 'KESIMPULAN: file di GitHub kosong/rusak (hanya ' + S.total + ' byte). Hapus lalu upload ulang videonya' : (S.kind && S.kind.indexOf('BUKAN') === 0) ? 'KESIMPULAN: isi file bukan video MP4 (mungkin file rusak atau pointer Git LFS)' : v.error ? 'KESIMPULAN: file ada tapi tidak bisa diputar. Ubah ke MP4 H.264' : '';
+  const show = () => { box.textContent = Object.values(L).join('\n') + (concl() ? '\n' + concl() : ''); };
+  fetch(u, { headers: { Range: 'bytes=0-255' }, cache: 'no-store' }).then(async r => {
+    const b = new Uint8Array(await r.arrayBuffer()), cr = r.headers.get('content-range'), total = cr ? +cr.split('/')[1] : (+r.headers.get('content-length') || b.length);
+    const sig = String.fromCharCode(...b.slice(4, 8)), head = String.fromCharCode(...b.slice(0, 50)).replace(/[^\x20-\x7e]/g, '.');
+    S.status = r.status; S.total = r.status < 400 ? total : null; S.kind = r.status >= 400 ? '-' : sig === 'ftyp' ? 'MP4 valid' : (b[0] === 0x1A && b[1] === 0x45) ? 'WebM/MKV' : 'BUKAN video, awalan: "' + head + '"';
+    L.h = 'Server GitHub: HTTP ' + r.status + ' | ' + (r.headers.get('content-type') || '?') + ' | ukuran ' + (S.total == null ? '-' : S.total + ' byte (' + Math.round(S.total / 104857.6) / 10 + ' MB)');
+    L.k = 'Isi file: ' + S.kind; show();
+  }).catch(e => { L.h = 'Server GitHub: gagal diakses (' + e.message + ')'; show(); });
   const upd = () => { L.s = 'Pemutar: ' + (v.error ? 'ERROR kode ' + v.error.code + ' (' + ({ 1: 'dibatalkan', 2: 'jaringan', 3: 'file rusak / gagal decode', 4: 'format atau alamat tidak didukung' }[v.error.code] || '?') + ')' : 'status ' + v.readyState + ', durasi ' + (isFinite(v.duration) ? v.duration.toFixed(1) + ' dtk' : '?')); show(); };
   ['error', 'loadedmetadata', 'loadeddata', 'canplay', 'playing', 'stalled'].forEach(e => v.addEventListener(e, upd)); upd(); show();
 }
