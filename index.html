@@ -376,6 +376,24 @@ html[data-perf=low] .mq-mask{overflow-x:auto;-webkit-mask-image:none;mask-image:
 html[data-perf=low] .product-card,html[data-perf=low] .about-card,html[data-perf=low] .fs-card,html[data-perf=low] .hc,html[data-perf=low] .cta-card,html[data-perf=low] .dock,html[data-perf=low] .sidebar,html[data-perf=low] .nav-logo{box-shadow:4px 4px 9px var(--shadow-dark),-4px -4px 9px var(--shadow-light)!important}
 html:not([data-perf=high]) .modal-overlay,html:not([data-perf=high]) .choice-overlay,html:not([data-perf=high]) .pd-modal-overlay,html:not([data-perf=high]) .cart-overlay{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .ac-gate{padding:12px 14px;margin-bottom:16px;border-radius:14px;font-size:12px;line-height:1.6;border-left:3px solid var(--accent);box-shadow:inset 3px 3px 7px var(--shadow-inset-dark),inset -3px -3px 7px var(--shadow-inset-light)}.ac-gate i{color:var(--accent);margin-right:6px}
+/* --- loading dengan video (16:9) --- */
+.ls-video,.ls-shade{display:none}
+.loading-screen>:not(.ls-video):not(.ls-shade){position:relative;z-index:2}
+.loading-screen.has-video .ls-orb{display:none}
+@media (orientation:landscape){
+  .loading-screen.has-video{justify-content:flex-end;padding-bottom:max(5vh,28px);background:#120e0b}
+  .loading-screen.has-video .ls-video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .loading-screen.has-video .ls-shade{display:block;position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,0) 28%,rgba(0,0,0,.18) 55%,rgba(0,0,0,.68) 100%)}
+  .loading-screen.has-video .ls-name{margin-top:0;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.55);font-size:clamp(24px,4vw,40px)}
+  .loading-screen.has-video .ls-sub{color:#f3c9a3;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+  .loading-screen.has-video .ls-bar{background:rgba(255,255,255,.2);box-shadow:none}
+  .loading-screen.has-video .ls-txt{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.6)}.loading-screen.has-video .ls-txt b{color:#ffd9b8}
+  .loading-screen.has-video .ls-load{width:min(420px,60vw)}
+}
+@media (orientation:portrait){
+  .loading-screen.has-video .ls-video{display:block;position:relative;width:min(92vw,640px);height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:26px;margin-bottom:30px;box-shadow:14px 14px 30px var(--shadow-dark),-12px -12px 26px var(--shadow-light),inset 0 0 0 1px var(--edge)}
+  .loading-screen.has-video .ls-name{margin-top:0}
+}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -591,6 +609,8 @@ html:not([data-perf=high]) .modal-overlay,html:not([data-perf=high]) .choice-ove
 <body>
 
 <div class="loading-screen" id="loadingScreen">
+  <video class="ls-video" id="lsVideo" src="componen/video_loading.mp4#t=0.1" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback></video>
+  <div class="ls-shade"></div>
   <div class="ls-orb"><span class="ls-ring"></span><span class="ls-ring r2"></span><i class="fas fa-cookie-bite"></i></div>
   <div class="ls-name">Ira Cookies</div><div class="ls-sub">RAMADHANIAH</div>
   <button class="ls-enter" id="lsEnter" type="button">Ketuk untuk masuk <i class="fas fa-arrow-right"></i></button>
@@ -1230,7 +1250,7 @@ function pdShow(i) {
   im.style.opacity = 0;
   im.onload = () => { im.style.opacity = 1; };
   im.onerror = function () { imgFallback(this); };
-  im.src = pdList[pdIdx];
+  im.dataset.orig = pdList[pdIdx]; im.src = thumb(pdList[pdIdx], 1000);
   if (im.complete && im.naturalWidth) im.style.opacity = 1;
   document.getElementById('pdCount').textContent = (pdIdx + 1) + ' / ' + pdList.length;
   document.querySelectorAll('.pd-thumb').forEach((e, k) => e.classList.toggle('active', k === pdIdx));
@@ -2329,45 +2349,70 @@ function toggleFull() { if (isFull()) { (document.exitFullscreen || document.web
   sndUI();
 })();
 
-// ═══ LOADING NYATA: data + foto beranda dimuat dulu sebelum halaman dibuka ═══
-const BOOT = { p: false, a: false, imgs: 0, tot: -1, go: false, tg: 0, t0: performance.now(), shown: 0, done: false };
+// ═══ LOADING NYATA: video + pemanasan data, foto, suara, dan font selama ±10 detik ═══
+const BOOT = { p: false, a: false, go: false, tg: 0, t0: performance.now(), shown: 0, done: false, tot: -1, imgs: 0, t2: -1, i2: 0, fonts: false, aud: false, vdur: 10 };
 window._onData = k => { BOOT[k] = true; if (BOOT.p && BOOT.a) bootImgs(); };
+function loadImgs(urls, cb) {
+  let n = 0; return Promise.all(urls.map(u => new Promise(res => {
+    const im = new Image(), fin = () => { cb(++n); res(); };
+    im.onload = () => { (im.decode ? im.decode() : Promise.resolve()).catch(() => {}).then(fin); }; im.onerror = fin; im.src = u;
+  })));
+}
 function bootImgs() {
   if (BOOT.tot >= 0) return;
   const ps = window._getProducts ? window._getProducts() : [], ab = window._getAbout ? window._getAbout() : [];
   let f = ps.filter(p => p.badge); if (!f.length) f = ps.slice(-8).reverse();
   let a = ab.filter(x => x.featured); if (!a.length) a = ab.slice(0, 5);
-  const urls = [...f.slice(0, 6).map(p => thumb(gImg(p), 640)), ...a.slice(0, 3).map(x => thumb(gAImg(x), 640))].filter((u, i, r) => u && !u.startsWith('data:') && r.indexOf(u) === i);
-  BOOT.tot = urls.length; BOOT.tI = performance.now();
-  urls.forEach(u => { const im = new Image(), fin = () => { BOOT.imgs++; }; im.onload = im.onerror = fin; im.src = u; });
+  const ok = (u, i, r) => u && !u.startsWith('data:') && r.indexOf(u) === i;
+  const A = [...f.slice(0, 6).map(p => thumb(gImg(p), 640)), ...a.slice(0, 3).map(x => thumb(gAImg(x), 640))].filter(ok);
+  const B = [...ps.slice(0, 24).map(p => thumb(gImg(p), 640)), ...ab.slice(0, 10).map(x => thumb(gAImg(x), 640)), ...f.slice(0, 4).map(p => thumb(gImg(p), 1000))].filter(ok).filter(u => !A.includes(u));
+  BOOT.tot = A.length; BOOT.t2 = B.length; BOOT.tI = performance.now();
+  loadImgs(A, n => { BOOT.imgs = n; }).then(() => loadImgs(B, n => { BOOT.i2 = n; }));
 }
 function idlePre() {
-  const ps = window._getProducts ? window._getProducts() : [], ab = window._getAbout ? window._getAbout() : [];
-  [...ps.slice(0, 12).map(p => thumb(gImg(p), 640)), ...ab.slice(0, 8).map(x => thumb(gAImg(x), 640))].forEach(u => { if (u && !u.startsWith('data:')) new Image().src = u; });
+  const ps = window._getProducts ? window._getProducts() : [];
+  ps.slice(24, 60).forEach(p => { const u = thumb(gImg(p), 640); if (u && !u.startsWith('data:')) new Image().src = u; });
+}
+function realFrac() {
+  let t = (BOOT.p ? .15 : 0) + (BOOT.a ? .07 : 0) + (BOOT.fonts ? .05 : 0) + (BOOT.aud ? .05 : 0);
+  t += .33 * (BOOT.tot > 0 ? BOOT.imgs / BOOT.tot : BOOT.tot === 0 ? 1 : 0);
+  t += .35 * (BOOT.t2 > 0 ? BOOT.i2 / BOOT.t2 : BOOT.t2 === 0 ? 1 : 0);
+  return Math.min(1, t);
 }
 function bootLoop() {
-  const ls = document.getElementById('loadingScreen'), bar = document.getElementById('lsBar'), tx = document.getElementById('lsTxt'), pc = document.getElementById('lsPct');
-  ls.addEventListener('click', () => { if (BOOT.go) return; BOOT.go = true; BOOT.tg = performance.now(); ls.classList.add('go'); goFull(); perfProbe(); });
+  const ls = document.getElementById('loadingScreen'), bar = document.getElementById('lsBar'), tx = document.getElementById('lsTxt'), pc = document.getElementById('lsPct'), v = document.getElementById('lsVideo');
+  let vOk = false; const sd = (navigator.connection || {}).saveData;
+  if (v && !sd) { v.addEventListener('loadeddata', () => { vOk = true; ls.classList.add('has-video'); }, { once: true }); v.addEventListener('error', () => { vOk = false; ls.classList.remove('has-video'); }, { once: true }); } else if (v) v.remove();
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(() => { BOOT.fonts = true; }, () => { BOOT.fonts = true; });
+  Promise.all(Object.values(SFX).map(a => new Promise(r => { if (a.readyState >= 3) return r(); a.addEventListener('canplaythrough', r, { once: true }); a.addEventListener('error', r, { once: true }); setTimeout(r, 7000); try { a.load(); } catch (e) { r(); } }))).then(() => { BOOT.aud = true; });
+  ls.addEventListener('click', () => {
+    if (BOOT.go) return; BOOT.go = true; BOOT.tg = performance.now(); ls.classList.add('go'); goFull(); perfProbe(); refreshBadge();
+    if (vOk && v) {
+      BOOT.vdur = isFinite(v.duration) ? Math.min(Math.max(v.duration, 3), 14) : 10;
+      try { v.currentTime = 0; } catch (e) {} v.muted = !soundOn; const pr = v.play(); if (pr && pr.catch) pr.catch(() => { v.muted = true; v.play().catch(() => {}); });
+    } else BOOT.vdur = 1.8;
+  });
+  const bar0 = performance.now();
   (function tick() {
     if (BOOT.done) return;
+    const now = performance.now();
+    if (v && !vOk && !BOOT.go && now - bar0 > 6000 && v.readyState < 2) { v.remove(); }
     if (BOOT.go) {
-      const now = performance.now(), forced = now - BOOT.t0 > 10000 || (BOOT.tot > 0 && now - BOOT.tI > 6000);
-      let t = (BOOT.p ? .35 : 0) + (BOOT.a ? .15 : 0) + (BOOT.tot > 0 ? .5 * BOOT.imgs / BOOT.tot : (BOOT.tot === 0 ? .5 : 0));
-      if (forced) t = 1;
-      t = Math.min(t, (now - BOOT.tg) / 1600);
-      BOOT.shown += (t - BOOT.shown) * .09 + .001; if (BOOT.shown > 1) BOOT.shown = 1;
+      const el = (now - BOOT.tg) / 1000, forced = el > BOOT.vdur + 6 || now - BOOT.t0 > 25000;
+      const t = forced ? 1 : Math.min(realFrac(), Math.min(1, el / BOOT.vdur));   // bar tidak pernah mendahului kenyataan
+      BOOT.shown += (t - BOOT.shown) * .12 + .001; if (BOOT.shown > 1) BOOT.shown = 1;
       bar.style.transform = 'scaleX(' + BOOT.shown + ')'; pc.textContent = Math.round(BOOT.shown * 100) + '%';
       tx.textContent = BOOT.shown < .3 ? 'Memanaskan oven…' : BOOT.shown < .6 ? 'Menata kue-kue…' : BOOT.shown < .92 ? 'Menyiapkan foto…' : 'Siap disajikan!';
+      if (vOk && v && !v.muted) v.volume = Math.max(0, Math.min(1, (BOOT.vdur - el) / 1.2));
       if (BOOT.shown >= .995 && t >= 1) {
         BOOT.done = true;
-        setTimeout(() => { ls.classList.add('hidden'); document.body.classList.add('ready'); welcome(); setTimeout(idlePre, 900); setTimeout(armWatch, 700); setTimeout(refreshBadge, 1200); }, 250);
+        setTimeout(() => { ls.classList.add('hidden'); document.body.classList.add('ready'); welcome(); setTimeout(idlePre, 900); setTimeout(armWatch, 700); setTimeout(refreshBadge, 1200); setTimeout(() => { if (v) { v.pause(); v.removeAttribute('src'); v.load(); } }, 1200); }, 250);
         return;
       }
     }
     requestAnimationFrame(tick);
   })();
 }
-
 // Keranjang tersimpan di HP; saat data produk baru tiba, tampilkan ulang dan buang item yang produknya sudah tidak ada
 function pruneCart() {
   const ps = window._getProducts ? window._getProducts() : [];
