@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="referrer" content="no-referrer">
-<meta name="build" content="v16-video-2026-11-22">
+<meta name="build" content="v17-video-2026-11-22">
 <script>(function(){try{var m=localStorage.getItem("icr_pm")||"auto",t=m;if(m==="auto"){t=localStorage.getItem("icr_pt");if(!t){var n=navigator,c=n.connection||{},mem=n.deviceMemory||4,cr=n.hardwareConcurrency||4,ap=/iPhone|iPad|Macintosh/.test(n.userAgent);t=(c.saveData||matchMedia("(prefers-reduced-motion:reduce)").matches||(!ap&&(mem<=2||cr<=3)))?"low":(ap||(mem>=6&&cr>=8))?"high":"medium"}}document.documentElement.dataset.perf=t}catch(e){document.documentElement.dataset.perf="medium"}})()</script>
 <link rel="preconnect" href="https://wsrv.nl"><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Ira Cookies">
@@ -377,24 +377,31 @@ html[data-perf=low] .mq-mask{overflow-x:auto;-webkit-mask-image:none;mask-image:
 html[data-perf=low] .product-card,html[data-perf=low] .about-card,html[data-perf=low] .fs-card,html[data-perf=low] .hc,html[data-perf=low] .cta-card,html[data-perf=low] .dock,html[data-perf=low] .sidebar,html[data-perf=low] .nav-logo{box-shadow:4px 4px 9px var(--shadow-dark),-4px -4px 9px var(--shadow-light)!important}
 html:not([data-perf=high]) .modal-overlay,html:not([data-perf=high]) .choice-overlay,html:not([data-perf=high]) .pd-modal-overlay,html:not([data-perf=high]) .cart-overlay{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .ac-gate{padding:12px 14px;margin-bottom:16px;border-radius:14px;font-size:12px;line-height:1.6;border-left:3px solid var(--accent);box-shadow:inset 3px 3px 7px var(--shadow-inset-dark),inset -3px -3px 7px var(--shadow-inset-light)}.ac-gate i{color:var(--accent);margin-right:6px}
-/* --- loading dengan video (16:9) --- */
-.ls-video,.ls-shade{display:none}
+/* --- loading dengan video: selalu jadi background penuh, logo di tengah video tetap terlihat --- */
+.ls-video,.ls-shade,.ls-head{display:none}
 .loading-screen>:not(.ls-video):not(.ls-shade){position:relative;z-index:2}
-.loading-screen.has-video .ls-orb{display:none}
-@media (orientation:landscape){
-  .loading-screen.has-video{justify-content:flex-end;padding-bottom:max(5vh,28px);background:#120e0b}
-  .loading-screen.has-video .ls-video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-  .loading-screen.has-video .ls-shade{display:block;position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,0) 28%,rgba(0,0,0,.18) 55%,rgba(0,0,0,.68) 100%)}
-  .loading-screen.has-video .ls-name{margin-top:0;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.55);font-size:clamp(24px,4vw,40px)}
-  .loading-screen.has-video .ls-sub{color:#f3c9a3;text-shadow:0 1px 8px rgba(0,0,0,.5)}
-  .loading-screen.has-video .ls-bar{background:rgba(255,255,255,.2);box-shadow:none}
-  .loading-screen.has-video .ls-txt{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.6)}.loading-screen.has-video .ls-txt b{color:#ffd9b8}
-  .loading-screen.has-video .ls-load{width:min(420px,60vw)}
-}
+.loading-screen.has-video{justify-content:flex-end;align-items:center;padding-bottom:max(6.5vh,34px);background:radial-gradient(ellipse at 50% 45%,#1c1712 0%,#0e0b08 72%)}
+.loading-screen.has-video .ls-orb,.loading-screen.has-video .ls-name,.loading-screen.has-video .ls-sub{display:none}
+.loading-screen.has-video .ls-video{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:100%;object-fit:cover;object-position:50% 50%;z-index:0}
+.loading-screen.has-video .ls-shade{display:block;position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 26%,rgba(0,0,0,0) 62%,rgba(0,0,0,.72) 100%)}
+.loading-screen.has-video .ls-enter{margin-top:0;animation:lsUp .7s var(--smooth) both,lsPulse 2.2s ease-in-out .8s infinite}
+.loading-screen.has-video .ls-load{margin-top:0;width:min(440px,76vw)}
+.loading-screen.has-video .ls-bar{background:rgba(255,255,255,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);overflow:visible;position:relative}
+.loading-screen.has-video .ls-head{display:block;position:absolute;top:50%;left:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#fff6e8;box-shadow:0 0 0 4px rgba(255,200,140,.28),0 0 18px 6px rgba(255,180,110,.65)}
+.loading-screen.has-video .ls-txt{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.7);font-variant-numeric:tabular-nums}.loading-screen.has-video .ls-txt b{color:#ffd9b8}
+.ls-txt span.sw{animation:lsSwap .55s var(--smooth)}
+@keyframes lsUp{from{opacity:0;transform:translateY(18px)}}
+@keyframes lsSwap{from{opacity:0;transform:translateY(6px)}}
+.loading-screen.go .ls-load{animation:lsUp .6s var(--smooth) both}
+/* HP tegak (portrait): video diperkecil secukupnya agar seluruh logo muat, sisi kiri-kanan yang berlebih terpotong, tepi atas-bawah memudar ke latar gelap */
 @media (orientation:portrait){
-  .loading-screen.has-video .ls-video{display:block;position:relative;width:min(92vw,640px);height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:26px;margin-bottom:30px;box-shadow:14px 14px 30px var(--shadow-dark),-12px -12px 26px var(--shadow-light),inset 0 0 0 1px var(--edge)}
-  .loading-screen.has-video .ls-name{margin-top:0}
+  .loading-screen.has-video .ls-video{height:min(100vh,140.6vw);height:min(100dvh,140.6vw);width:calc(min(100vh,140.6vw)*1.7778);width:calc(min(100dvh,140.6vw)*1.7778);-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%)}
 }
+/* kualitas tinggi: gerak kamera pelan pada video + kilau cahaya saat masuk */
+html[data-perf=high] .loading-screen.has-video.go .ls-video{animation:lsZoom 14s ease-out forwards}
+@keyframes lsZoom{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-50%,-50%) scale(1.07)}}
+.loading-screen.burst::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(255,220,170,.6),rgba(255,200,140,0) 62%);animation:lsBurst .9s ease-out forwards}
+@keyframes lsBurst{0%{opacity:0;transform:scale(.6)}35%{opacity:1}100%{opacity:0;transform:scale(1.6)}}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -615,7 +622,7 @@ html:not([data-perf=high]) .modal-overlay,html:not([data-perf=high]) .choice-ove
   <div class="ls-orb"><span class="ls-ring"></span><span class="ls-ring r2"></span><i class="fas fa-cookie-bite"></i></div>
   <div class="ls-name">Ira Cookies</div><div class="ls-sub">RAMADHANIAH</div>
   <button class="ls-enter" id="lsEnter" type="button">Ketuk untuk masuk <i class="fas fa-arrow-right"></i></button>
-  <div class="ls-load"><div class="ls-bar"><i id="lsBar"></i></div><div class="ls-txt"><span id="lsTxt">Memanaskan oven…</span><b id="lsPct">0%</b></div></div>
+  <div class="ls-load"><div class="ls-bar"><i id="lsBar"></i><i class="ls-head" id="lsHead"></i></div><div class="ls-txt"><span id="lsTxt">Memanaskan oven…</span><b id="lsPct">0%</b></div></div>
 </div>
 <div class="watermark">AL-HAZA<sup style="font-size:6px;">tm</sup></div>
 <div class="toast-container" id="toastContainer"></div>
@@ -2401,7 +2408,7 @@ function videoDiag(v, ls) {
   ['error', 'loadedmetadata', 'loadeddata', 'canplay', 'playing', 'stalled'].forEach(e => v.addEventListener(e, upd)); upd(); show();
 }
 function bootLoop() {
-  const ls = document.getElementById('loadingScreen'), bar = document.getElementById('lsBar'), tx = document.getElementById('lsTxt'), pc = document.getElementById('lsPct'), v = document.getElementById('lsVideo');
+  const ls = document.getElementById('loadingScreen'), bar = document.getElementById('lsBar'), tx = document.getElementById('lsTxt'), pc = document.getElementById('lsPct'), hd = document.getElementById('lsHead'), v = document.getElementById('lsVideo');
   // HP sering baru memuat video setelah layar disentuh, jadi video dianggap ada dan dimainkan saat diketuk
   let vOk = !!v && !(navigator.connection || {}).saveData; const clampD = d => Math.min(Math.max(d, 3), 14);
   const noVideo = () => { vOk = false; ls.classList.remove('has-video'); };
@@ -2431,11 +2438,13 @@ function bootLoop() {
       const el = vOk ? v.currentTime : wall, forced = wall > BOOT.vdur + 8 || now - BOOT.t0 > 25000;
       const t = forced ? 1 : Math.min(realFrac(), Math.min(1, el / BOOT.vdur));   // bar tidak pernah mendahului kenyataan
       BOOT.shown += (t - BOOT.shown) * .12 + .001; if (BOOT.shown > 1) BOOT.shown = 1;
-      bar.style.transform = 'scaleX(' + BOOT.shown + ')'; pc.textContent = Math.round(BOOT.shown * 100) + '%';
-      tx.textContent = BOOT.shown < .3 ? 'Memanaskan oven…' : BOOT.shown < .6 ? 'Menata kue-kue…' : BOOT.shown < .92 ? 'Menyiapkan foto…' : 'Siap disajikan!';
+      bar.style.transform = 'scaleX(' + BOOT.shown + ')'; hd.style.left = (BOOT.shown * 100) + '%'; pc.textContent = Math.round(BOOT.shown * 100) + '%';
+      const msg = BOOT.shown < .3 ? 'Memanaskan oven…' : BOOT.shown < .6 ? 'Menata kue-kue…' : BOOT.shown < .92 ? 'Menyiapkan foto…' : 'Siap disajikan!';
+      if (tx.textContent !== msg) { tx.textContent = msg; tx.classList.remove('sw'); void tx.offsetWidth; tx.classList.add('sw'); }
       if (vOk && !v.muted) v.volume = Math.max(0, Math.min(1, (BOOT.vdur - el) / 1.2));
       if (BOOT.shown >= .995 && t >= 1) {
         BOOT.done = true;
+        ls.classList.add('burst');
         setTimeout(() => { ls.classList.add('hidden'); document.body.classList.add('ready'); welcome(); setTimeout(idlePre, 900); setTimeout(armWatch, 700); setTimeout(refreshBadge, 1200); setTimeout(() => { if (v) { v.pause(); v.removeAttribute('src'); v.load(); } }, 1200); }, 250);
         return;
       }
