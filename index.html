@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="referrer" content="no-referrer">
+<meta name="build" content="v15-video-2026-11-22">
 <script>(function(){try{var m=localStorage.getItem("icr_pm")||"auto",t=m;if(m==="auto"){t=localStorage.getItem("icr_pt");if(!t){var n=navigator,c=n.connection||{},mem=n.deviceMemory||4,cr=n.hardwareConcurrency||4,ap=/iPhone|iPad|Macintosh/.test(n.userAgent);t=(c.saveData||matchMedia("(prefers-reduced-motion:reduce)").matches||(!ap&&(mem<=2||cr<=3)))?"low":(ap||(mem>=6&&cr>=8))?"high":"medium"}}document.documentElement.dataset.perf=t}catch(e){document.documentElement.dataset.perf="medium"}})()</script>
 <link rel="preconnect" href="https://wsrv.nl"><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Ira Cookies">
@@ -2379,14 +2380,26 @@ function realFrac() {
   t += .35 * (BOOT.t2 > 0 ? BOOT.i2 / BOOT.t2 : BOOT.t2 === 0 ? 1 : 0);
   return Math.min(1, t);
 }
+function videoDiag(v, ls) {
+  const box = document.createElement('div'); box.id = 'vdiag';
+  box.style.cssText = 'position:absolute;left:10px;top:10px;z-index:9;max-width:92vw;padding:10px 12px;border-radius:10px;background:rgba(0,0,0,.78);color:#9ef;font:11px/1.55 monospace;white-space:pre-wrap;text-align:left;pointer-events:none';
+  ls.appendChild(box);
+  const u = new URL('componen/video_loading.mp4', location.href).href, L = { v: 'Versi web: ' + (document.querySelector('meta[name=build]') || {}).content, u: 'Alamat video: ' + u };
+  const ct = t => v.canPlayType(t) || 'tidak', show = () => { box.textContent = Object.values(L).join('\n'); };
+  L.c = 'Browser bisa memutar: H.264=' + ct('video/mp4; codecs="avc1.42E01E"') + ' | HEVC=' + ct('video/mp4; codecs="hvc1.1.6.L93.B0"') + ' | VP9=' + ct('video/webm; codecs="vp9"');
+  fetch(u, { method: 'HEAD', cache: 'no-store' }).then(r => { L.h = 'Server GitHub: HTTP ' + r.status + ' | ' + (r.headers.get('content-type') || '?') + ' | ' + (Math.round((+r.headers.get('content-length') || 0) / 104857.6) / 10) + ' MB'; show(); }).catch(e => { L.h = 'Server GitHub: gagal diakses (' + e.message + ')'; show(); });
+  const upd = () => { L.s = 'Pemutar: ' + (v.error ? 'ERROR kode ' + v.error.code + ' (' + ({ 1: 'dibatalkan', 2: 'jaringan', 3: 'file rusak / gagal decode', 4: 'format atau alamat tidak didukung' }[v.error.code] || '?') + ')' : 'status ' + v.readyState + ', durasi ' + (isFinite(v.duration) ? v.duration.toFixed(1) + ' dtk' : '?')); show(); };
+  ['error', 'loadedmetadata', 'loadeddata', 'canplay', 'playing', 'stalled'].forEach(e => v.addEventListener(e, upd)); upd(); show();
+}
 function bootLoop() {
   const ls = document.getElementById('loadingScreen'), bar = document.getElementById('lsBar'), tx = document.getElementById('lsTxt'), pc = document.getElementById('lsPct'), v = document.getElementById('lsVideo');
   // HP sering baru memuat video setelah layar disentuh, jadi video dianggap ada dan dimainkan saat diketuk
   let vOk = !!v && !(navigator.connection || {}).saveData; const clampD = d => Math.min(Math.max(d, 3), 14);
   const noVideo = () => { vOk = false; ls.classList.remove('has-video'); };
+  if (v && /[?&]cek/.test(location.search)) videoDiag(v, ls);
   if (v && !vOk) v.remove();
   if (vOk) {
-    ls.classList.add('has-video'); v.addEventListener('error', noVideo);
+    ls.classList.add('has-video'); v.addEventListener('error', () => { console.warn('[video_loading] gagal dimuat, kode', v.error && v.error.code); noVideo(); });
     v.addEventListener('loadedmetadata', () => { if (isFinite(v.duration) && vOk) BOOT.vdur = clampD(v.duration); });
     try { v.load(); } catch (e) {}
   }
