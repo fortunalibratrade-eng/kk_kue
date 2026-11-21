@@ -2381,29 +2381,37 @@ function realFrac() {
 }
 function bootLoop() {
   const ls = document.getElementById('loadingScreen'), bar = document.getElementById('lsBar'), tx = document.getElementById('lsTxt'), pc = document.getElementById('lsPct'), v = document.getElementById('lsVideo');
-  let vOk = false; const sd = (navigator.connection || {}).saveData;
-  if (v && !sd) { v.addEventListener('loadeddata', () => { vOk = true; ls.classList.add('has-video'); }, { once: true }); v.addEventListener('error', () => { vOk = false; ls.classList.remove('has-video'); }, { once: true }); } else if (v) v.remove();
+  // HP sering baru memuat video setelah layar disentuh, jadi video dianggap ada dan dimainkan saat diketuk
+  let vOk = !!v && !(navigator.connection || {}).saveData; const clampD = d => Math.min(Math.max(d, 3), 14);
+  const noVideo = () => { vOk = false; ls.classList.remove('has-video'); };
+  if (v && !vOk) v.remove();
+  if (vOk) {
+    ls.classList.add('has-video'); v.addEventListener('error', noVideo);
+    v.addEventListener('loadedmetadata', () => { if (isFinite(v.duration) && vOk) BOOT.vdur = clampD(v.duration); });
+    try { v.load(); } catch (e) {}
+  }
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(() => { BOOT.fonts = true; }, () => { BOOT.fonts = true; });
   Promise.all(Object.values(SFX).map(a => new Promise(r => { if (a.readyState >= 3) return r(); a.addEventListener('canplaythrough', r, { once: true }); a.addEventListener('error', r, { once: true }); setTimeout(r, 7000); try { a.load(); } catch (e) { r(); } }))).then(() => { BOOT.aud = true; });
   ls.addEventListener('click', () => {
     if (BOOT.go) return; BOOT.go = true; BOOT.tg = performance.now(); ls.classList.add('go'); goFull(); perfProbe(); refreshBadge();
-    if (vOk && v) {
-      BOOT.vdur = isFinite(v.duration) ? Math.min(Math.max(v.duration, 3), 14) : 10;
-      try { v.currentTime = 0; } catch (e) {} v.muted = !soundOn; const pr = v.play(); if (pr && pr.catch) pr.catch(() => { v.muted = true; v.play().catch(() => {}); });
+    if (vOk) {
+      BOOT.vdur = isFinite(v.duration) ? clampD(v.duration) : 10;
+      try { v.currentTime = 0; } catch (e) {} v.muted = !soundOn;
+      const pr = v.play(); if (pr && pr.catch) pr.catch(() => { v.muted = true; const p2 = v.play(); if (p2 && p2.catch) p2.catch(() => { noVideo(); BOOT.vdur = 1.8; }); });
     } else BOOT.vdur = 1.8;
   });
-  const bar0 = performance.now();
   (function tick() {
     if (BOOT.done) return;
     const now = performance.now();
-    if (v && !vOk && !BOOT.go && now - bar0 > 6000 && v.readyState < 2) { v.remove(); }
     if (BOOT.go) {
-      const el = (now - BOOT.tg) / 1000, forced = el > BOOT.vdur + 6 || now - BOOT.t0 > 25000;
+      const wall = (now - BOOT.tg) / 1000;
+      if (vOk && wall > 4.5 && v.currentTime < .3 && !v.ended) { noVideo(); BOOT.vdur = 1.8; }   // video tidak mau jalan: pakai animasi cadangan
+      const el = vOk ? v.currentTime : wall, forced = wall > BOOT.vdur + 8 || now - BOOT.t0 > 25000;
       const t = forced ? 1 : Math.min(realFrac(), Math.min(1, el / BOOT.vdur));   // bar tidak pernah mendahului kenyataan
       BOOT.shown += (t - BOOT.shown) * .12 + .001; if (BOOT.shown > 1) BOOT.shown = 1;
       bar.style.transform = 'scaleX(' + BOOT.shown + ')'; pc.textContent = Math.round(BOOT.shown * 100) + '%';
       tx.textContent = BOOT.shown < .3 ? 'Memanaskan oven…' : BOOT.shown < .6 ? 'Menata kue-kue…' : BOOT.shown < .92 ? 'Menyiapkan foto…' : 'Siap disajikan!';
-      if (vOk && v && !v.muted) v.volume = Math.max(0, Math.min(1, (BOOT.vdur - el) / 1.2));
+      if (vOk && !v.muted) v.volume = Math.max(0, Math.min(1, (BOOT.vdur - el) / 1.2));
       if (BOOT.shown >= .995 && t >= 1) {
         BOOT.done = true;
         setTimeout(() => { ls.classList.add('hidden'); document.body.classList.add('ready'); welcome(); setTimeout(idlePre, 900); setTimeout(armWatch, 700); setTimeout(refreshBadge, 1200); setTimeout(() => { if (v) { v.pause(); v.removeAttribute('src'); v.load(); } }, 1200); }, 250);
