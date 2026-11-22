@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="referrer" content="no-referrer">
-<meta name="build" content="v17-video-2026-11-22">
+<meta name="build" content="v19-video-2026-11-22">
 <script>(function(){try{var m=localStorage.getItem("icr_pm")||"auto",t=m;if(m==="auto"){t=localStorage.getItem("icr_pt");if(!t){var n=navigator,c=n.connection||{},mem=n.deviceMemory||4,cr=n.hardwareConcurrency||4,ap=/iPhone|iPad|Macintosh/.test(n.userAgent);t=(c.saveData||matchMedia("(prefers-reduced-motion:reduce)").matches||(!ap&&(mem<=2||cr<=3)))?"low":(ap||(mem>=6&&cr>=8))?"high":"medium"}}document.documentElement.dataset.perf=t}catch(e){document.documentElement.dataset.perf="medium"}})()</script>
 <link rel="preconnect" href="https://wsrv.nl"><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Ira Cookies">
@@ -377,31 +377,49 @@ html[data-perf=low] .mq-mask{overflow-x:auto;-webkit-mask-image:none;mask-image:
 html[data-perf=low] .product-card,html[data-perf=low] .about-card,html[data-perf=low] .fs-card,html[data-perf=low] .hc,html[data-perf=low] .cta-card,html[data-perf=low] .dock,html[data-perf=low] .sidebar,html[data-perf=low] .nav-logo{box-shadow:4px 4px 9px var(--shadow-dark),-4px -4px 9px var(--shadow-light)!important}
 html:not([data-perf=high]) .modal-overlay,html:not([data-perf=high]) .choice-overlay,html:not([data-perf=high]) .pd-modal-overlay,html:not([data-perf=high]) .cart-overlay{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .ac-gate{padding:12px 14px;margin-bottom:16px;border-radius:14px;font-size:12px;line-height:1.6;border-left:3px solid var(--accent);box-shadow:inset 3px 3px 7px var(--shadow-inset-dark),inset -3px -3px 7px var(--shadow-inset-light)}.ac-gate i{color:var(--accent);margin-right:6px}
-/* --- loading dengan video: selalu jadi background penuh, logo di tengah video tetap terlihat --- */
-.ls-video,.ls-shade,.ls-head{display:none}
+/* --- loading emas: senada dengan video (hitam & emas), video jadi bintangnya --- */
+@property --r{syntax:'<percentage>';inherits:false;initial-value:0%}
+.ls-video,.ls-shade,.ls-head,.ls-hint{display:none}
 .loading-screen>:not(.ls-video):not(.ls-shade){position:relative;z-index:2}
-.loading-screen.has-video{justify-content:flex-end;align-items:center;padding-bottom:max(6.5vh,34px);background:radial-gradient(ellipse at 50% 45%,#1c1712 0%,#0e0b08 72%)}
+.loading-screen.has-video{justify-content:flex-end;align-items:center;padding-bottom:max(6vh,32px);background:radial-gradient(ellipse at 50% 45%,#1b1711 0%,#0b0907 75%)}
 .loading-screen.has-video .ls-orb,.loading-screen.has-video .ls-name,.loading-screen.has-video .ls-sub{display:none}
 .loading-screen.has-video .ls-video{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:100%;object-fit:cover;object-position:50% 50%;z-index:0}
-.loading-screen.has-video .ls-shade{display:block;position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 26%,rgba(0,0,0,0) 62%,rgba(0,0,0,.72) 100%)}
-.loading-screen.has-video .ls-enter{margin-top:0;animation:lsUp .7s var(--smooth) both,lsPulse 2.2s ease-in-out .8s infinite}
-.loading-screen.has-video .ls-load{margin-top:0;width:min(440px,76vw)}
-.loading-screen.has-video .ls-bar{background:rgba(255,255,255,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);overflow:visible;position:relative}
-.loading-screen.has-video .ls-head{display:block;position:absolute;top:50%;left:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#fff6e8;box-shadow:0 0 0 4px rgba(255,200,140,.28),0 0 18px 6px rgba(255,180,110,.65)}
-.loading-screen.has-video .ls-txt{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.7);font-variant-numeric:tabular-nums}.loading-screen.has-video .ls-txt b{color:#ffd9b8}
+.loading-screen.has-video .ls-shade{display:block;position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,5,4,.4),rgba(6,5,4,0) 24%,rgba(6,5,4,0) 58%,rgba(6,5,4,.82) 100%)}
+.loading-screen.has-video .ls-enter{margin-top:0;color:#2b1a07;font-weight:700;letter-spacing:.3px;background:linear-gradient(145deg,#f8dba0,#d6a050 55%,#b9822f);box-shadow:0 10px 30px rgba(214,160,80,.35),inset 0 1px 0 rgba(255,255,255,.6);animation:lsUp .7s var(--smooth) both,lsPulse 2.2s ease-in-out .8s infinite}
+.loading-screen.has-video .ls-enter::before{content:"";position:absolute;inset:-7px;border-radius:44px;border:1.5px solid rgba(246,215,155,.55);animation:lsRingBtn 2.2s ease-out .8s infinite}
+@keyframes lsRingBtn{0%{transform:scale(.94);opacity:.9}100%{transform:scale(1.18);opacity:0}}
+.loading-screen.has-video .ls-hint{display:block;margin-top:16px;font:500 11.5px 'Poppins',sans-serif;color:#cdb58a;letter-spacing:.4px;text-shadow:0 1px 8px rgba(0,0,0,.7);animation:lsUp .8s var(--smooth) .25s both}
+.loading-screen.has-video .ls-hint i{margin-right:7px;color:#f2c477}
+.loading-screen.go .ls-hint{display:none}
+.loading-screen.has-video .ls-load{display:none;width:min(460px,78vw);margin-top:0;flex-direction:column;align-items:center}
+.loading-screen.go.has-video .ls-load{display:flex;animation:lsUp .6s var(--smooth) both}
+.loading-screen.has-video .ls-txt{display:contents}
+.loading-screen.has-video #lsTxt{order:-1;margin-bottom:15px;display:flex;align-items:center;gap:12px;font:600 11px 'Poppins',sans-serif;letter-spacing:3.2px;text-transform:uppercase;color:#f2cf94;text-shadow:0 0 14px rgba(242,196,119,.45),0 1px 6px rgba(0,0,0,.7)}
+.loading-screen.has-video #lsTxt::before,.loading-screen.has-video #lsTxt::after{content:"";width:30px;height:1px;background:linear-gradient(90deg,transparent,#f2c477)}
+.loading-screen.has-video #lsTxt::after{transform:scaleX(-1)}
+.loading-screen.has-video .ls-bar{width:100%;height:3px;padding:0;border-radius:3px;background:rgba(255,226,170,.16);box-shadow:none;overflow:visible;position:relative}
+.loading-screen.has-video .ls-bar #lsBar{height:100%;border-radius:3px;background:linear-gradient(90deg,#8d5f24,#e3b25f 55%,#fff0c8);box-shadow:0 0 12px rgba(242,196,119,.7)}
+.loading-screen.has-video #lsPct{order:1;margin-top:14px;font:600 22px 'Playfair Display',serif;color:#ffe3b3;text-shadow:0 0 18px rgba(255,200,130,.55);font-variant-numeric:tabular-nums}
+.loading-screen.has-video .ls-head{display:block;position:absolute;top:50%;left:0;width:36px;height:36px;margin:-18px 0 0 -18px;pointer-events:none;background:radial-gradient(circle,#fff 0 11%,rgba(255,226,170,.9) 17%,rgba(255,200,130,0) 62%)}
+.loading-screen.has-video .ls-head::before,.loading-screen.has-video .ls-head::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:linear-gradient(90deg,transparent,#fff7e0,transparent)}
+.loading-screen.has-video .ls-head::before{width:36px;height:2px}
+.loading-screen.has-video .ls-head::after{width:2px;height:36px;background:linear-gradient(180deg,transparent,#fff7e0,transparent)}
+html[data-perf=high] .loading-screen.has-video .ls-head{animation:lsTwinkle 1.4s ease-in-out infinite}
+@keyframes lsTwinkle{50%{transform:scale(.78) rotate(45deg);opacity:.85}}
 .ls-txt span.sw{animation:lsSwap .55s var(--smooth)}
 @keyframes lsUp{from{opacity:0;transform:translateY(18px)}}
 @keyframes lsSwap{from{opacity:0;transform:translateY(6px)}}
-.loading-screen.go .ls-load{animation:lsUp .6s var(--smooth) both}
-/* HP tegak (portrait): video diperkecil secukupnya agar seluruh logo muat, sisi kiri-kanan yang berlebih terpotong, tepi atas-bawah memudar ke latar gelap */
+@keyframes lsOut{to{opacity:0;transform:translateY(10px)}}
+.loading-screen.fin .ls-load{animation:lsOut .6s var(--smooth) forwards}
+/* HP tegak: video diperkecil secukupnya agar seluruh logo muat; sisi kiri-kanan berlebih terpotong, tepi atas-bawah memudar ke latar gelap */
 @media (orientation:portrait){
   .loading-screen.has-video .ls-video{height:min(100vh,140.6vw);height:min(100dvh,140.6vw);width:calc(min(100vh,140.6vw)*1.7778);width:calc(min(100dvh,140.6vw)*1.7778);-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%)}
 }
-/* kualitas tinggi: gerak kamera pelan pada video + kilau cahaya saat masuk */
-html[data-perf=high] .loading-screen.has-video.go .ls-video{animation:lsZoom 14s ease-out forwards}
-@keyframes lsZoom{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-50%,-50%) scale(1.07)}}
-.loading-screen.burst::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(255,220,170,.6),rgba(255,200,140,0) 62%);animation:lsBurst .9s ease-out forwards}
-@keyframes lsBurst{0%{opacity:0;transform:scale(.6)}35%{opacity:1}100%{opacity:0;transform:scale(1.6)}}
+/* pembuka sinematik: cahaya hangat membesar dari tengah logo lalu larut menjadi halaman */
+.ls-bloom{display:none}
+.ls-bloom.on{display:block;position:fixed;left:50%;top:50%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;border-radius:50%;z-index:100000;pointer-events:none;background:radial-gradient(circle,#fff8e6 0%,#ffe3ae 24%,rgba(255,205,135,.9) 42%,rgba(255,205,135,0) 68%);transform:scale(0);opacity:0;animation:lsBloom 1.7s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes lsBloom{0%{transform:scale(0);opacity:0}22%{opacity:1}52%{transform:scale(1);opacity:1}100%{transform:scale(1.25);opacity:0}}
+.loading-screen.instant{transition:none!important}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -616,12 +634,14 @@ html[data-perf=high] .loading-screen.has-video.go .ls-video{animation:lsZoom 14s
 </head>
 <body>
 
+<div class="ls-bloom" id="lsBloom"></div>
 <div class="loading-screen" id="loadingScreen">
-  <video class="ls-video" id="lsVideo" src="componen/video_loading.mp4#t=0.1" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback></video>
+  <video class="ls-video" id="lsVideo" src="componen/video_loading.mp4" poster="componen/poster_loading.jpg" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback></video>
   <div class="ls-shade"></div>
   <div class="ls-orb"><span class="ls-ring"></span><span class="ls-ring r2"></span><i class="fas fa-cookie-bite"></i></div>
   <div class="ls-name">Ira Cookies</div><div class="ls-sub">RAMADHANIAH</div>
   <button class="ls-enter" id="lsEnter" type="button">Ketuk untuk masuk <i class="fas fa-arrow-right"></i></button>
+  <div class="ls-hint"><i class="fas fa-volume-high"></i>Nyalakan suara untuk pengalaman terbaik</div>
   <div class="ls-load"><div class="ls-bar"><i id="lsBar"></i><i class="ls-head" id="lsHead"></i></div><div class="ls-txt"><span id="lsTxt">Memanaskan oven…</span><b id="lsPct">0%</b></div></div>
 </div>
 <div class="watermark">AL-HAZA<sup style="font-size:6px;">tm</sup></div>
@@ -2441,11 +2461,15 @@ function bootLoop() {
       bar.style.transform = 'scaleX(' + BOOT.shown + ')'; hd.style.left = (BOOT.shown * 100) + '%'; pc.textContent = Math.round(BOOT.shown * 100) + '%';
       const msg = BOOT.shown < .3 ? 'Memanaskan oven…' : BOOT.shown < .6 ? 'Menata kue-kue…' : BOOT.shown < .92 ? 'Menyiapkan foto…' : 'Siap disajikan!';
       if (tx.textContent !== msg) { tx.textContent = msg; tx.classList.remove('sw'); void tx.offsetWidth; tx.classList.add('sw'); }
-      if (vOk && !v.muted) v.volume = Math.max(0, Math.min(1, (BOOT.vdur - el) / 1.2));
       if (BOOT.shown >= .995 && t >= 1) {
-        BOOT.done = true;
-        ls.classList.add('burst');
-        setTimeout(() => { ls.classList.add('hidden'); document.body.classList.add('ready'); welcome(); setTimeout(idlePre, 900); setTimeout(armWatch, 700); setTimeout(refreshBadge, 1200); setTimeout(() => { if (v) { v.pause(); v.removeAttribute('src'); v.load(); } }, 1200); }, 250);
+        BOOT.done = true; ls.classList.add('fin');   // bar memudar, logo di akhir video ditahan sejenak
+        const bloom = vOk && perfT() !== 'low', hold = vOk ? 650 : 200, bl = document.getElementById('lsBloom');
+        const open = () => { document.body.classList.add('ready'); welcome(); setTimeout(idlePre, 900); setTimeout(armWatch, 700); setTimeout(refreshBadge, 1200); };
+        const end = () => { ls.classList.add('hidden'); setTimeout(() => { if (v) { v.pause(); v.removeAttribute('src'); v.load(); } }, 1200); };
+        setTimeout(() => {
+          if (bloom) { bl.classList.add('on'); setTimeout(() => { ls.classList.add('instant'); end(); open(); }, 880); setTimeout(() => bl.classList.remove('on'), 1800); }
+          else { open(); end(); }
+        }, hold);
         return;
       }
     }
