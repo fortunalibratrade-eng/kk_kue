@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com https://www.google.com https://www.recaptcha.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebaseapp.com https://www.google.com https://www.gstatic.com; frame-src https://*.firebaseapp.com https://accounts.google.com https://www.google.com https://www.recaptcha.net; object-src 'none'; base-uri 'self'; form-action 'self'">
+<script>if(top!==self){document.documentElement.style.display="none";try{top.location=self.location}catch(e){}}</script>
 <meta name="referrer" content="no-referrer">
-<meta name="build" content="v21-video-2026-11-22">
+<meta name="build" content="v23-aman-2026-11-23">
 <script>(function(){try{var m=localStorage.getItem("icr_pm")||"auto",t=m;if(m==="auto"){t=localStorage.getItem("icr_pt");if(!t){var n=navigator,c=n.connection||{},mem=n.deviceMemory||4,cr=n.hardwareConcurrency||4,ap=/iPhone|iPad|Macintosh/.test(n.userAgent);t=(c.saveData||matchMedia("(prefers-reduced-motion:reduce)").matches||(!ap&&(mem<=2||cr<=3)))?"low":(ap||(mem>=6&&cr>=8))?"high":"medium"}}document.documentElement.dataset.perf=t}catch(e){document.documentElement.dataset.perf="medium"}})()</script>
 <link rel="preconnect" href="https://wsrv.nl"><link rel="preconnect" href="https://firestore.googleapis.com"><link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Ira Cookies">
@@ -454,6 +456,25 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
 .loading-screen.has-video .ls-glint{display:block;position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(105deg,transparent 41%,rgba(255,238,200,.0) 44%,rgba(255,240,205,.55) 50%,rgba(255,238,200,0) 56%,transparent 59%);transform:translateX(-115%)}
 .loading-screen.fin .ls-glint{animation:lsGlint 1.25s cubic-bezier(.5,0,.3,1) .05s both}
 @keyframes lsGlint{to{transform:translateX(115%)}}
+/* --- pengaturan admin, banner, stok habis --- */
+.ann{display:flex;align-items:center;gap:10px;margin:calc(var(--nav-h) + 8px) 14px -18px;padding:11px 16px;border-radius:16px;font-size:12px;line-height:1.55;color:var(--text);border-left:3px solid var(--accent);box-shadow:inset 3px 3px 8px var(--shadow-inset-dark),inset -3px -3px 8px var(--shadow-inset-light);animation:pageIn .6s var(--smooth)}
+.ann i{color:var(--accent);font-size:14px}.ann.closed{border-left-color:var(--danger)}.ann.closed i{color:var(--danger)}
+.set-card{padding:18px;margin-bottom:18px;border-radius:var(--radius);background:var(--bg);box-shadow:8px 8px 18px var(--shadow-dark),-8px -8px 18px var(--shadow-light),inset 1px 1px 0 var(--edge)}
+.set-card h4{display:flex;align-items:center;gap:10px;font:700 14px 'Playfair Display',serif;margin-bottom:16px}.set-card h4 i{color:var(--accent)}
+.set-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 16px}
+.set-hint{font-size:11px;color:var(--text2);line-height:1.7;margin-top:4px}.set-req{font-size:9px;font-weight:700;color:#fff;background:var(--accent);padding:2px 7px;border-radius:8px;margin-left:6px;vertical-align:middle}
+.set-save{position:sticky;bottom:14px;width:100%;padding:14px;font-size:13px;z-index:5;margin-top:4px}
+.tg-row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;font-size:13px;font-weight:600}
+.tg{position:relative;display:inline-block;width:52px;height:30px;flex:0 0 52px;cursor:pointer}.tg input{opacity:0;width:0;height:0;position:absolute}
+.tg i{position:absolute;inset:0;border-radius:30px;background:var(--bg);box-shadow:inset 3px 3px 7px var(--shadow-inset-dark),inset -3px -3px 7px var(--shadow-inset-light);transition:background .3s}
+.tg i::after{content:"";position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:var(--bg);box-shadow:3px 3px 6px var(--shadow-dark),-2px -2px 5px var(--shadow-light);transition:transform .35s var(--bounce),background .3s}
+.tg input:checked+i::after{transform:translateX(22px);background:var(--accent)}
+.sold-ribbon{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:7px;text-align:center;font:700 11px 'Poppins',sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:rgba(40,30,25,.74)}
+.pay-intro{font-size:11.5px;color:var(--text2);line-height:1.7;margin-bottom:12px}.pay-intro i{color:#25d366;margin-right:6px}
+.pay-sub{font-size:11px;color:var(--text2);margin-top:2px;line-height:1.5}
+.pw-meter{display:flex;gap:6px;margin-top:9px}.pw-meter i{flex:1;height:5px;border-radius:5px;background:var(--bg);box-shadow:inset 1px 1px 3px var(--shadow-inset-dark),inset -1px -1px 3px var(--shadow-inset-light);transition:background .3s}
+.pw-meter i.s1{background:#e74c3c}.pw-meter i.s2{background:#e67e22}.pw-meter i.s3{background:#f1c40f}.pw-meter i.s4{background:#27ae60}
+.pw-hint{font-size:11px;color:var(--text2);margin-top:6px;line-height:1.6}
 /* ===== CART ===== */
 .cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s var(--smooth)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -749,7 +770,7 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
     <button class="sb-link" onclick="toggleSound()"><i class="fas fa-volume-high" id="sndIc"></i><span id="sndTxt">Suara: Aktif</span></button>
     <button class="sb-link" onclick="cyclePerf()"><i class="fas fa-gauge-high"></i><span id="perfTxt">Kualitas: Auto</span></button>
     <button class="sb-link" onclick="toggleFull()"><i class="fas fa-expand"></i>Layar Penuh</button>
-    <a class="sb-link" href="https://wa.me/6287755046663?text=Halo%20Ira%20Cookies!" target="_blank"><i class="fab fa-whatsapp"></i>Chat WhatsApp</a>
+    <a class="sb-link" href="#" data-wa="Halo Ira Cookies!" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i>Chat WhatsApp</a>
   </div>
 </aside>
 <div class="sb-overlay" onclick="setSidebar(false)"></div>
@@ -761,6 +782,7 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
   <button class="dock-i" type="button" onclick="openUserLoginModal()"><i class="fas fa-user"></i><span id="dockAccTxt">Masuk</span></button>
 </nav>
 <main class="shell"><div class="page active" id="pg-home">
+<div class="ann" id="annBar" style="display:none"><i class="fas fa-bullhorn"></i><span id="annTxt"></span></div>
 <section class="hero" id="hero">
   <div class="hero-content">
     <div class="hero-badge"><i class="fas fa-star" style="margin-right:5px;"></i> PREMIUM HANDMADE</div>
@@ -769,12 +791,12 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
     <p class="hero-sub">Rasa autentik warisan nenek moyang, dibuat dengan bahan premium dan cinta di setiap gigitan.</p>
     <div class="hero-actions">
       <a href="#produk" onclick="go('produk',event)" class="neu-btn-accent hero-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-store"></i> Koleksi</a>
-      <a href="https://wa.me/6287755046663?text=Halo%20Ira%20Cookies!" target="_blank" class="neu-btn hero-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fab fa-whatsapp"></i> Kontak</a>
+      <a href="#" data-wa="Halo Ira Cookies!" target="_blank" rel="noopener noreferrer" class="neu-btn hero-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fab fa-whatsapp"></i> Kontak</a>
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-num" id="statVariants">—</div><div class="hero-stat-label">Varian</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">5K+</div><div class="hero-stat-label">Pelanggan</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">4.9</div><div class="hero-stat-label">Rating</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" id="statCust">5K+</div><div class="hero-stat-label">Pelanggan</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" id="statRate">4.9</div><div class="hero-stat-label">Rating</div></div>
     </div>
   </div>
 </section>
@@ -798,7 +820,7 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
   <h2 class="section-title">Tentang <span>Kami</span></h2>
   <p class="section-sub">Cerita di balik setiap kue</p>
   <div class="about-grid" id="aboutGrid"></div>
-  <div class="cta-card"><h3>Penasaran dengan dapur kami? 🍪</h3><p>Tanyakan resep andalan, request varian, atau pesan hampers spesial langsung lewat WhatsApp.</p><a href="https://wa.me/6287755046663?text=Halo%20Ira%20Cookies!" target="_blank" class="neu-btn-accent hero-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fab fa-whatsapp"></i> Ngobrol Yuk</a></div>
+  <div class="cta-card"><h3>Penasaran dengan dapur kami? 🍪</h3><p>Tanyakan resep andalan, request varian, atau pesan hampers spesial langsung lewat WhatsApp.</p><a href="#" data-wa="Halo Ira Cookies!" target="_blank" rel="noopener noreferrer" class="neu-btn-accent hero-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fab fa-whatsapp"></i> Ngobrol Yuk</a></div>
 </section>
 </div><div class="page" id="pg-riwayat">
 <section class="section" id="riwayat"><h2 class="section-title">Riwayat <span>Pesanan</span></h2><p class="section-sub">Pantau status pesananmu di sini</p><div class="hist-list" id="historyPageBody"></div></section>
@@ -810,15 +832,17 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
       <div class="footer-col">
         <h4>Ira Cookies Ramadhaniah</h4>
         <p>Kue kering dan lapis premium berkualitas tinggi.</p>
-        <div class="footer-social">
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-          <a href="https://wa.me/6287755046663" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <div class="footer-social" id="ftSocial">
+          <a href="#" id="ftIg" target="_blank" rel="noopener" aria-label="Instagram" style="display:none"><i class="fab fa-instagram"></i></a>
+          <a href="#" id="ftTt" target="_blank" rel="noopener" aria-label="TikTok" style="display:none"><i class="fab fa-tiktok"></i></a>
+          <a href="#" id="ftFb" target="_blank" rel="noopener" aria-label="Facebook" style="display:none"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" id="ftYt" target="_blank" rel="noopener" aria-label="YouTube" style="display:none"><i class="fab fa-youtube"></i></a>
+          <a href="#" data-wa="" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
       <div class="footer-col"><h4>Kategori</h4><a href="#produk" onclick="setFilter('kering');go('produk',event)">Kue Kering</a><a href="#produk" onclick="setFilter('lapis');go('produk',event)">Kue Lapis</a></div>
       <div class="footer-col"><h4>Info</h4><a href="#" onclick="openInfo('pesan',event)">Cara Pesan</a><a href="#" onclick="openInfo('kebijakan',event)">Kebijakan</a></div>
-      <div class="footer-col"><h4>Kontak</h4><p><i class="fas fa-phone" style="color:var(--accent);margin-right:5px;"></i> 0877-7550-46663</p><p><i class="fas fa-envelope" style="color:var(--accent);margin-right:5px;"></i> iracookies@gmail.com</p></div>
+      <div class="footer-col"><h4>Kontak</h4><p id="ftPhone"><i class="fas fa-phone" style="color:var(--accent);margin-right:5px;"></i> <span id="ftPhoneTxt"></span></p><p id="ftMail"><i class="fas fa-envelope" style="color:var(--accent);margin-right:5px;"></i> <span id="ftMailTxt"></span></p><p id="ftAddr" style="display:none"><i class="fas fa-location-dot" style="color:var(--accent);margin-right:5px;"></i> <span id="ftAddrTxt"></span></p><p id="ftHours" style="display:none"><i class="fas fa-clock" style="color:var(--accent);margin-right:5px;"></i> <span id="ftHoursTxt"></span></p></div>
     </div>
     <div class="footer-bottom">&copy; 2026 Ira Cookies Ramadhaniah. | <span style="color:var(--accent);font-weight:600;">AL-HAZA<sup style="font-size:7px;">tm</sup></span></div>
   </div>
@@ -860,6 +884,7 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
       <button class="admin-tab" data-tab="tentang" onclick="switchAdminTab('tentang')"><i class="fas fa-heart" style="margin-right:3px;"></i>Tentang</button>
       <button class="admin-tab" data-tab="pesanan" onclick="switchAdminTab('pesanan')"><i class="fas fa-receipt" style="margin-right:3px;"></i>Pesanan</button>
       <button class="admin-tab" data-tab="akun" onclick="switchAdminTab('akun')"><i class="fas fa-users" style="margin-right:3px;"></i>Akun</button>
+      <button class="admin-tab" data-tab="pengaturan" onclick="switchAdminTab('pengaturan')"><i class="fas fa-sliders" style="margin-right:3px;"></i>Pengaturan</button>
     </div>
     <div class="admin-content active" id="adminDashboard"><div class="admin-stats" id="adminStats"></div></div>
     <div class="admin-content" id="adminProduk">
@@ -872,6 +897,43 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
     </div>
     <div class="admin-content" id="adminPesanan">
       <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>Pelanggan</th><th>Item</th><th>Total</th><th>Bayar</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="adminOrderBody"></tbody></table></div>
+    </div>
+    <div class="admin-content" id="adminPengaturan">
+      <div class="set-card"><h4><i class="fas fa-store"></i> Status Toko</h4>
+        <div class="tg-row"><span>Toko buka (menerima pesanan)</span><label class="tg"><input type="checkbox" id="st_open"><i></i></label></div>
+        <div class="form-group"><label class="form-label">Pesan saat toko tutup</label><textarea class="neu-input" id="st_closedMsg" rows="2" maxlength="200"></textarea></div>
+        <p class="set-hint">Saat toko ditutup, pelanggan tetap bisa melihat produk tetapi tidak bisa mengirim pesanan, dan banner pemberitahuan muncul di Beranda.</p>
+      </div>
+      <div class="set-card"><h4><i class="fas fa-bullhorn"></i> Pengumuman Beranda</h4>
+        <div class="tg-row"><span>Tampilkan pengumuman</span><label class="tg"><input type="checkbox" id="st_annOn"><i></i></label></div>
+        <div class="form-group"><label class="form-label">Isi pengumuman</label><input type="text" class="neu-input" id="st_ann" maxlength="160" placeholder="Contoh: Pesanan lebaran dibuka sampai 20 Maret!"></div>
+      </div>
+      <div class="set-card"><h4><i class="fas fa-address-book"></i> Kontak &amp; Sosial Media</h4>
+        <div class="set-grid">
+          <div class="form-group"><label class="form-label">Nomor WhatsApp <span class="set-req">wajib</span></label><input type="text" inputmode="tel" class="neu-input" id="st_wa" placeholder="0812xxxxxxxx"></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="text" class="neu-input" id="st_email" autocapitalize="off" placeholder="nama@email.com"></div>
+          <div class="form-group"><label class="form-label">Instagram</label><input type="text" class="neu-input" id="st_ig" autocapitalize="off" placeholder="@username atau link"></div>
+          <div class="form-group"><label class="form-label">TikTok</label><input type="text" class="neu-input" id="st_tt" autocapitalize="off" placeholder="@username atau link"></div>
+          <div class="form-group"><label class="form-label">Facebook</label><input type="text" class="neu-input" id="st_fb" autocapitalize="off" placeholder="nama halaman atau link"></div>
+          <div class="form-group"><label class="form-label">YouTube</label><input type="text" class="neu-input" id="st_yt" autocapitalize="off" placeholder="@channel atau link"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Alamat toko</label><input type="text" class="neu-input" id="st_addr" maxlength="200" placeholder="Jl. ... (kosongkan jika tidak ingin ditampilkan)"></div>
+        <div class="form-group"><label class="form-label">Jam buka</label><input type="text" class="neu-input" id="st_hours" maxlength="120" placeholder="Contoh: Setiap hari 08.00 - 20.00"></div>
+        <p class="set-hint">Kolom sosial media yang kosong otomatis tidak ditampilkan di footer. Nomor WhatsApp dipakai di semua tombol WhatsApp dan pesan pesanan.</p>
+      </div>
+      <div class="set-card"><h4><i class="fas fa-wallet"></i> Metode Pembayaran</h4>
+        <p class="set-hint" style="margin-bottom:12px;">Pembayaran dilakukan di luar website, dilanjutkan lewat WhatsApp. Di sini kamu memilih metode yang ditawarkan kepada pelanggan.</p>
+        <div class="tg-row"><span>QRIS</span><label class="tg"><input type="checkbox" id="st_payQris"><i></i></label></div>
+        <div class="tg-row"><span>Transfer Bank</span><label class="tg"><input type="checkbox" id="st_payTransfer"><i></i></label></div>
+        <div class="tg-row"><span>Tunai (Cash)</span><label class="tg"><input type="checkbox" id="st_payCash"><i></i></label></div>
+      </div>
+      <div class="set-card"><h4><i class="fas fa-chart-simple"></i> Statistik Beranda</h4>
+        <div class="set-grid">
+          <div class="form-group"><label class="form-label">Jumlah pelanggan</label><input type="text" class="neu-input" id="st_statCust" maxlength="12" placeholder="5K+"></div>
+          <div class="form-group"><label class="form-label">Rating</label><input type="text" class="neu-input" id="st_statRate" maxlength="8" placeholder="4.9"></div>
+        </div>
+      </div>
+      <button class="neu-btn-accent set-save" onclick="saveSettingsForm()"><i class="fas fa-floppy-disk"></i> Simpan Pengaturan</button>
     </div>
     <div class="admin-content" id="adminAkun">
       <input type="text" class="neu-input" id="accSearch" placeholder="Cari ID atau nama pelanggan..." oninput="renderAcc()" style="margin-bottom:14px;" autocapitalize="off">
@@ -901,6 +963,7 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
           <div class="url-preview-info"><i class="fas fa-check-circle" style="color:var(--success);"></i> Foto berhasil dimuat</div>
         </div>
       </div>
+      <div class="form-group"><label class="tg-row" style="margin-bottom:0;"><span><i class="fas fa-box-open" style="color:var(--accent);margin-right:8px;"></i>Stok habis (tidak bisa dipesan)</span><span class="tg"><input type="checkbox" id="prodSold"><i></i></span></label></div>
       <div class="form-group">
         <label class="form-label">Foto Pendukung <span style="color:var(--text2);font-weight:400;">(muncul saat kue diklik · opsional · bisa paste banyak link sekaligus)</span></label>
         <div id="prodExtraList"></div>
@@ -982,15 +1045,14 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
       <div class="form-group"><label class="form-label">Catatan</label><input type="text" class="neu-input" id="custNotes" placeholder="Opsional"></div>
       <div class="form-group">
         <label class="form-label">Pembayaran</label>
+        <p class="pay-intro"><i class="fab fa-whatsapp"></i> Pembayaran dilanjutkan di WhatsApp. Di sini kamu cukup memilih metode yang ingin dipakai, admin akan mengirimkan detailnya.</p>
         <div class="payment-options">
-          <label class="payment-opt" onclick="selectPayment('bca')"><input type="radio" name="payment" value="bca" required><div class="payment-radio"><div class="payment-radio-inner"></div></div><div><div>Bank BCA</div></div></label>
-          <label class="payment-opt" onclick="selectPayment('mandiri')"><input type="radio" name="payment" value="mandiri"><div class="payment-radio"><div class="payment-radio-inner"></div></div><div><div>Bank Mandiri</div></div></label>
-          <label class="payment-opt" onclick="selectPayment('qris')"><input type="radio" name="payment" value="qris"><div class="payment-radio"><div class="payment-radio-inner"></div></div><div><div>QRIS</div></div></label>
+          <label class="payment-opt" onclick="selectPayment('qris')"><input type="radio" name="payment" value="qris" required><div class="payment-radio"><div class="payment-radio-inner"></div></div><div><div>QRIS</div><div class="pay-sub">Kode QRIS dikirim admin lewat WhatsApp</div></div></label>
+          <label class="payment-opt" onclick="selectPayment('transfer')"><input type="radio" name="payment" value="transfer"><div class="payment-radio"><div class="payment-radio-inner"></div></div><div><div>Transfer Bank</div><div class="pay-sub">Nomor rekening dikirim admin lewat WhatsApp</div></div></label>
+          <label class="payment-opt" onclick="selectPayment('cash')"><input type="radio" name="payment" value="cash"><div class="payment-radio"><div class="payment-radio-inner"></div></div><div><div>Tunai (Cash)</div><div class="pay-sub">Bayar saat pesanan diterima atau diambil</div></div></label>
         </div>
       </div>
-      <div class="payment-detail" id="payBCA">BCA: <strong>8720-3456-7890</strong> a.n. Ira Cookies Ramadhaniah</div>
-      <div class="payment-detail" id="payMandiri">Mandiri: <strong>1234-0098-7654</strong> a.n. Ira Cookies Ramadhaniah</div>
-      <div class="payment-detail" id="payQRIS" style="text-align:center;">Scan QRIS:<img id="qrisImg" class="qris-img" alt="QRIS" style="display:none"><div id="qrisNote" style="font-size:12px;margin-top:8px;">Kode QRIS dikirim admin lewat WhatsApp setelah pesanan masuk.</div></div>
+      <div class="payment-detail" id="payNote"></div>
       <label class="form-label" style="margin-bottom:8px;">Ringkasan</label>
       <div class="order-summary" id="checkoutSummary"></div>
       <div style="display:flex;justify-content:space-between;margin-bottom:16px;"><span style="color:var(--text2);font-size:14px;">Total</span><span style="font-size:20px;font-weight:800;color:var(--accent);" id="checkoutTotal">Rp 0</span></div>
@@ -1020,7 +1082,9 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
       <div class="form-group"><label class="form-label">ID Pengguna</label><input type="text" class="neu-input" id="acUser" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="20" placeholder="contoh: budi_01"></div>
       <div class="form-group" data-reg><label class="form-label">Nama Panggilan</label><input type="text" class="neu-input" id="acName" maxlength="40" placeholder="Contoh: Budi"></div>
       <div class="form-group" data-reg><label class="form-label">No. WhatsApp <span style="font-weight:400;color:var(--text2);">(opsional, untuk bantuan reset)</span></label><input type="text" inputmode="tel" class="neu-input" id="acPhone" maxlength="20" placeholder="08xxxxxxxxxx"></div>
-      <div class="form-group"><label class="form-label">Password</label><div class="pw-wrap"><input type="password" class="neu-input" id="acPass" autocomplete="current-password" maxlength="64" placeholder="minimal 6 karakter"><button type="button" class="pw-eye" onclick="acEye('acPass',this)"><i class="fas fa-eye"></i></button></div></div>
+      <div class="form-group"><label class="form-label">Password</label><div class="pw-wrap"><input type="password" class="neu-input" id="acPass" autocomplete="current-password" maxlength="64" placeholder="minimal 8 karakter, huruf + angka"><button type="button" class="pw-eye" onclick="acEye('acPass',this)"><i class="fas fa-eye"></i></button></div>
+        <div data-reg><div class="pw-meter" id="pwMeter"><i></i><i></i><i></i><i></i></div><div class="pw-hint" id="pwHint">Minimal 8 karakter, gabungan huruf dan angka. Semakin panjang semakin aman.</div></div></div>
+      <div class="ac-gate" id="acHint" style="display:none;"></div>
       <div class="login-error" id="acErr" style="margin-bottom:10px;"></div>
       <button class="neu-btn-accent" id="acGo" style="width:100%;padding:13px;font-size:13px;" onclick="acSubmit()">Masuk</button>
       <div class="ac-note" data-login><a href="#" onclick="acForgot(event)">Lupa password? Hubungi admin</a></div>
@@ -1030,7 +1094,7 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
       <div class="ac-me"><div class="ac-av" id="acAv">A</div><div><b id="acMeName"></b><small id="acMeId"></small></div></div>
       <div id="acChg" style="display:none;">
         <div class="form-group"><label class="form-label">Password Lama / Sementara</label><div class="pw-wrap"><input type="password" class="neu-input" id="acOld" autocomplete="current-password" maxlength="64"><button type="button" class="pw-eye" onclick="acEye('acOld',this)"><i class="fas fa-eye"></i></button></div></div>
-        <div class="form-group"><label class="form-label">Password Baru</label><div class="pw-wrap"><input type="password" class="neu-input" id="acNew" autocomplete="new-password" maxlength="64" placeholder="minimal 6 karakter"><button type="button" class="pw-eye" onclick="acEye('acNew',this)"><i class="fas fa-eye"></i></button></div></div>
+        <div class="form-group"><label class="form-label">Password Baru</label><div class="pw-wrap"><input type="password" class="neu-input" id="acNew" autocomplete="new-password" maxlength="64" placeholder="minimal 8 karakter, huruf + angka"><button type="button" class="pw-eye" onclick="acEye('acNew',this)"><i class="fas fa-eye"></i></button></div></div>
         <div class="login-error" id="acErr2" style="margin-bottom:10px;"></div>
         <button class="neu-btn-accent" style="width:100%;padding:12px;font-size:13px;margin-bottom:10px;" onclick="acChange()">Simpan Password Baru</button>
       </div>
@@ -1047,7 +1111,7 @@ html[data-perf=high] .loading-screen.has-video .ls-head s{display:block;position
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   initializeFirestore, persistentLocalCache, persistentMultipleTabManager, getFirestore, collection, getDocs, doc, addDoc, setDoc, updateDoc, deleteDoc,
-  query, orderBy, onSnapshot, serverTimestamp, getDoc, arrayUnion
+  query, orderBy, limit, writeBatch, onSnapshot, serverTimestamp, getDoc, arrayUnion
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, onAuthStateChanged, signOut
@@ -1067,6 +1131,9 @@ const app = initializeApp(firebaseConfig);
 let db;
 try { db = initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) }); } catch (e) { db = getFirestore(app); }
 const auth = getAuth(app);
+// App Check: isi dengan "site key" reCAPTCHA v3 untuk memblokir akses dari luar website resmi (panduan ada di penjelasan). Kosong = nonaktif.
+const APPCHECK_SITE_KEY = '';
+if (APPCHECK_SITE_KEY) { try { const ac = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check.js"); ac.initializeAppCheck(app, { provider: new ac.ReCaptchaV3Provider(APPCHECK_SITE_KEY), isTokenAutoRefreshEnabled: true }); } catch (e) { console.warn('App Check gagal dimulai', e); } }
 
 /* ── FIRESTORE STATUS ── */
 function setFsStatus(state, text) {
@@ -1121,9 +1188,10 @@ function listenAbout() {
 }
 
 function listenOrders() {
-  const q = query(collection(db, 'pesanan'), orderBy('createdAt', 'desc'));
+  const q = query(collection(db, 'pesanan'), orderBy('createdAt', 'desc'), limit(500));
   return onSnapshot(q, snap => {
     orders = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
+    { const ids = new Set(orders.map(o => o.firestoreId)); if (window.__oids && window.onNewOrder) { const nw = orders.filter(o => !window.__oids.has(o.firestoreId)); if (nw.length) window.onNewOrder(nw[0]); } window.__oids = ids; }
     renderAO();
     renderAD();
     // also update local history for current user
@@ -1170,6 +1238,14 @@ window._fs = {
     return await setDoc(doc(db, 'users', userId), data, { merge: true });
   },
   // ── akun pelanggan ──
+  // ── akun (semua perubahan berupa satu kesatuan/batch agar aturan keamanan bisa memeriksa hasil akhirnya) ──
+  async accRegister(u, id, data) { const b = writeBatch(db); b.set(doc(db, 'usernames', u), { createdAt: new Date().toISOString() }); b.set(doc(db, 'acl', u), { acc: id, okey: data.okey }); b.set(doc(db, 'accounts', id), data); return await b.commit(); },
+  async accRebind(u, oldId, newId, data) { const b = writeBatch(db); b.update(doc(db, 'acl', u), { acc: newId, prev: oldId }); b.set(doc(db, 'accounts', newId), data); b.delete(doc(db, 'accounts', oldId)); return await b.commit(); },
+  async accUpgrade(u, oldId, newId, data) { const b = writeBatch(db); b.set(doc(db, 'acl', u), { acc: newId, okey: data.okey }); b.set(doc(db, 'accounts', newId), data); b.delete(doc(db, 'accounts', oldId)); return await b.commit(); },
+  async accAdminDelete(u, id) { const b = writeBatch(db); b.delete(doc(db, 'accounts', id)); b.delete(doc(db, 'usernames', u)); b.delete(doc(db, 'acl', u)); return await b.commit(); },
+  watchOrder(id, cb) { return onSnapshot(doc(db, 'pesanan', id), s => cb(s.exists() ? { firestoreId: s.id, ...s.data() } : null), () => cb(null)); },
+  async usernameExists(u) { const x = await getDoc(doc(db, 'usernames', u)); return x.exists(); },
+  async saveSettings(data) { return await setDoc(doc(db, 'pengaturan', 'toko'), data, { merge: true }); },
   async usernameCreate(u) { return await setDoc(doc(db, 'usernames', u), { createdAt: new Date().toISOString() }); },
   async usernameDelete(u) { return await deleteDoc(doc(db, 'usernames', u)); },
   async accGet(id) { const x = await getDoc(doc(db, 'accounts', id)); return x.exists() ? x.data() : null; },
@@ -1178,8 +1254,14 @@ window._fs = {
   async accAddOrder(id, orderId) { return await updateDoc(doc(db, 'accounts', id), { orderIds: arrayUnion(orderId) }); },
   async orderGet(id) { const x = await getDoc(doc(db, 'pesanan', id)); return x.exists() ? { firestoreId: x.id, ...x.data() } : null; }
 };
+function listenSettings() {
+  return onSnapshot(doc(db, 'pengaturan', 'toko'), snap => {
+    window._set = (snap && typeof snap.exists === 'function' && snap.exists()) ? snap.data() : {};
+    if (window.applySettings) window.applySettings(); if (window.renderSettings) window.renderSettings();
+  }, () => {});
+}
 function listenAccounts() {
-  return onSnapshot(collection(db, 'accounts'), snap => {
+  return onSnapshot(query(collection(db, 'accounts'), limit(500)), snap => {
     window._accs = snap.docs.map(d => ({ credId: d.id, ...d.data() }));
     if (window.renderAcc) window.renderAcc();
   }, () => {});
@@ -1193,6 +1275,7 @@ window._getOrders = () => orders;
 /* start listeners */
 listenProducts();
 listenAbout();
+listenSettings();
 
 /* ── LOGIN ADMIN (Google) ──
    Admin ditentukan oleh Firestore Rules (daftar email di server), bukan oleh kode ini.
@@ -1200,7 +1283,7 @@ listenAbout();
 let unsubOrders = null;
 let unsubAcc = null;
 function startOrders() { if (!unsubOrders) unsubOrders = listenOrders(); if (!unsubAcc) unsubAcc = listenAccounts(); }
-function stopOrders() { if (unsubOrders) { unsubOrders(); unsubOrders = null; } if (unsubAcc) { unsubAcc(); unsubAcc = null; } window._accs = []; orders = []; }
+function stopOrders() { if (unsubOrders) { unsubOrders(); unsubOrders = null; } if (unsubAcc) { unsubAcc(); unsubAcc = null; } window._accs = []; window.__oids = undefined; orders = []; }
 const gProvider = new GoogleAuthProvider();
 gProvider.setCustomParameters({ prompt: 'select_account' });
 window._auth = {
@@ -1328,7 +1411,7 @@ function toast(m, t = 'success') {
   const e = document.createElement('div');
   e.className = `toast toast-${t}`;
   const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
-  e.innerHTML = `<i class="fas ${icons[t] || icons.success}"></i><span>${m}</span>`;
+  e.innerHTML = '<i class="fas ' + (icons[t] || icons.success) + '"></i><span></span>'; e.lastChild.textContent = String(m);
   c.appendChild(e);
   setTimeout(() => { e.classList.add('toast-exit'); setTimeout(() => e.remove(), 350); }, 2800);
 }
@@ -1459,15 +1542,30 @@ function updateUserUI() {
     if (mobileEl) mobileEl.textContent = 'Masuk / Daftar';
   }
 }
-const AC_RE = /^[a-z0-9_]{3,20}$/; let acM = 'login', acFail = 0, acLock = 0;
-async function derive(u, p) {
-  const enc = new TextEncoder(), key = await crypto.subtle.importKey('raw', enc.encode(p), 'PBKDF2', false, ['deriveBits']);
-  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode('ira-cookies:' + u), iterations: 150000 }, key, 256);
+const AC_RE = /^[a-z0-9_]{3,20}$/; let acM = 'login', acFail = 0, acLock = 0, acLockN = 0;
+// v2 (baru): PBKDF2-SHA256 600.000 putaran sesuai rekomendasi OWASP. v1 hanya untuk akun lama agar tetap bisa masuk lalu otomatis ditingkatkan.
+async function derive(u, p, ver) {
+  ver = ver || 2; const enc = new TextEncoder(), key = await crypto.subtle.importKey('raw', enc.encode(p), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(ver === 1 ? 'ira-cookies:' + u : 'ira-cookies:v2:' + u), iterations: ver === 1 ? 150000 : 600000 }, key, 256);
   return [...new Uint8Array(bits)].map(b => b.toString(16).padStart(2, '0')).join('');
 }
+function rnd(n) { return [...crypto.getRandomValues(new Uint8Array(n))].map(b => b.toString(16).padStart(2, '0')).join(''); }
+const COMMON_PW = ['password', 'password1', 'password123', '12345678', '123456789', '1234567890', 'qwerty123', 'qwertyui', '11111111', '00000000', 'iloveyou', 'admin123', 'abc12345', '12341234', '1q2w3e4r', 'asdfghjk', 'zxcvbnm1', 'kuekue12', 'indonesia', '12345678a', 'a12345678', 'password12', 'welcome1', 'letmein1'];
+function pwCheck(p, u) {
+  if (p.length < 8) return 'Password minimal 8 karakter';
+  if (p.length > 64) return 'Password maksimal 64 karakter';
+  if (!/[A-Za-z]/.test(p) || !/\d/.test(p)) return 'Password harus gabungan huruf dan angka';
+  if (/^(.)\1+$/.test(p)) return 'Password terlalu mudah ditebak';
+  if (u && u.length >= 3 && p.toLowerCase().includes(u)) return 'Password tidak boleh mengandung ID kamu';
+  if (COMMON_PW.includes(p.toLowerCase())) return 'Password ini terlalu umum, pilih yang lain';
+  return '';
+}
+function pwScore(p) { let sc = 0; if (p.length >= 8 && /[A-Za-z]/.test(p) && /\d/.test(p)) sc++; if (p.length >= 11) sc++; if (/[A-Z]/.test(p) && /[a-z]/.test(p)) sc++; if (/[^A-Za-z0-9]/.test(p) || p.length >= 14) sc++; return sc; }
 function acErr(t, id) { const e = document.getElementById(id || 'acErr'); e.textContent = t; e.classList.toggle('show', !!t); }
 function acEye(id, b) { const i = document.getElementById(id); i.type = i.type === 'password' ? 'text' : 'password'; b.firstElementChild.className = 'fas fa-eye' + (i.type === 'password' ? '' : '-slash'); }
+function acHint(h) { const e = document.getElementById('acHint'); if (!e) return; e.innerHTML = h ? '<i class="fas fa-circle-info"></i> ' + h : ''; e.style.display = h ? 'block' : 'none'; }
 function acMode(m) {
+  acHint('');
   acM = m; document.querySelectorAll('.ac-tab').forEach(t => t.classList.toggle('active', t.dataset.m === m));
   document.querySelectorAll('#acGuest [data-reg]').forEach(e => e.style.display = m === 'reg' ? '' : 'none');
   document.querySelectorAll('#acGuest [data-login]').forEach(e => e.style.display = m === 'login' ? '' : 'none');
@@ -1488,7 +1586,7 @@ function openUserLoginModal() {
 }
 function closeUserLoginModal() { document.getElementById('userLoginModal').classList.remove('open'); document.body.style.overflow = ''; }
 function acLogin(id, d) {
-  currentUser = { userId: d.username, username: d.username, name: d.name, phone: d.phone || '', credId: id, mustChange: !!d.mustChange };
+  currentUser = { userId: d.username, username: d.username, name: d.name, phone: d.phone || '', credId: id, okey: d.okey || '', mustChange: !!d.mustChange };
   localStorage.setItem('icr_user', JSON.stringify(currentUser)); updateUserUI(); acFail = 0; refreshBadge(); switchCartOnLogin();
   document.getElementById('acPass').value = '';
   if (d.mustChange) { acView(); acChgToggle(true); toast('Buat password baru untuk melanjutkan'); }
@@ -1498,39 +1596,52 @@ function acLogin(id, d) {
     if (pa && Date.now() - pa.t < 180000) setTimeout(pa.fn, 450);
   }
 }
+async function upgradeAcc(u, oldId, d, p) {
+  try { const nid = await derive(u, p, 2), nd = { ...d, okey: d.okey || rnd(16) }; await window._fs.accUpgrade(u, oldId, nid, nd); return { id: nid, d: nd }; }
+  catch (e) { console.warn('peningkatan keamanan akun gagal', e); return { id: oldId, d }; }
+}
 async function acSubmit() {
   const u = document.getElementById('acUser').value.trim().toLowerCase(), p = document.getElementById('acPass').value, b = document.getElementById('acGo'); acErr('');
   if (Date.now() < acLock) return acErr('Terlalu banyak percobaan. Coba lagi ' + Math.ceil((acLock - Date.now()) / 1000) + ' detik lagi.');
   if (!AC_RE.test(u)) return acErr('ID harus 3-20 karakter: huruf kecil, angka, atau _');
-  if (p.length < 6) return acErr('Password minimal 6 karakter');
+  if (acM === 'reg') { const pe = pwCheck(p, u); if (pe) return acErr(pe); } else if (!p) return acErr('Masukkan password');
   if (!window._fs) return acErr('Layanan belum siap, coba lagi sebentar');
-  const t0 = b.textContent; b.disabled = true; b.textContent = 'Memproses...';
+  b.disabled = true; b.textContent = 'Memproses...';
   try {
-    const id = await derive(u, p);
     if (acM === 'reg') {
-      try { await window._fs.usernameCreate(u); } catch (e) { throw e && e.code === 'permission-denied' ? new Error('ID "' + u + '" sudah dipakai, pilih ID lain') : e; }
-      const d = { username: u, name: document.getElementById('acName').value.trim() || u, phone: document.getElementById('acPhone').value.trim(), orderIds: [], mustChange: false, createdAt: new Date().toISOString() };
-      await window._fs.accCreate(id, d); acLogin(id, d); toast('Akun dibuat. Selamat datang, ' + d.name + '!');
+      let taken = false; try { taken = await window._fs.usernameExists(u); } catch (e) {}
+      if (taken) throw new Error('ID "' + u + '" sudah dipakai. Jika itu akunmu, pilih tab Masuk. Jika bukan, pilih ID lain.');
+      const id = await derive(u, p, 2), d = { username: u, name: document.getElementById('acName').value.trim().slice(0, 40) || u, phone: document.getElementById('acPhone').value.trim().slice(0, 20), orderIds: [], mustChange: false, createdAt: new Date().toISOString(), okey: rnd(16) };
+      try { await window._fs.accRegister(u, id, d); } catch (e) { throw e && e.code === 'permission-denied' ? new Error('Pendaftaran ditolak. ID mungkin baru saja dipakai orang lain, coba ID lain.') : e; }
+      acLogin(id, d); toast('Akun dibuat. Selamat datang, ' + d.name + '!');
     } else {
-      const d = await window._fs.accGet(id);
-      if (!d || d.username !== u) { if (++acFail >= 5) { acLock = Date.now() + 30000; acFail = 0; } throw new Error('ID atau password salah'); }
-      acLogin(id, d); toast('Halo, ' + d.name + '!');
+      let id = await derive(u, p, 2), d = await window._fs.accGet(id), legacy = false;
+      if (!d) { const id1 = await derive(u, p, 1); d = await window._fs.accGet(id1); if (d) { legacy = true; id = id1; } }
+      if (!d || d.username !== u) {
+        let known = true; try { known = await window._fs.usernameExists(u); } catch (e) {}
+        if (!known) { acMode('reg'); acHint('ID <b>@' + E(u) + '</b> belum terdaftar, jadi kami arahkan ke pendaftaran. Lengkapi nama lalu tekan <b>Daftar &amp; Masuk</b>.'); return; }
+        acFail++; if (acFail >= 5) { acLockN++; acLock = Date.now() + 30000 * Math.pow(2, Math.min(acLockN - 1, 5)); acFail = 0; }
+        throw new Error('Password salah. Coba lagi, atau hubungi admin untuk reset password.');
+      }
+      if (legacy && !d.okey) { const r = await upgradeAcc(u, id, d, p); id = r.id; d = r.d; }
+      acLockN = 0; acLogin(id, d); toast('Halo, ' + d.name + '!');
     }
   } catch (e) { acErr(e && e.code ? 'Terjadi kendala koneksi, coba lagi' : (e.message || 'Gagal, coba lagi')); }
-  finally { b.disabled = false; b.textContent = t0; }
+  finally { b.disabled = false; b.textContent = acM === 'reg' ? 'Daftar & Masuk' : 'Masuk'; }
 }
-function acForgot(e) { e.preventDefault(); const u = document.getElementById('acUser').value.trim(); window.open('https://wa.me/6287755046663?text=' + encodeURIComponent('Halo admin, saya lupa password akun Ira Cookies.' + (u ? ' ID: ' + u : '')), '_blank'); }
+function acForgot(e) { e.preventDefault(); const u = document.getElementById('acUser').value.trim(); window.open(waLink('Halo admin, saya lupa password akun Ira Cookies.' + (u ? ' ID: ' + u : '')), '_blank', 'noopener,noreferrer'); }
 function acChgToggle(force) { const b = document.getElementById('acChg'), o = typeof force === 'boolean' ? force : b.style.display === 'none'; b.style.display = o ? 'block' : 'none'; acErr('', 'acErr2'); if (o) document.getElementById('acOld').focus(); }
 async function acChange() {
   const op = document.getElementById('acOld').value, np = document.getElementById('acNew').value; acErr('', 'acErr2');
-  if (np.length < 6) return acErr('Password baru minimal 6 karakter', 'acErr2');
+  const pe = pwCheck(np, currentUser.username); if (pe) return acErr(pe, 'acErr2');
   try {
-    const oid = await derive(currentUser.username, op);
-    if (oid !== currentUser.credId) return acErr('Password lama salah', 'acErr2');
-    const nid = await derive(currentUser.username, np); if (nid === oid) return acErr('Password baru harus berbeda', 'acErr2');
+    const u = currentUser.username, ok = (await derive(u, op, 2)) === currentUser.credId || (await derive(u, op, 1)) === currentUser.credId;
+    if (!ok) return acErr('Password lama salah', 'acErr2');
+    const oid = currentUser.credId, nid = await derive(u, np, 2); if (nid === oid) return acErr('Password baru harus berbeda', 'acErr2');
     const d = await window._fs.accGet(oid); if (!d) return acErr('Akun tidak ditemukan, silakan masuk ulang', 'acErr2');
-    d.mustChange = false; await window._fs.accCreate(nid, d); await window._fs.accDelete(oid);
-    currentUser.credId = nid; currentUser.mustChange = false; localStorage.setItem('icr_user', JSON.stringify(currentUser));
+    d.mustChange = false;
+    if (d.okey) await window._fs.accRebind(u, oid, nid, d); else { d.okey = rnd(16); await window._fs.accUpgrade(u, oid, nid, d); }
+    currentUser.credId = nid; currentUser.okey = d.okey; currentUser.mustChange = false; localStorage.setItem('icr_user', JSON.stringify(currentUser));
     document.getElementById('acOld').value = document.getElementById('acNew').value = ''; toast('Password berhasil diganti'); closeUserLoginModal();
   } catch (e) { acErr('Gagal menyimpan, coba lagi', 'acErr2'); }
 }
@@ -1545,6 +1656,7 @@ async function confirmLogout() {
   if (await cfm('Keluar dari akun <b>@' + E(currentUser && currentUser.username) + '</b>?<br><small>Keranjangmu tetap tersimpan aman di akun ini dan kembali saat kamu masuk lagi.</small>', 'Ya, Keluar')) logoutUser(); else openUserLoginModal();
 }
 function logoutUser() {
+  histStop(); _hCache = {};
   saveCart();
   currentUser = null; localStorage.removeItem('icr_user'); localStorage.removeItem('icr_cart');
   cart.splice(0, cart.length); updateCB(); renderCart();
@@ -1584,6 +1696,7 @@ function closePD() { document.getElementById('pdOverlay').classList.remove('open
 
 // ─── CHOICE DIALOG ───
 function showChoiceDialog(firestoreId) {
+  { const pp = (window._getProducts ? window._getProducts() : []).find(x => x.firestoreId === firestoreId || x.id === firestoreId); if (pp && pp.soldOut) { toast('Maaf, stok sedang habis', 'error'); return; } }
   if (needLogin(() => showChoiceDialog(firestoreId), 'Masuk atau daftar dulu untuk menambahkan kue ke keranjang.')) return;
   const products = window._getProducts ? window._getProducts() : [];
   const p = products.find(x => x.firestoreId === firestoreId || x.id === firestoreId);
@@ -1617,7 +1730,7 @@ function choiceDirectCheckout() {
 function switchAdminTab(t) {
   document.querySelectorAll('.admin-tab').forEach(x => x.classList.toggle('active', x.dataset.tab === t));
   document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-  const map = { dashboard: 'adminDashboard', produk: 'adminProduk', tentang: 'adminTentang', pesanan: 'adminPesanan', akun: 'adminAkun' };
+  const map = { dashboard: 'adminDashboard', produk: 'adminProduk', tentang: 'adminTentang', pesanan: 'adminPesanan', akun: 'adminAkun', pengaturan: 'adminPengaturan' };
   if (map[t]) document.getElementById(map[t]).classList.add('active');
 }
 
@@ -1645,12 +1758,13 @@ function renderAP() {
   document.getElementById('adminProductBody').innerHTML = products.map(p => `
     <tr>
       <td><img ${ia(gImg(p), 120)} class="admin-table-img" onerror="imgFallback(this,'${p.firestoreId}')"></td>
-      <td style="font-weight:700;">${p.name}</td>
+      <td style="font-weight:700;">${p.name}${p.soldOut ? ' <span class="badge-sm" style="background:#7f8c8d">Habis</span>' : ''}</td>
       <td>${p.category === 'kering' ? 'Kering' : 'Lapis'}</td>
       <td style="color:var(--accent);font-weight:800;">${fp(p.price || 0)}</td>
       <td>${p.badge ? `<span class="badge-sm" style="${bc[p.badge]}">${bl[p.badge]}</span>` : '—'}</td>
       <td>
         <button class="admin-action-btn admin-action-edit" onclick="editProduct('${p.firestoreId}')"><i class="fas fa-edit"></i></button>
+        <button class="admin-action-btn" title="${p.soldOut ? 'Tandai tersedia' : 'Tandai stok habis'}" onclick="toggleSold('${p.firestoreId}', ${!p.soldOut})"><i class="fas fa-${p.soldOut ? 'box-open' : 'ban'}" style="${p.soldOut ? 'color:var(--success)' : ''}"></i></button>
         <button class="admin-action-btn admin-action-delete" onclick="deleteProduct('${p.firestoreId}')"><i class="fas fa-trash"></i></button>
       </td>
     </tr>`).join('');
@@ -1706,6 +1820,7 @@ function openProductModal(firestoreId) {
     document.getElementById('prodCategory').value = p.category;
     document.getElementById('prodPrice').value = p.price;
     document.getElementById('prodBadge').value = p.badge || '';
+    document.getElementById('prodSold').checked = !!p.soldOut;
     document.getElementById('prodDesc').value = p.desc;
     document.getElementById('prodFullDesc').value = p.fullDesc || '';
     setExtraRows(p.images);
@@ -1721,6 +1836,7 @@ function openProductModal(firestoreId) {
     document.getElementById('prodCategory').value = 'kering';
     document.getElementById('prodPrice').value = '';
     document.getElementById('prodBadge').value = '';
+    document.getElementById('prodSold').checked = false;
     document.getElementById('prodDesc').value = '';
     document.getElementById('prodFullDesc').value = '';
   }
@@ -1743,6 +1859,7 @@ async function saveProduct(e) {
     category: document.getElementById('prodCategory').value,
     price: parseInt(document.getElementById('prodPrice').value),
     badge: document.getElementById('prodBadge').value,
+    soldOut: document.getElementById('prodSold').checked,
     desc: document.getElementById('prodDesc').value.trim(),
     fullDesc: document.getElementById('prodFullDesc').value.trim(),
   };
@@ -1867,6 +1984,7 @@ function renderAA() {
 // ─── RENDER ADMIN ORDERS ───
 let ordF = 'all';
 const E = x => String(x ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const PAYL = { qris: 'QRIS', transfer: 'Transfer Bank', cash: 'Tunai (Cash)', bca: 'Transfer BCA', mandiri: 'Transfer Mandiri' };
 function setOrdF(f) { ordF = f; renderAO(); }
 function waNum(p) { let d = (p || '').replace(/\D/g, ''); if (d.startsWith('0')) d = '62' + d.slice(1); return d; }
 function ordDate(o) { try { return o.date || (o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''); } catch (e) { return ''; } }
@@ -1879,10 +1997,10 @@ function renderAO() {
   const done = all.filter(o => o.status === 'done').reduce((t, o) => t + (o.total || 0), 0);
   bar.innerHTML = [['all', 'Semua'], ['wait', 'Menunggu'], ['process', 'Diproses'], ['done', 'Selesai']].map(([k, l]) =>
     `<button class="ord-chip ${ordF === k ? '' : 'neu-btn'}" style="${ordF === k ? 'background:var(--accent);color:#fff;box-shadow:0 4px 12px var(--accent-glow);' : ''}" onclick="setOrdF('${k}')">${l} (${cnt(k)})</button>`).join('')
-    + `<span style="margin-left:auto;font-size:12px;color:var(--text2);">Pendapatan selesai: <b style="color:var(--accent)">${fp(done)}</b></span>`;
+    + `<button class="ord-chip neu-btn" style="margin-left:auto;" onclick="exportOrders()"><i class="fas fa-file-csv"></i> Ekspor CSV</button><span style="font-size:12px;color:var(--text2);">Pendapatan selesai: <b style="color:var(--accent)">${fp(done)}</b></span>`;
   const orders = ordF === 'all' ? all : all.filter(o => (o.status || 'wait') === ordF);
   if (!orders.length) { b.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text2);">Tidak ada pesanan</td></tr>'; return; }
-  const pl = { bca: 'BCA', mandiri: 'Mandiri', qris: 'QRIS' };
+  const pl = PAYL;
   b.innerHTML = orders.map(o => {
     const st = o.status || 'wait', c = o.customer || {}, f = o.firestoreId;
     return `<tr>
@@ -1894,7 +2012,7 @@ function renderAO() {
       <td><span class="history-status status-${st}">${{ wait: 'Menunggu', process: 'Diproses', done: 'Selesai' }[st]}</span></td>
       <td style="white-space:nowrap;">
         <select class="ord-sel" onchange="updOrd('${f}',this.value)"><option value="wait" ${st === 'wait' ? 'selected' : ''}>Menunggu</option><option value="process" ${st === 'process' ? 'selected' : ''}>Diproses</option><option value="done" ${st === 'done' ? 'selected' : ''}>Selesai</option></select>
-        ${c.phone ? `<a class="admin-action-btn" style="color:#25d366;text-decoration:none;display:inline-flex;" target="_blank" title="Chat pelanggan" href="https://wa.me/${waNum(c.phone)}"><i class="fab fa-whatsapp"></i></a>` : ''}
+        ${c.phone ? `<a class="admin-action-btn" style="color:#25d366;text-decoration:none;display:inline-flex;" target="_blank" rel="noopener noreferrer" title="Chat pelanggan" href="https://wa.me/${waNum(c.phone)}"><i class="fab fa-whatsapp"></i></a>` : ''}
         <button class="admin-action-btn admin-action-delete" title="Hapus pesanan" onclick="delOrd('${f}')"><i class="fas fa-trash"></i></button>
       </td></tr>`;
   }).join('');
@@ -1960,14 +2078,14 @@ function renderProducts() {
     return `<div class="product-card" style="transition-delay:${i * 60}ms;">
       <div class="product-img-wrap" onclick="openPD('${fid}')">
         <img ${ia(gImg(p), 640)} alt="${p.name}" class="product-img" loading="lazy" onerror="imgFallback(this,'${fid}')">
-        ${bh}<div class="product-category-tag">${cl}</div>${(Array.isArray(p.images) && p.images.length) ? `<div class="photo-count"><i class="fas fa-images"></i> ${p.images.length + 1}</div>` : ''}
+        ${bh}<div class="product-category-tag">${cl}</div>${p.soldOut ? '<div class="sold-ribbon">Stok habis</div>' : ''}${(Array.isArray(p.images) && p.images.length) ? `<div class="photo-count"><i class="fas fa-images"></i> ${p.images.length + 1}</div>` : ''}
       </div>
       <div class="product-info">
         <div class="product-name" onclick="openPD('${fid}')">${p.name}</div>
         <div class="product-desc">${p.desc || ''}</div>
         <div class="product-bottom">
           <div class="product-price">${fp(p.price || 0)} <small>/box</small></div>
-          <button class="add-cart-btn" onclick="event.stopPropagation();showChoiceDialog('${fid}')" aria-label="Tambah ${p.name}"><i class="fas fa-plus"></i></button>
+          <button class="add-cart-btn" ${p.soldOut ? `onclick="event.stopPropagation();toast('Maaf, stok sedang habis','error')" style="opacity:.4"` : `onclick="event.stopPropagation();showChoiceDialog('${fid}')"`} aria-label="Tambah ${p.name}"><i class="fas fa-plus"></i></button>
         </div>
       </div>
     </div>`;
@@ -2065,6 +2183,7 @@ function closeCart() { document.getElementById('cartOverlay').classList.remove('
 
 // ─── CHECKOUT ───
 function openCheckoutModal() {
+  if (cfg('open') === false) { showInfoHtml('Toko Sedang Tutup', '<p>' + E(cfg('closedMsg')) + '</p>' + (cfg('hours') ? '<p><b>Jam buka:</b> ' + E(cfg('hours')) + '</p>' : '')); return; }
   if (needLogin(openCheckoutModal, 'Masuk atau daftar dulu untuk melanjutkan pesanan.')) return;
   const products = window._getProducts ? window._getProducts() : [];
   if (!cart.length) { toast('Keranjang kosong!', 'error'); return; }
@@ -2098,62 +2217,57 @@ function openCheckoutModal() {
 function closeCheckoutModal() { document.getElementById('checkoutModal').classList.remove('open'); document.body.style.overflow = ''; }
 function selectPayment(m) {
   selectedPayment = m;
-  document.querySelectorAll('.payment-opt').forEach(o => o.classList.remove('selected'));
-  document.querySelectorAll('.payment-detail').forEach(d => d.classList.remove('show'));
-  document.querySelectorAll('.payment-opt').forEach(o => { if (o.querySelector('input').value === m) o.classList.add('selected'); });
-  const map = { bca: 'payBCA', mandiri: 'payMandiri', qris: 'payQRIS' };
-  if (map[m]) document.getElementById(map[m]).classList.add('show');
+  document.querySelectorAll('.payment-opt').forEach(o => o.classList.toggle('selected', o.querySelector('input').value === m));
+  const n = document.getElementById('payNote'), t = {
+    qris: 'Kode <b>QRIS</b> beserta total tagihan akan dikirim admin lewat WhatsApp setelah pesananmu dikonfirmasi. Pembayaran dilakukan di luar website.',
+    transfer: '<b>Nomor rekening</b> dan total tagihan akan dikirim admin lewat WhatsApp. Pembayaran dilakukan di luar website, lalu kirim bukti transfer di chat yang sama.',
+    cash: 'Kamu membayar <b>tunai</b> saat pesanan diterima atau diambil. Waktu dan tempat pengantaran atau pengambilan dibahas di WhatsApp.'
+  };
+  n.innerHTML = '<i class="fas fa-circle-info" style="color:var(--accent);margin-right:6px;"></i>' + (t[m] || ''); n.classList.add('show');
 }
 
 async function submitOrder(e) {
-  e.preventDefault();
-  if (!selectedPayment) { toast('Pilih pembayaran', 'error'); return; }
+  if (e && e.preventDefault) e.preventDefault();
+  if (cfg('open') === false) { toast(cfg('closedMsg'), 'error'); return; }
+  if (!currentUser) { needLogin(null, 'Masuk atau daftar dulu untuk mengirim pesanan.'); return; }
+  if (!selectedPayment) { toast('Pilih metode pembayaran', 'error'); return; }
   const products = window._getProducts ? window._getProducts() : [];
-  const nm = document.getElementById('custName').value.trim();
-  const ph = document.getElementById('custPhone').value.trim();
-  const ad = document.getElementById('custAddress').value.trim();
-  const nt = document.getElementById('custNotes').value.trim();
-  if (!nm || !ph || !ad) { toast('Lengkapi data', 'error'); return; }
-  const oid = gid();
-  const tot = cart.reduce((s, i) => { const p = products.find(x => x.firestoreId === i.id || x.id === i.id); return s + (p ? (p.price || 0) * i.qty : 0); }, 0);
-  const pl = { bca: 'Bank BCA', mandiri: 'Bank Mandiri', qris: 'QRIS' };
-  const orderData = {
-    orderId: oid,
-    items: cart.map(i => { const p = products.find(x => x.firestoreId === i.id || x.id === i.id); return { name: p?.name || '?', qty: i.qty, price: p?.price || 0, productId: i.id }; }),
-    total: tot,
-    customer: { name: nm, phone: ph, address: ad, notes: nt },
-    payment: selectedPayment,
-    status: 'wait',
-    userId: currentUser?.userId || null,
-    userName: currentUser?.name || null,
-  };
-  // save to Firestore
+  const nm = document.getElementById('custName').value.trim().slice(0, 100), ph = document.getElementById('custPhone').value.trim();
+  const ad = document.getElementById('custAddress').value.trim().slice(0, 500), nt = document.getElementById('custNotes').value.trim().slice(0, 500);
+  if (!nm || !ph || !ad) { toast('Lengkapi nama, WhatsApp, dan alamat', 'error'); return; }
+  if (!/^[0-9+() -]{6,20}$/.test(ph)) { toast('Nomor WhatsApp tidak valid', 'error'); return; }
+  const lines = cart.map(i => { const p = products.find(x => x.firestoreId === i.id || x.id === i.id); return p ? { name: p.name, qty: Math.max(1, Math.min(99, i.qty | 0)), price: p.price || 0, productId: i.id } : null; }).filter(Boolean);
+  if (!lines.length) { toast('Keranjang kosong', 'error'); return; }
+  const oid = gid(), tot = lines.reduce((t, l) => t + l.price * l.qty, 0), now = new Date();
+  const orderData = { orderId: oid, items: lines, total: tot, customer: { name: nm, phone: ph, address: ad, notes: nt }, payment: selectedPayment, status: 'wait', userId: currentUser.userId, userName: currentUser.name, okey: currentUser.okey || '' };
+  // ── Pesan WhatsApp ──
+  const wf = x => String(x == null ? '' : x).replace(/[*_~`]/g, ''), pcs = lines.reduce((t, l) => t + l.qty, 0);
+  const when = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ' • ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(':', '.') + ' WIB';
+  const payInfo = {
+    qris: ['QRIS', 'Mohon kirimkan *kode QRIS* beserta total tagihan. Saya akan membayar setelah pesanan dikonfirmasi.'],
+    transfer: ['Transfer Bank', 'Mohon kirimkan *nomor rekening* beserta total tagihan. Bukti transfer akan saya kirim di chat ini.'],
+    cash: ['Tunai (Cash)', 'Saya akan membayar *tunai* saat pesanan diterima/diambil.']
+  }[selectedPayment];
+  const sep = '━━━━━━━━━━━━━━━━━━';
+  let msg = `🍪 *PESANAN BARU*\n*Ira Cookies Ramadhaniah*\n${sep}\n`;
+  msg += `🧾 *No. Pesanan:* ${oid}\n🕒 *Waktu:* ${when}\n🔑 *Akun:* @${currentUser.username}\n\n`;
+  msg += `*📋 DATA PEMESAN*\n▫️ Nama: ${wf(nm)}\n▫️ WhatsApp: ${wf(ph)}\n▫️ Alamat: ${wf(ad)}\n`;
+  if (nt) msg += `▫️ Catatan: ${wf(nt)}\n`;
+  msg += `\n*🛒 RINCIAN PESANAN*\n`;
+  lines.forEach((l, i) => { msg += `${i + 1}. ${wf(l.name)}\n    ${l.qty} × ${fp(l.price)} = *${fp(l.price * l.qty)}*\n`; });
+  msg += `${sep}\n📦 Jumlah: ${pcs} item (${lines.length} jenis)\n💰 *TOTAL: ${fp(tot)}*\n_(belum termasuk ongkos kirim bila ada)_\n\n`;
+  msg += `*💳 METODE PEMBAYARAN*\n▫️ ${payInfo[0]}\n▫️ ${payInfo[1]}\n\n`;
+  msg += `*✅ MOHON KONFIRMASI*\n1. Ketersediaan & total akhir (termasuk ongkir)\n2. Estimasi waktu pengantaran/pengambilan\n3. Detail pembayaran\n\nTerima kasih 🙏`;
+  // buka WhatsApp langsung (masih dalam sentuhan pengguna agar tidak diblokir browser), lalu simpan pesanan
+  window.open(waLink(msg), '_blank', 'noopener,noreferrer');
+  let saved = false;
   if (window._fs) {
-    try {
-      const ref = await window._fs.addOrder(orderData);
-      if (currentUser && currentUser.credId && ref && ref.id) window._fs.accAddOrder(currentUser.credId, ref.id).catch(e => console.warn(e));
-    } catch (err) { console.warn('Order save failed:', err); }
+    try { const ref = await window._fs.addOrder(orderData); saved = true; if (currentUser.credId && ref && ref.id) window._fs.accAddOrder(currentUser.credId, ref.id).catch(er => console.warn(er)); }
+    catch (err) { console.warn('Order save failed:', err); }
   }
-  // also keep in localStorage for offline history
-  if (!currentUser) {
-    const localOrders = JSON.parse(localStorage.getItem('icr_orders') || '[]');
-    localOrders.unshift({ ...orderData, date: new Date().toLocaleString('id-ID') });
-    localStorage.setItem('icr_orders', JSON.stringify(localOrders.slice(0, 50)));
-  } else { try { localStorage.setItem('icr_addr_u_' + currentUser.username, JSON.stringify({ phone: ph, address: ad })); } catch (e) {} }
-
-  // Build WA message
-  let msg = `🍪 *PESANAN - Ira Cookies Ramadhaniah*\n━━━━━━━━━━━━━━━━\n👤 ${nm}\n📱 ${ph}\n📍 ${ad}\n`;
-  if (nt) msg += `📝 ${nt}\n`;
-  msg += `\n🛒 *Pesanan:*\n───\n`;
-  cart.forEach((it, idx) => { const p = products.find(x => x.firestoreId === it.id || x.id === it.id); msg += `${idx + 1}. ${p?.name || '?'} x${it.qty} = ${fp((p?.price || 0) * it.qty)}\n`; });
-  msg += `───\n💰 *TOTAL: ${fp(tot)}*\n\n💳 ${pl[selectedPayment]}\n`;
-  if (selectedPayment === 'bca') msg += `BCA: 8720-3456-7890 a.n. Ira Cookies Ramadhaniah\n`;
-  else if (selectedPayment === 'mandiri') msg += `Mandiri: 1234-0098-7654 a.n. Ira Cookies Ramadhaniah\n`;
-  else msg += `Scan QRIS\n`;
-  msg += `\n🆔 ${oid}\n📅 ${new Date().toLocaleString('id-ID')}\n\nTerima kasih! 🙏`;
-  window.open(`https://wa.me/6287755046663?text=${encodeURIComponent(msg)}`, '_blank');
-  cart = []; saveCart(); updateCB(); renderCart(); closeCheckoutModal();
-  toast('Pesanan terkirim!');
+  try { localStorage.setItem('icr_addr_u_' + currentUser.username, JSON.stringify({ phone: ph, address: ad })); } catch (er) {}
+  cart.splice(0, cart.length); saveCart(); updateCB(); renderCart(); closeCheckoutModal();
+  toast(saved ? 'Pesanan tercatat. Lanjutkan pembayaran di WhatsApp' : 'Pesanan dikirim lewat WhatsApp', saved ? 'success' : 'info');
 }
 
 // ─── HISTORY ───
@@ -2261,7 +2375,7 @@ function go(pg, e) {
   if (!PAGES.includes(pg)) pg = 'home'; curPage = pg;
   PAGES.forEach(x => { const el = document.getElementById('pg-' + x); if (el) el.classList.toggle('active', x === pg); });
   document.querySelectorAll('.sb-link[data-pg],.dock-i[data-pg]').forEach(a => a.classList.toggle('active', a.dataset.pg === pg));
-  if (pg === 'riwayat') renderHistory(true);
+  if (pg === 'riwayat') renderHistory(true); else histStop();
   window.scrollTo(0, 0); try { history.replaceState(null, '', '#' + pg); } catch (x) {}
   setSidebar(false); armWatch();
 }
@@ -2313,40 +2427,51 @@ function dots(t) {
 // ─── RIWAYAT (halaman) ───
 function openHistoryModal(e) { if (e && e.preventDefault) e.preventDefault(); closeCart(); go('riwayat'); }
 function renderHistoryIfOpen() { }
-var _ho = [], _hT = null, _hSig = '';
+var _ho = [], _hSig = '', _hw = {}, _hCache = {};
+function histStop() { Object.values(_hw || {}).forEach(f => { try { f(); } catch (e) {} }); _hw = {}; }
 async function loadHist() {
   if (currentUser && currentUser.credId && window._fs) {
     try {
       const a = await window._fs.accGet(currentUser.credId);
       if (!a) { logoutUser(); toast('Sesi berakhir, silakan masuk lagi', 'error'); return []; }
-      const ids = (a.orderIds || []).slice(-30).reverse();
-      return (await Promise.all(ids.map(id => window._fs.orderGet(id).catch(() => null)))).filter(Boolean);
+      const ids = (a.orderIds || []).slice(-20).reverse();
+      return (await Promise.all(ids.map(async id => { if (_hCache[id]) return _hCache[id]; const o = await window._fs.orderGet(id).catch(() => null); if (o && o.status === 'done') _hCache[id] = o; return o; }))).filter(Boolean);
     } catch (e) { console.warn(e); }
   }
-  return JSON.parse(localStorage.getItem('icr_orders') || '[]').filter(o => !o.userId);
+  return [];
+}
+// status pesanan diperbarui langsung lewat pemantau per pesanan yang belum selesai (jauh lebih hemat dibanding polling)
+function histWatch() {
+  if (!currentUser || !window._fs || !window._fs.watchOrder) return;
+  _ho.forEach(o => {
+    const id = o.firestoreId; if (!id || _hw[id] || o.status === 'done') return;
+    _hw[id] = window._fs.watchOrder(id, n => {
+      const i = _ho.findIndex(x => x.firestoreId === id); if (i < 0 || !n) return; const ch = (_ho[i].status || 'wait') !== (n.status || 'wait'); _ho[i] = n;
+      if (n.status === 'done') { _hCache[id] = n; if (_hw[id]) { _hw[id](); delete _hw[id]; } }
+      if (ch) { setBadge(_ho); drawHistory(false); }
+    });
+  });
 }
 async function renderHistory(fresh) {
-  const b = document.getElementById('historyPageBody'); if (!b) return; clearTimeout(_hT);
-  if (fresh) { _hSig = ''; if (!b.children.length) b.innerHTML = '<div class="hc" style="text-align:center;color:var(--text2);">Memuat...</div>'; }
-  const list = await loadHist(); _ho = list; setBadge(list);
-  const sig = JSON.stringify(list.map(o => (o.firestoreId || o.orderId) + o.status)) + (currentUser ? 1 : 0);
-  if (sig !== _hSig) {
-    _hSig = sig;
-    const guest = currentUser ? '' : '<div class="hc" style="text-align:center;font-size:12px;color:var(--text2);line-height:1.7;"><i class="fas fa-shield-halved" style="color:var(--accent);font-size:22px;display:block;margin-bottom:8px;"></i>Masuk agar riwayat pesananmu tersimpan aman dan bisa dibuka di perangkat lain.<br><button class="neu-btn-accent" style="margin-top:12px;padding:10px 20px;font-size:12px;" onclick="openUserLoginModal()">Masuk / Daftar</button></div>';
-    if (!list.length) { b.innerHTML = guest + '<div class="hc" style="text-align:center;color:var(--text2);padding:40px 20px;"><i class="fas fa-receipt" style="font-size:42px;opacity:.25;display:block;margin-bottom:12px;"></i>Belum ada pesanan<br><button class="neu-btn-accent" style="margin-top:16px;padding:11px 22px;font-size:12px;" onclick="go(\'produk\')">Mulai Belanja</button></div>'; }
-    else {
-      const lv = { wait: 0, process: 1, done: 2 }, nm = ['Menunggu', 'Diproses', 'Selesai'], ic = ['clock', 'fire', 'check'];
-      b.innerHTML = guest + list.map((o, i) => {
-        const s = lv[o.status] ?? 0, an = fresh ? `animation-delay:${Math.min(i, 6) * 70}ms` : 'animation:none';
-        return `<div class="hc" style="${an}"><div class="hc-top"><span>${E(o.orderId || o.id || '—')}</span><span style="color:var(--accent)">${nm[s]}</span></div>
+  const b = document.getElementById('historyPageBody'); if (!b) return;
+  if (fresh) { histStop(); _hSig = ''; if (!b.children.length) b.innerHTML = '<div class="hc" style="text-align:center;color:var(--text2);">Memuat...</div>'; _ho = await loadHist(); setBadge(_ho); histWatch(); }
+  drawHistory(!!fresh);
+}
+function drawHistory(fresh) {
+  const b = document.getElementById('historyPageBody'); if (!b) return; const list = _ho;
+  const sig = JSON.stringify(list.map(o => (o.firestoreId || o.orderId) + (o.status || 'wait'))) + (currentUser ? 1 : 0);
+  if (!fresh && sig === _hSig) return; _hSig = sig;
+  if (!currentUser) { b.innerHTML = '<div class="hc" style="text-align:center;font-size:12px;color:var(--text2);line-height:1.7;"><i class="fas fa-shield-halved" style="color:var(--accent);font-size:26px;display:block;margin-bottom:10px;"></i>Masuk untuk melihat riwayat pesananmu. Riwayat tersimpan aman di akunmu dan bisa dibuka dari perangkat mana pun.<br><button class="neu-btn-accent" style="margin-top:14px;padding:11px 22px;font-size:12px;" onclick="openUserLoginModal()">Masuk / Daftar</button></div>'; return; }
+  if (!list.length) { b.innerHTML = '<div class="hc" style="text-align:center;color:var(--text2);padding:40px 20px;"><i class="fas fa-receipt" style="font-size:42px;opacity:.25;display:block;margin-bottom:12px;"></i>Belum ada pesanan<br><button class="neu-btn-accent" style="margin-top:16px;padding:11px 22px;font-size:12px;" onclick="go(\'produk\')">Mulai Belanja</button></div>'; return; }
+  const lv = { wait: 0, process: 1, done: 2 }, nm = ['Menunggu', 'Diproses', 'Selesai'], ic = ['clock', 'fire', 'check'];
+  b.innerHTML = list.map((o, i) => {
+    const s = lv[o.status] ?? 0, an = fresh ? `animation-delay:${Math.min(i, 6) * 70}ms` : 'animation:none';
+    return `<div class="hc" style="${an}"><div class="hc-top"><span>${E(o.orderId || o.id || '—')}</span><span style="color:var(--accent)">${nm[s]}</span></div>
     <div class="hc-date">${E(o.date || (o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString('id-ID') : '—'))}</div>
     <div class="stp">${[0, 1, 2].map(k => `<span class="${k <= s ? 'on' : ''}"><i class="fas fa-${ic[k]}"></i></span>${k < 2 ? `<em class="${k < s ? 'on' : ''}"></em>` : ''}`).join('')}</div>
     <div class="hc-items">${(o.items || []).map(x => E(x.name) + ' ×' + E(x.qty)).join(' · ')}</div>
-    <div class="hc-bot"><div class="hc-tot">${fp(o.total || 0)}</div><div class="hc-btns"><button class="neu-btn" onclick="reorder(${i})"><i class="fas fa-redo"></i> Pesan Lagi</button><a class="neu-btn" target="_blank" href="https://wa.me/6287755046663?text=${encodeURIComponent('Halo, tanya pesanan ' + (o.orderId || ''))}"><i class="fab fa-whatsapp"></i></a></div></div></div>`;
-      }).join('');
-    }
-  }
-  if (curPage === 'riwayat') _hT = setTimeout(() => renderHistory(false), 15000);
+    <div class="hc-bot"><div class="hc-tot">${fp(o.total || 0)}</div><div class="hc-btns"><button class="neu-btn" onclick="reorder(${i})"><i class="fas fa-redo"></i> Pesan Lagi</button><a class="neu-btn" target="_blank" rel="noopener noreferrer" href="${waLink('Halo, tanya pesanan ' + (o.orderId || ''))}"><i class="fab fa-whatsapp"></i></a></div></div></div>`;
+  }).join('');
 }
 function reorder(i) {
   if (needLogin(() => reorder(i), 'Masuk atau daftar dulu untuk memesan lagi.')) return;
@@ -2356,16 +2481,13 @@ function reorder(i) {
 }
 
 // ═══ INFO: Cara Pesan & Kebijakan ═══
-// Isi alamat gambar QRIS tokomu di sini (link langsung .jpg/.png). Kosong = QRIS dikirim lewat WhatsApp.
-const QRIS_URL = '';
-if (QRIS_URL) { const q = document.getElementById('qrisImg'); q.src = normUrl(QRIS_URL); q.style.display = 'block'; document.getElementById('qrisNote').style.display = 'none'; }
 const INFO = {
   pesan: { t: 'Cara Pesan', h: `<ol>
     <li><b>Pilih kue</b> di halaman <b>Produk</b>. Ketuk kue untuk melihat foto dan detailnya.</li>
     <li>Tekan <b>Keranjang</b> untuk lanjut memilih kue lain, atau <b>Checkout</b> untuk langsung memesan.</li>
-    <li>Isi <b>nama, nomor WhatsApp, dan alamat</b>, lalu pilih pembayaran (BCA, Mandiri, atau QRIS).</li>
+    <li>Isi <b>nama, nomor WhatsApp, dan alamat</b>, lalu pilih <b>metode pembayaran</b> (QRIS, Transfer Bank, atau Tunai).</li>
     <li>Tekan kirim. Pesananmu otomatis terbuka di <b>WhatsApp</b> lengkap dengan rincian dan total.</li>
-    <li>Lakukan pembayaran sesuai total, lalu kirim <b>bukti transfer</b> di chat WhatsApp yang sama.</li>
+    <li>Admin mengonfirmasi pesanan dan <b>mengirim detail pembayaran</b> (kode QRIS atau nomor rekening) lewat WhatsApp. Pembayaran dilakukan di luar website.</li>
     <li>Pantau statusnya kapan saja di halaman <b>Riwayat</b>.</li></ol>
     <h4>Butuh bantuan?</h4><p>Ingin pesan dalam jumlah besar atau hampers? Chat saja lewat WhatsApp, kami bantu.</p>` },
   kebijakan: { t: 'Kebijakan', h: `<h4>Pemesanan &amp; Pembayaran</h4><p>Pesanan diproses setelah pembayaran dikonfirmasi lewat WhatsApp. Harga yang berlaku adalah harga saat pesanan dikirim.</p>
@@ -2539,17 +2661,16 @@ async function resetAcc(cid) {
   if (!(await cfm('Reset password akun <b>@' + E(a.username) + '</b>?<br><small>Password lama dihapus dan tidak ditampilkan. Pelanggan wajib membuat password baru saat masuk.</small>', 'Ya, Reset'))) return;
   const tmp = genTmp();
   try {
-    const nid = await derive(a.username, tmp);
-    await window._fs.accCreate(nid, { username: a.username, name: a.name, phone: a.phone || '', orderIds: a.orderIds || [], mustChange: true, createdAt: a.createdAt || new Date().toISOString() });
-    await window._fs.accDelete(cid);
-    const wa = a.phone ? `<a class="neu-btn-accent" style="display:flex;justify-content:center;gap:8px;padding:12px;font-size:13px;text-decoration:none;margin-top:6px;" target="_blank" href="https://wa.me/${waNum(a.phone)}?text=${encodeURIComponent('Halo ' + a.name + ', password akun Ira Cookies kamu sudah direset. Password sementara: ' + tmp + '. Silakan masuk lalu buat password baru ya.')}"><i class="fab fa-whatsapp"></i> Kirim ke WhatsApp ${E(a.name)}</a>` : '<p style="font-size:11px;">Nomor WhatsApp pelanggan tidak tersedia. Sampaikan password ini secara langsung.</p>';
+    const nid = await derive(a.username, tmp, 2);
+    await window._fs.accUpgrade(a.username, cid, nid, { username: a.username, name: a.name, phone: a.phone || '', orderIds: a.orderIds || [], mustChange: true, createdAt: a.createdAt || new Date().toISOString(), okey: a.okey || rnd(16) });
+    const wa = a.phone ? `<a class="neu-btn-accent" style="display:flex;justify-content:center;gap:8px;padding:12px;font-size:13px;text-decoration:none;margin-top:6px;" target="_blank" rel="noopener noreferrer" href="https://wa.me/${waNum(a.phone)}?text=${encodeURIComponent('Halo ' + a.name + ', password akun Ira Cookies kamu sudah direset. Password sementara: ' + tmp + '. Silakan masuk lalu buat password baru ya.')}"><i class="fab fa-whatsapp"></i> Kirim ke WhatsApp ${E(a.name)}</a>` : '<p style="font-size:11px;">Nomor WhatsApp pelanggan tidak tersedia. Sampaikan password ini secara langsung.</p>';
     showInfoHtml('Password Sementara', `<p>Akun <b>@${E(a.username)}</b> sudah direset. Berikan password sementara ini ke pelanggan. Password ini hanya tampil sekali.</p><div class="tmp-box">${tmp}</div>${wa}`);
   } catch (e) { toast('Gagal reset: ' + e.message, 'error'); }
 }
 async function delAcc(cid) {
   const a = (window._accs || []).find(x => x.credId === cid); if (!a) return;
   if (!(await cfm('Hapus akun <b>@' + E(a.username) + '</b>?<br><small>Riwayat pesanan di toko tetap tersimpan. ID ini bisa didaftarkan ulang.</small>'))) return;
-  try { await window._fs.accDelete(cid); await window._fs.usernameDelete(a.username); toast('Akun dihapus'); } catch (e) { toast('Gagal hapus: ' + e.message, 'error'); }
+  try { await window._fs.accAdminDelete(a.username, cid); toast('Akun dihapus'); } catch (e) { toast('Gagal hapus: ' + e.message, 'error'); }
 }
 function showInfoHtml(t, h) { document.getElementById('infoTitle').textContent = t; document.getElementById('infoBody').innerHTML = h; document.getElementById('infoModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
 
@@ -2606,6 +2727,78 @@ function refreshBadge() { if (currentUser && currentUser.credId) loadHist().then
     if (curPage === 'riwayat') renderHistory(true);
   });
 })();
+
+// ═══ PENGATURAN TOKO (diatur admin, tersimpan di Firestore) ═══
+const SET_DEF = { wa: '6287755046663', ig: '', tt: '', fb: '', yt: '', email: 'iracookies@gmail.com', addr: '', hours: '', payQris: true, payTransfer: true, payCash: true, open: true, closedMsg: 'Toko sedang tutup. Pesananmu akan diproses saat kami buka kembali.', ann: '', annOn: false, statCust: '5K+', statRate: '4.9' };
+function cfg(k) { const v = (window._set || {})[k]; if (v === undefined || v === null) return SET_DEF[k]; if (k === 'wa' && !String(v).trim()) return SET_DEF.wa; return v; }
+function waNo() { const n = waNum(String(cfg('wa'))); return /^\d{9,15}$/.test(n) ? n : SET_DEF.wa; }
+function waLink(text) { return 'https://wa.me/' + waNo() + (text ? '?text=' + encodeURIComponent(text) : ''); }
+function socialUrl(kind, v) {
+  v = String(v).trim(); if (/^https?:\/\//i.test(v)) return v; if (/\.(com|id|me|co|link)\b/i.test(v)) return 'https://' + v.replace(/^\/+/, '');
+  v = v.replace(/^@/, ''); return { instagram: 'https://instagram.com/', tiktok: 'https://www.tiktok.com/@', facebook: 'https://facebook.com/', youtube: 'https://youtube.com/@' }[kind] + v;
+}
+function fmtPhone(n) { return ('0' + String(n).replace(/^62/, '')).replace(/(\d{4})(?=\d)/g, '$1-'); }
+function applySettings() {
+  const T = (id, t) => { const e = document.getElementById(id); if (e) e.textContent = t; }, show = (id, on) => { const e = document.getElementById(id); if (e) e.style.display = on ? '' : 'none'; };
+  document.querySelectorAll('a[data-wa]').forEach(a => { a.href = waLink(a.dataset.wa); });
+  [['ftIg', 'ig', 'instagram'], ['ftTt', 'tt', 'tiktok'], ['ftFb', 'fb', 'facebook'], ['ftYt', 'yt', 'youtube']].forEach(([id, k, kind]) => { const a = document.getElementById(id), v = cfg(k); if (a) { a.style.display = v ? '' : 'none'; if (v) a.href = socialUrl(kind, v); } });
+  T('ftPhoneTxt', fmtPhone(waNo())); T('ftMailTxt', cfg('email')); show('ftMail', !!cfg('email'));
+  T('ftAddrTxt', cfg('addr')); show('ftAddr', !!cfg('addr')); T('ftHoursTxt', cfg('hours')); show('ftHours', !!cfg('hours'));
+  T('statCust', cfg('statCust') || '5K+'); T('statRate', cfg('statRate') || '4.9');
+  const opt = k => document.querySelector('.payment-opt[onclick*="\'' + k + '\'"]'), hide = (k, off) => { const o = opt(k); if (o) o.style.display = off ? 'none' : ''; };
+  hide('qris', cfg('payQris') === false); hide('transfer', cfg('payTransfer') === false); hide('cash', cfg('payCash') === false);
+  if (selectedPayment && cfg('pay' + selectedPayment.charAt(0).toUpperCase() + selectedPayment.slice(1)) === false) { selectedPayment = ''; const n = document.getElementById('payNote'); if (n) n.classList.remove('show'); }
+  const ab = document.getElementById('annBar'), closed = cfg('open') === false, txt = closed ? cfg('closedMsg') : (cfg('annOn') && cfg('ann') ? cfg('ann') : '');
+  if (ab) { ab.style.display = txt ? 'flex' : 'none'; ab.classList.toggle('closed', closed); ab.firstElementChild.className = 'fas ' + (closed ? 'fa-lock' : 'fa-bullhorn'); T('annTxt', txt); }
+}
+window.applySettings = applySettings;
+function renderSettings(force) {
+  const box = document.getElementById('adminPengaturan'); if (!box || (!force && box.contains(document.activeElement))) return;
+  const set = (id, v) => { const e = document.getElementById(id); if (!e) return; if (e.type === 'checkbox') e.checked = !!v; else e.value = v == null ? '' : v; };
+  set('st_open', cfg('open') !== false); set('st_closedMsg', cfg('closedMsg')); set('st_annOn', cfg('annOn')); set('st_ann', cfg('ann'));
+  set('st_wa', cfg('wa')); set('st_email', cfg('email')); set('st_ig', cfg('ig')); set('st_tt', cfg('tt')); set('st_fb', cfg('fb')); set('st_yt', cfg('yt')); set('st_addr', cfg('addr')); set('st_hours', cfg('hours'));
+  set('st_payQris', cfg('payQris') !== false); set('st_payTransfer', cfg('payTransfer') !== false); set('st_payCash', cfg('payCash') !== false);
+  set('st_statCust', cfg('statCust')); set('st_statRate', cfg('statRate'));
+}
+window.renderSettings = renderSettings;
+async function saveSettingsForm() {
+  const v = id => (document.getElementById(id).value || '').trim(), c = id => document.getElementById(id).checked, wa = waNum(v('st_wa'));
+  if (!/^\d{9,15}$/.test(wa)) return toast('Nomor WhatsApp tidak valid (contoh: 081234567890)', 'error');
+  if (v('st_email') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('st_email'))) return toast('Format email tidak valid', 'error');
+  if (!c('st_payQris') && !c('st_payTransfer') && !c('st_payCash')) return toast('Aktifkan minimal satu metode pembayaran', 'error');
+  const data = { wa, email: v('st_email'), ig: v('st_ig'), tt: v('st_tt'), fb: v('st_fb'), yt: v('st_yt'), addr: v('st_addr'), hours: v('st_hours'), payQris: c('st_payQris'), payTransfer: c('st_payTransfer'), payCash: c('st_payCash'), open: c('st_open'), closedMsg: v('st_closedMsg') || SET_DEF.closedMsg, ann: v('st_ann'), annOn: c('st_annOn'), statCust: v('st_statCust') || SET_DEF.statCust, statRate: v('st_statRate') || SET_DEF.statRate, updatedAt: new Date().toISOString() };
+  try { await window._fs.saveSettings(data); toast('Pengaturan tersimpan dan langsung tampil di website'); } catch (e) { toast('Gagal menyimpan: ' + (e.code === 'permission-denied' ? 'rules Firestore belum diperbarui' : e.message), 'error'); }
+}
+(function () { const sw = window.switchAdminTab; window.switchAdminTab = function (t) { sw.apply(this, arguments); if (t === 'pengaturan') renderSettings(true); }; })();
+// ═══ ADMIN: tambahan ═══
+async function toggleSold(id, v) { try { await window._fs.updateProduct(id, { soldOut: v }); toast(v ? 'Ditandai stok habis' : 'Ditandai tersedia'); } catch (e) { toast('Gagal mengubah: ' + e.message, 'error'); } }
+function exportOrders() {
+  const all = window._getOrders ? window._getOrders() : [], L = ordF === 'all' ? all : all.filter(o => (o.status || 'wait') === ordF);
+  if (!L.length) return toast('Tidak ada pesanan untuk diekspor', 'error');
+  const q = x => { let t = String(x == null ? '' : x); if (/^[=+\-@\t\r]/.test(t)) t = "'" + t; return '"' + t.replace(/"/g, '""') + '"'; }, st = { wait: 'Menunggu', process: 'Diproses', done: 'Selesai' };
+  const rows = [['ID Pesanan', 'Tanggal', 'Nama', 'WhatsApp', 'Alamat', 'Catatan', 'Item', 'Total', 'Pembayaran', 'Status']];
+  L.forEach(o => { const c = o.customer || {}; rows.push([o.orderId || '', ordDate(o), c.name, c.phone, c.address, c.notes, (o.items || []).map(i => i.name + ' x' + i.qty).join('; '), o.total || 0, PAYL[o.payment] || o.payment, st[o.status || 'wait']]); });
+  const blob = new Blob(['\ufeff' + rows.map(r => r.map(q).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' }), a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'pesanan-' + new Date().toISOString().slice(0, 10) + '.csv'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  toast('Mengunduh ' + L.length + ' pesanan');
+}
+window.onNewOrder = function (o) { const c = (o && o.customer) || {}; toast('Pesanan baru dari ' + (c.name || 'pelanggan') + (o && o.total ? ' · ' + fp(o.total) : ''), 'info'); sfx('cart'); };
+(function () {
+  const ra = window.renderAD; const isToday = o => { try { const d = o.createdAt && o.createdAt.toDate ? o.createdAt.toDate() : null; return d && d.toDateString() === new Date().toDateString(); } catch (e) { return false; } };
+  window.renderAD = function () {
+    ra.apply(this, arguments);
+    const O = window._getOrders ? window._getOrders() : [], td = O.filter(isToday), wait = O.filter(o => (o.status || 'wait') === 'wait').length, rev = td.reduce((t, o) => t + (o.total || 0), 0), sold = (window._getProducts ? window._getProducts() : []).filter(p => p.soldOut).length;
+    const card = (ic, col, n, l) => `<div class="stat-card"><div class="stat-card-icon" style="background:${col};"><i class="fas fa-${ic}"></i></div><div class="stat-card-num" style="${String(n).length > 8 ? 'font-size:12px;' : ''}">${n}</div><div class="stat-card-label">${l}</div></div>`;
+    document.getElementById('adminStats').insertAdjacentHTML('beforeend', card('calendar-day', 'linear-gradient(145deg,#1abc9c,#16a085)', td.length, 'Pesanan Hari Ini') + card('sack-dollar', 'linear-gradient(145deg,#f1c40f,#d4a20a)', fp(rev), 'Omzet Hari Ini') + card('hourglass-half', 'linear-gradient(145deg,#e67e22,#d35400)', wait, 'Perlu Diproses') + card('ban', 'linear-gradient(145deg,#7f8c8d,#636e72)', sold, 'Stok Habis') + card('user-check', 'linear-gradient(145deg,#3498db,#2475ae)', (window._accs || []).length, 'Akun Pelanggan'));
+  };
+})();
+applySettings();
+(function () {
+  const pw = document.getElementById('acPass'); if (!pw) return;
+  pw.addEventListener('input', () => { if (acM !== 'reg') return; const v = pw.value, sc = v ? pwScore(v) : 0, e = pwCheck(v, (document.getElementById('acUser').value || '').trim().toLowerCase()); document.querySelectorAll('#pwMeter i').forEach((el, i) => { el.className = i < sc ? 's' + sc : ''; });
+    document.getElementById('pwHint').textContent = !v ? 'Minimal 8 karakter, gabungan huruf dan angka. Semakin panjang semakin aman.' : e || ['', 'Cukup, tambah panjang agar lebih kuat', 'Bagus', 'Kuat', 'Sangat kuat'][sc] || 'Bagus'; });
+})();
+(function () { const u = document.getElementById('acUser'); let t; if (u) u.addEventListener('input', () => { clearTimeout(t); acHint(''); if (acM !== 'login') return; const id = u.value.trim().toLowerCase(); if (!AC_RE.test(id) || !window._fs) return; t = setTimeout(async () => { try { if (acM === 'login' && !(await window._fs.usernameExists(id))) acHint('ID <b>@' + E(id) + '</b> belum terdaftar. <a href="#" onclick="acMode(\'reg\');return false;">Daftar dulu yuk</a>'); } catch (e) {} }, 700); }); })();
 
 init();
 </script>
